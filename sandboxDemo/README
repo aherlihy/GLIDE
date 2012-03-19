@@ -1,0 +1,43 @@
+README
+
+Author: Anna Herlihy
+
+This demo represents the sandbox we are going to use in order to protect our program from user input.
+
+The goal is to take the user input and compile/run it as a different program, catching any errors that occur.
+This will protect our program from being damanged by malicious or reckless code.
+Eventually, the process being tested will be run within an environement that mimics our main process, so that this process will be able to manipulate objects that would be present in the main process.
+
+Design Choices:
+There were many different options for sandboxing code.
+The two main options for testing code are to fully sandbox using something like PyPy or do some kind of pseudo-parsing.
+	(Instead of limiting language features that are considered unsafe, PyPy replaces all calls to external libraries with a stub that communicates with the process that handles it)
+PyPy seems pretty intense/complex for what we're trying to do, and interfacing between the sandbox'd script and the regular program is nonintuitive.
+
+Another option would be to parse by hand: remove all imports and check that nothing is being called except for the procedures we explicitly tell the user they can use.
+The problem with this approach is that it is tedious and not very extensible. Running their code will catch a lot of the errors we would be parsing for, and would require much less legwork on our program's part.
+Also, if we parse by hand, it is unlikely that we will be able to cover all bases. The potential for malicious or error-prone code is huge, and it wouldn't make sense to try and think about every possible error.
+
+The approach we decided upon was to create a separate process. Functionally, it is almost identical but implementation-wise, much simpler.
+
+The goal is to create a dummy program that would take in the user's python code and run it completely separately in an environment that mimics our original program (i.e. run it in a disposable virtual enviornment).
+This would introduce a level of separation between our main program and the input. That way if the script wrecks havoc on it's environment, it would be destroying a dummy environment instead of our actual program.
+This dummy program will only simulate access to the components that the script is allowed to modify, so if the script attempts to change something that it should not, an error will be thrown.
+
+We can watch the exit status of the subprocess, and do minimal postprocessing. (Basically instead of checking before its run, we would run it and watch the outcome.)
+This program could pipe any python errors into the main program, which would interpret it appropriately and tell the user.
+
+It also simplifies the code if we keep all our checks in one place, and assume that the code we're directly running in the main program is safe.
+
+Thus we would get the same level of protection without any of the complications of using python support.
+
+This demo takes in the pathfile to the program to be tested as a command line argument.
+	(1) Compile the file passed in through the command line.
+		Most compile-time errors will be caught at this point and returned to the user
+	(2) Creates a subprocess
+	(3) Catch any runtime errors thrown
+	(4) Print out the errors
+
+The main process would invoke this demo with the user input file, then read the output from stdout.
+
+Please note at this point we do not parse the error messages to return more meaningful error codes. This will be done once we have a better idea of what to expect.
