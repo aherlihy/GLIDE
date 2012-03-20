@@ -1,3 +1,4 @@
+
 #! /usr/bin/python
 # -*- coding: iso-8859-1 -*-
 
@@ -19,7 +20,7 @@ def cmd_output(args, **kwds):
     p = subprocess.Popen(args, **kwds)
     return p.communicate()[0]
 
-print("helloo")
+print("Compiling code...")
 
 #compile the code and check for any syntax errors
 try:
@@ -29,5 +30,9 @@ except py_compile.PyCompileError, e:
     print "\t",e
 #if there are no compile-time errors, run the code and check for any runtim$
 else:
-    print "Oops! Looks like there's a runtime error:"
-    print cmd_output(["python", sys.argv[1]])
+    print "Great! No compiler errors. Running..."
+    output =  cmd_output(["python", sys.argv[1]])
+    print "Run completed. Program outputs: "
+    print "---------------------"
+    print output
+    print "---------------------"  
