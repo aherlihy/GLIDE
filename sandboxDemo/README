@@ -9,7 +9,7 @@ This will protect our program from being damanged by malicious or reckless code.
 Eventually, the process being tested will be run within an environement that mimics our main process, so that this process will be able to manipulate objects that would be present in the main process.
 
 We decided that it was not the responsibility/scope of our program to protect the filesystem from user input.
-The only program we take ownership over is the functionality of the GLIDE interface. GLIDE is fundamentally an IDE, and it is not relevant enough for us to pour energy into making sure the script does not harm the system.
+All we take ownership over is the functionality of the GLIDE interface. GLIDE is fundamentally an IDE, and it is not relevant enough for us to pour energy into making sure the script does not harm the system.
 Since this program does not create a barrier between the filesystem and the script being run, it is not a sandbox in the traditional sense of the word.
 This program is a sandbox in that it protects *our* process from the code being unput, which after all will be the most likely occurance when used correctly. 
 
