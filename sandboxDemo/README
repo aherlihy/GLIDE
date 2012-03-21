@@ -8,6 +8,11 @@ The goal is to take the user input and compile/run it as a different program, ca
 This will protect our program from being damanged by malicious or reckless code.
 Eventually, the process being tested will be run within an environement that mimics our main process, so that this process will be able to manipulate objects that would be present in the main process.
 
+We decided that it was not the responsibility/scope of our program to protect the filesystem from user input.
+All we take ownership over is the functionality of the GLIDE interface. GLIDE is fundamentally an IDE, and it is not relevant enough for us to pour energy into making sure the script does not harm the system.
+Since this program does not create a barrier between the filesystem and the script being run, it is not a sandbox in the traditional sense of the word.
+This program is a sandbox in that it protects *our* process from the code being unput, which after all will be the most likely occurance when used correctly. 
+
 Design Choices:
 There were many different options for sandboxing code.
 The two main options for testing code are to fully sandbox using something like PyPy or do some kind of pseudo-parsing.
@@ -18,7 +23,7 @@ Another option would be to parse by hand: remove all imports and check that noth
 The problem with this approach is that it is tedious and not very extensible. Running their code will catch a lot of the errors we would be parsing for, and would require much less legwork on our program's part.
 Also, if we parse by hand, it is unlikely that we will be able to cover all bases. The potential for malicious or error-prone code is huge, and it wouldn't make sense to try and think about every possible error.
 
-The approach we decided upon was to create a separate process. Functionally, it is almost identical but implementation-wise, much simpler.
+The approach we decided upon was a balance of the two options. We will do minimal parsing, removing all imports, and create a separate process. Functionally, it is almost identical but implementation-wise, much simpler.
 
 The goal is to create a dummy program that would take in the user's python code and run it completely separately in an environment that mimics our original program (i.e. run it in a disposable virtual enviornment).
 This would introduce a level of separation between our main program and the input. That way if the script wrecks havoc on it's environment, it would be destroying a dummy environment instead of our actual program.
@@ -28,6 +33,11 @@ We can watch the exit status of the subprocess, and do minimal postprocessing. (
 This program could pipe any python errors into the main program, which would interpret it appropriately and tell the user.
 
 It also simplifies the code if we keep all our checks in one place, and assume that the code we're directly running in the main program is safe.
+
+We will also do minimal pre-parsing. NOTE this has not been implemented in this demo. 
+All imports will be stripped from the file, as well as print lines (as not to mess up the communication between the two programs).
+The sandbox will communicate with the process being run through redirected IO.
+Since the communication will be one-way (i.e. the sandbox doesn't have to tell the subprocess much), the output of the subprocess is stored in a string that we will parse for errors thrown.
 
 Thus we would get the same level of protection without any of the complications of using python support.
 
