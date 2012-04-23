@@ -1,7 +1,6 @@
-#!/urs/bin/Python
-# bintree.py
+#!/usr/bin/Python
 
-""" Map module
+""" Map Module
 
 Implements a basic map environment for use in GLIDE
 
@@ -27,6 +26,18 @@ class InvalidMapFileException(Exception):
     def __str__(self):
         return repr(self.value);
 
+class InvalidMoveException(Exception):
+    def  __init__(self, value="You've hit a wall or grue."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
+class NoPlaneException(Exception):
+    def __init__(self, value="There was no plane object on the given map."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
 
 class Tile:
     """Map Tile Class
@@ -38,8 +49,8 @@ class Tile:
     """
 
     def __init__(self, value= "AIR") :
-        self.valid = ["AIR","CLOUD","GATE"]
-        self.bitval = ["0","1","X"]
+        self.valid = ["AIR","CLOUD","GATE","PLANE"]
+        self.bitval = ["0","1","X","P"]
         self.value = "NULL"
         if value in self.valid:
             self.value = value
@@ -62,6 +73,8 @@ class Tile:
             return "1";
         if self.value == "GATE":
             return "X";
+        if self.value == "PLANE":
+            return "P";
 
     def getType(self):
         return self.value;
@@ -93,6 +106,64 @@ class TileMap:
         for row in self.grid:
             for j in xrange(self.width):
                 row.append(Tile())
+
+    """
+    The following methods are used for navigating the plane around the
+    map.
+    """
+    def setPlane(self):
+        """This method sets the coordinates for a plane that has
+        been added to the map from a working file.
+        """
+        found = False
+        for y in xrange(self.height):
+            for x in xrange(self.width):
+                if(self.grid[y][x].getType()=="PLANE"):
+                    found = True
+                    self.py = y
+                    self.px = x
+        if found == False:
+            raise NoPlaneException()
+
+
+    def move(self, heading):
+        valid = True;
+        if heading==0:
+            newx = self.px+1
+            newy = self.py
+            if newx >= self.width:
+                raise new InvalidMoveException()
+        if heading==1:
+            newx = self.px
+            newy = self.py-1
+            if newx < 0:
+                raise new InvalidMoveException()
+        if heading==2:
+            newx = self.px-1
+            newy = self.py
+            if newx < 0:
+                raise new InvalidMoveException()
+        if heading==3:
+            newx = self.px
+            newy = self.py+1
+            if newx >= self.height:
+                raise new InvalidMoveException()
+        if self.grid[newy][newx].getType() == "CLOUD":
+            raise new InvalidMoveException()
+        if self.grid[newy][newx].getType() == "GATE":
+            #TODO
+            #victory condition
+            pass;
+        temp = self.grid[self.py][self.px]
+        self.grid[self.py][self.px] = self.grid[newy][newx]
+        self.grid[newy][newx] = temp
+        #update the map
+
+
+    def runLevel(self, levelnum):
+        pathname = "level"+str(levelnum)
+        exec pathname
+        #TODO get this working?
 
 
 
