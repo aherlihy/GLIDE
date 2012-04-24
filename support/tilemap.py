@@ -132,32 +132,48 @@ class TileMap:
             newx = self.px+1
             newy = self.py
             if newx >= self.width:
-                raise new InvalidMoveException()
+                raise InvalidMoveException()
         if heading==1:
             newx = self.px
             newy = self.py-1
             if newx < 0:
-                raise new InvalidMoveException()
+                raise InvalidMoveException()
         if heading==2:
             newx = self.px-1
             newy = self.py
             if newx < 0:
-                raise new InvalidMoveException()
+                raise InvalidMoveException()
         if heading==3:
             newx = self.px
             newy = self.py+1
             if newx >= self.height:
-                raise new InvalidMoveException()
+                raise InvalidMoveException()
         if self.grid[newy][newx].getType() == "CLOUD":
-            raise new InvalidMoveException()
+            raise InvalidMoveException()
         if self.grid[newy][newx].getType() == "GATE":
             #TODO
             #victory condition
-            pass;
+            print "We won!!"
+            return;
         temp = self.grid[self.py][self.px]
         self.grid[self.py][self.px] = self.grid[newy][newx]
         self.grid[newy][newx] = temp
-        #update the map
+        self.py = newy
+        self.px = newx
+        #TODO update the map
+
+    def check(heading):
+        """returns a string representing the type of object in fron
+        of the plane
+        """
+        if heading==0:
+            return self.grid[self.px+1][self.py].getType()
+        if heading==1:
+            return self.grid[self.px][self.py-1].getType()
+        if heading==2:
+            return self.grid[self.px-1][self.py].getType()
+        if heading==3:
+            return self.grid[self.px][self.py+1].getType()
 
 
     def runLevel(self, levelnum):
