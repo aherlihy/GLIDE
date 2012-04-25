@@ -1,6 +1,6 @@
-#!/usr/bin/Python
+#!/usr/bin/Py
 
-import tilemap.py
+from tilemap import *
 
 """ Avatar Module
 
@@ -37,26 +37,30 @@ class Airplane:
         """
         self.heading = heading%4
 
-    def crash():
+    def crash(self):
         """
         This method will be called whenever the plane
         runs into an immmovable object (NPC, wall, fire,
         etc.)
         """
+        print "CRASH!!!"
         #TODO
 
-    def turnLeft():
-        #TODO add in animation calls here
-        self.heading = (self.heading-1)%4
+    def check(self):
+        return self.tileMap.check(self.heading)
 
-    def turnRight():
+    def turnLeft(self):
+        #TODO add in animation calls here
         self.heading = (self.heading+1)%4
 
-    def move():
+    def turnRight(self):
+        self.heading = (self.heading-1)%4
+
+    def move(self):
         try:
             self.tileMap.move(self.heading)
         except InvalidMoveException:
-            crash()
+            self.crash()
 
 
 
@@ -76,9 +80,14 @@ class Plane(Airplane):
         super(Plane, self).__init__(tile_map)
 
 
+    def move(self):
+        Airplane.move(self)
 
-    def turnLeft():
+    def check(self):
+        Airplane.check(self)
+
+    def turnLeft(self):
         Airplane.turnLeft(self)
 
-    def turnRight():
+    def turnRight(self):
         Airplane.turnRight(self)
