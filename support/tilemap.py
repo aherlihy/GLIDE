@@ -224,6 +224,6 @@ class TileMap:
         for i in xrange(self.height):
             for j in xrange(self.width):
                 self.grid[i].append(Tile(strmap[i][j]))
-        print self.__str__()
+#        print self.__str__()
         
             
