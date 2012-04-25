@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: iso-8859-1 -*-
 
-
+# @author aherlihy
 # This file represents the sandbox that will be generated for the user's code
 # For now, the command-line args will be:
     # (1) the level  number
@@ -34,12 +34,12 @@ class sandbox:
 
     # init doesn't really need to do anything because there are no global vars
     def __init__(self):
-        print("inited")
+        print("**inited")
 
     # initializes the level file by appending the user's script to a function definition with the correct imports
     # saves the file as runLevel<#>
     def init_level(self):
-        print("initing level")
+        print("**initing level")
         #set up headers
         outfile = open("runLevel.py", "w")
         outfile.write("#!usr/bin/python\n")
@@ -48,30 +48,29 @@ class sandbox:
         outfile.write("def runLevel(plane, map):\n")
 
         codefile = open("code", "r")
-        boolean empty = True
+        empty = True
 
         #append each line in codefile to outfile, indenting appropriately
         for line in codefile:
-            empty = false
+            empty = False
             outfile.write("    ")
             outfile.write(line)
         if(empty):
-            print("problems, code passed in was empty or didn't exist")
-
+            print("**ERROR: Empty")
+            return False
         codefile.close()
         outfile.close()
-        
+        return True
       
     # compile will check runLevel through the compiler and catch any syntax errors
     def compile_usr(self):
-        print("Compiling code...")
         #compile the code and check for any syntax errors
         try:
-            py_compile.compile("bubblewrap.py", doraise=True)
+            py_compile.compile("runLevel.py", doraise=True)
         except py_compile.PyCompileError, e:
-            return ("Oops! Looks like there's a compiler error:" + e)
+            return (e.__str__())
         else:
-            return ("Great! No compiler errors")
+            return (None)
 
     # takes in a variable number of arguments and return the output of the process being run.
          # limits the period that the subprocess  will run to 10 seconds. Any code that takes longer than that is either in an infinite loop or is doing something rediculously slow.
@@ -83,7 +82,7 @@ class sandbox:
         time.sleep(10)
         if(usr.poll() == None):
             usr.kill()
-            return ("Either your code is stuck in an infinite loop or you've coded something much too slow!")
+            return ("ERROR:INFINITE")
         else:
              return usr.communicate()[0]
         

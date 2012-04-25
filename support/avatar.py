@@ -43,7 +43,7 @@ class Airplane:
         runs into an immmovable object (NPC, wall, fire,
         etc.)
         """
-        print "CRASH!!!"
+#        print "CRASH!!!"
         #TODO
 
     def check(self):

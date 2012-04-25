@@ -1,2 +1,2 @@
-print map
-print "YAY RAN CODE"
+plane.move()
+

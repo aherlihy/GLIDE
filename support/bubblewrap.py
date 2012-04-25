@@ -7,7 +7,7 @@
 # If the script passes the tests then the function runLevel will be passed over to the support classes
 # The support class will take the script and run it on the actual vars.
 
-#def runLevel(self, levelnum)
+# @author aherlihy
 
 # MAIN:	
 
@@ -22,4 +22,4 @@ map = TileMap()
 map.filetomap(mapArg)
 plane = Airplane(map)
 runLevel(plane, map)
-print("Finished running level")
+
