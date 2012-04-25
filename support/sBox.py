@@ -32,15 +32,36 @@ import time
 #This is the sandbox class
 class sandbox:
 
-    # TODO
     # init doesn't really need to do anything because there are no global vars
-    def __init__():
+    def __init__(self):
+        print("inited")
 
-    # TODO
     # initializes the level file by appending the user's script to a function definition with the correct imports
     # saves the file as runLevel<#>
-    def init_level(levelNum):
+    def init_level(self):
+        print("initing level")
+        #set up headers
+        outfile = open("runLevel.py", "w")
+        outfile.write("#!usr/bin/python\n")
+        outfile.write("from tilemap import *\n")
+        outfile.write("from avatar import *\n\n")
+        outfile.write("def runLevel(plane, map):\n")
+
+        codefile = open("code", "r")
+        boolean empty = True
+
+        #append each line in codefile to outfile, indenting appropriately
+        for line in codefile:
+            empty = false
+            outfile.write("    ")
+            outfile.write(line)
+        if(empty):
+            print("problems, code passed in was empty or didn't exist")
+
+        codefile.close()
+        outfile.close()
         
+      
     # compile will check runLevel through the compiler and catch any syntax errors
     def compile_usr(self):
         print("Compiling code...")
@@ -48,12 +69,14 @@ class sandbox:
         try:
             py_compile.compile("bubblewrap.py", doraise=True)
         except py_compile.PyCompileError, e:
-           return "Oops! Looks like there's a compiler error:" + e
+            return ("Oops! Looks like there's a compiler error:" + e)
+        else:
+            return ("Great! No compiler errors")
 
     # takes in a variable number of arguments and return the output of the process being run.
          # limits the period that the subprocess  will run to 10 seconds. Any code that takes longer than that is either in an infinite loop or is doing something rediculously slow.
-         # output =  run_process(["python", sys.argv[1]])
-    def run_process(args, **kwds):
+         # output =  run_process(["python", "bubblewrap.py", "<#>")
+    def run_process(self, args, **kwds):
         kwds.setdefault("stdout", subprocess.PIPE)
         kwds.setdefault("stderr", subprocess.STDOUT)
         usr = subprocess.Popen(args, **kwds)
@@ -67,4 +90,4 @@ class sandbox:
     # TODO
         # generate the AST and parse for illegal imports or obvious errors
         # if there's time, pass a flag into the request and look for different specific issues depending on the level
-    def gen_AST():
+#    def gen_AST():

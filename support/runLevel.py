@@ -1,9 +1,7 @@
-#!/usr/bin/python
-
+#!usr/bin/python
 from tilemap import *
 from avatar import *
 
-def runLevel(a, levelnum):
-   print a
-   a.move(1)
-   print("success! running runLevel")
+def runLevel(plane, map):
+    print map
+    print "YAY RAN CODE"
