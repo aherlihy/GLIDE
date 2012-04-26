@@ -79,7 +79,7 @@ class sandbox:
         kwds.setdefault("stdout", subprocess.PIPE)
         kwds.setdefault("stderr", subprocess.STDOUT)
         usr = subprocess.Popen(args, **kwds)
-        time.sleep(10)
+        time.sleep(5)
         if(usr.poll() == None):
             usr.kill()
             return ("ERROR:INFINITE")

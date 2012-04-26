@@ -1,2 +1,3 @@
 plane.move()
-
+null = None
+100/0
