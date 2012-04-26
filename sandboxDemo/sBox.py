@@ -28,13 +28,23 @@ import sys
 import subprocess
 import py_compile
 import time
+import ast
+
+class ASTvisitor(ast.NodeVisitor):
+    #init doesn't need to do anything
+    def __init__(self):
+        pass
+    def visit_nodes(self, node):
+        print "node type: " + type(node).__name__
+        super(ASTvisitor, self).generic_visit(node)
+
 
 #This is the sandbox class
 class sandbox:
 
     # init doesn't really need to do anything because there are no global vars
     def __init__(self):
-        print("**inited")
+        pass
 
     # initializes the level file by appending the user's script to a function definition with the correct imports
     # saves the file as runLevel<#>
@@ -89,4 +99,10 @@ class sandbox:
     # TODO
         # generate the AST and parse for illegal imports or obvious errors
         # if there's time, pass a flag into the request and look for different specific issues depending on the level
-#    def gen_AST():
+    def gen_AST(self, filepath):
+        print "visiting..."
+        visitor = ASTvisitor()
+        file = open(filepath, "r")
+        usrcode = file.read()
+        tree = ast.parse(usrcode)
+        visitor.visit_nodes(tree)

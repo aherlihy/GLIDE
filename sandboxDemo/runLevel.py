@@ -4,5 +4,8 @@ from avatar import *
 
 def runLevel(plane, map):
     plane.move()
-    null = None
-    100/0
+    plane.move()
+    
+    for i in range(0,10):
+         list = i
+    airplane.move()

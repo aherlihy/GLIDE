@@ -83,6 +83,8 @@ def test():
     #test compiler with AST
     if not(run_this(box, output)):
         return False
+    box.gen_AST()
+    return True
 
 #print("compiling...")
 #try:
@@ -92,4 +94,8 @@ def test():
 #else:
 #    print("no errors :/")
 
-print test()
+box = sandbox()
+
+box.init_level()
+
+box.gen_AST(sys.argv[2])
