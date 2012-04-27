@@ -18,21 +18,22 @@ import py_compile
 def compile_this(box, output):
     compiler_output =  box.compile_usr()
     if(compiler_output is not None):
-        output.write("ERROR:COMPILER\n")
+        output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")
+        output.write("COMPILER ERROR\n")
         #parse py_compiler exception
         list = compiler_output.split(':', 2)
         if(len(list)==2):
-            output.write(list[0].strip() + "\n")#write the type of error
+            output.write(list[0].strip())#write the type of error
         else:
-            output.write(list[1].strip() + "\n")
+            output.write(list[1].strip())
         list = list[len(list)-1]
         list = list.split('\'',5)
-        output.write(list[1]+"\n")#write the subtype of error
+        output.write(": " + list[1]+"\n")#write the subtype of error
         nums = list[4].split(',')
-        output.write(nums[1].split()[0]+"\n")#row
-        output.write(nums[2].split()[0]+"\n")#col
-        output.write(list[5][:-3]+"\n")
-        output.write(compiler_output)#full output
+        output.write("line: " + nums[1].split()[0]+"\n")#row
+        output.write("col(should this be included?): " + nums[2].split()[0]+"\n")#col
+        output.write("code: \"" +list[5][:-4]+"\"\n")
+#        output.write(compiler_output)#full output
         output.close()
         return False
     else:
@@ -47,30 +48,66 @@ def compile_this(box, output):
      # <Error name + description>
 def run_this(box, output):
     run_output = box.run_process(["python", "bubblewrap.py", sys.argv[1]])
+#    print("printing stderr " + run_output)
+#    for i in run_output:
+#        print i
     if(run_output == "ERROR:TIMEOUT"):
-       output.write(run_output)
-       output.close()
-       return False
+        output.write("Yikes! Your code took too long to run :(\nYou probably have an infinite loop or you're doing something extremely inefficiently\nCheck out the help pages if you're not sure how to fix it!\n\n")
+        output.write("RUNTIME ERROR\n")
+        output.write("Timeout\n")
+        output.close()
+        return False
     else:
-       if(run_output == ""):
-           output.write("NO ERROR\n")
+        if(run_output == "" or run_output==None):
+           output.write("NO ERRORS!\n")
+           output.write("Careful though - your code may be correct but not do exactly what you want\n")
            output.close()
            return True
-       else:
-           output.write("ERROR:RUNTIME\n")
+        else:
+
            list = run_output.strip().split('\n')
-           
+           output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")           
+           output.write("RUNTIME ERROR\n")
+
            print len(list)
            length = len(list)
            for i in range (0,length):
-               if(list[i].startswith("  File \"/gpfs/main/home/aherlihy/GLIDE/support/runLevel.py\",")):
+               if(list[i].startswith("  File \"/gpfs/main/home/aherlihy/GLIDE/sandboxDemo/runLevel.py\",")):
                    line = list[i].split(',')
-                   output.write(line[1].strip() + "\n")
-                   output.write(list[i+1].strip() + "\n")
+                   linenumber = (line[1].strip() + "\n")
+                   codeline = (list[i+1].strip())
            output.write(list[length-1]+"\n")
-           output.write("\nFULL: \n" + run_output)
+           output.write(linenumber)
+           output.write("code: \"" + codeline + "\"")
+#           output.write("\nFULL: \n" + run_output)
            output.close()
            return False
+def analyze_ast(box, output):
+    box.gen_AST()
+    file = open("astoutput", "r")
+    r = file.read()
+
+    if(r == "ImportFrom|LINE:2|FROM:tilemap|NAMES:*|\nImportFrom|LINE:3|FROM:avatar|NAMES:*|\n"):
+        file.close()
+        return True
+    else:
+        output.write("Hey! Great job, it looks like your code is correct. Problem is, it's trying to do something that's not allowed.\n\n")
+        list = r.split('\n')
+        for line in list:
+            if(line==""):
+                break
+            a = line.split('|')
+            output.write("The module you used was " + a[0] + "\n")
+            b = a[1].split(':')
+            output.write("line " + b[1] + "\n")
+            for i in range(2, len(a)):
+                c=a[i].split(':')
+                if(c[0]=="FROM"):
+                    output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
+                    #don't do anything with the name of the imported functions - not really important so not printed. Basically, as soon as the line has been identified there's no question that they shouldn't be importing it    
+        output.close()
+        file.close()
+        return False
 def test():
     output = open("output.py", "w")
     box = sandbox() 
@@ -80,10 +117,10 @@ def test():
         return False
     if not(compile_this(box, output)):
 	return False
-    #test compiler with AST
+    if not (analyze_ast(box, output)):
+        return False
     if not(run_this(box, output)):
         return False
-    box.gen_AST()
     return True
 
 #print("compiling...")
@@ -94,8 +131,4 @@ def test():
 #else:
 #    print("no errors :/")
 
-box = sandbox()
-
-box.init_level()
-
-box.gen_AST(sys.argv[2])
+test()

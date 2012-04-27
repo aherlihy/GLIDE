@@ -21,40 +21,29 @@ class ASTvisitor(ast.NodeVisitor):
     # However every visitor recurses on it's children using generic_visit, since the child's type is necessarily known by the parent.
     # Here I've override generic_visit to print out the name of the node (for debugging). Note that my generic_visit then calls the super's generic_visit to continue the recursive tree traversal
     def generic_visit(self, node):
-#        file = open("ASToutput", "a")
-#        file.write("node type: " + type(node).__name__ + "\n")
-#        file.close()
+        print "node type: " + type(node).__name__
+#        print "\tnode name: " + node.id
         ast.NodeVisitor.generic_visit(self, node) # essentially a call to super
     def visit_Import(self, node):
-        file = open("astoutput", "a")
-        file.write("Import|LINE:"+ str(node.lineno)+ "|FROM:")
-#        file.write("Import:FROM:"+ node.module+ "\n")
+        print "found import at line ",  node.lineno
+        print "\tnode name: " + node.module
         for name in node.names:
-            file.write(name.name + "|")
-        file.write("\n")
-        file.close()
+            print ("import name: " + name.name)
         ast.NodeVisitor.generic_visit(self, node) # can recurse using super because it will be overriden by the above def
     def visit_ImportFrom(self, node):
-        file = open("astoutput", "a")
-        file.write("ImportFrom|LINE:"+ str(node.lineno))
-        file.write("|FROM:"+ node.module+ "|NAMES:")
+        print "found importFrom at line", node.lineno
+        print "\tnode name: ", node.module
         for name in node.names:
-            file.write(name.name + "|")
-        file.write("\n")
-        file.close()
+            print ("\timport name: " + name.name)
         ast.NodeVisitor.generic_visit(self, node)
     def visit_Name(self, node):
-#        file = open("astoutput", "a")
-#        file.write("Name:"+ node.id)
-#        file.close()
+        print "node type: Name:", node.id
         ast.NodeVisitor.generic_visit(self, node)
-
-#print "visiting..."
-#visitor = ASTvisitor()
-#file = open(sys.argv[1], "r")
-#usrcode = file.read()
-#tree = ast.parse(usrcode)
-#visitor.generic_visit(tree)
-#print("dumping...")
-#print ast.dump(tree, annotate_fields=True, include_attributes=False)
-
+print "visiting..."
+visitor = ASTvisitor()
+file = open(sys.argv[1], "r")
+usrcode = file.read()
+tree = ast.parse(usrcode)
+visitor.generic_visit(tree)
+print("dumping...")
+print ast.dump(tree, annotate_fields=True, include_attributes=False)

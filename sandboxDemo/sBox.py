@@ -29,15 +29,7 @@ import subprocess
 import py_compile
 import time
 import ast
-
-class ASTvisitor(ast.NodeVisitor):
-    #init doesn't need to do anything
-    def __init__(self):
-        pass
-    def visit_nodes(self, node):
-        print "node type: " + type(node).__name__
-        super(ASTvisitor, self).generic_visit(node)
-
+from ASTvisitor import *
 
 #This is the sandbox class
 class sandbox:
@@ -53,8 +45,8 @@ class sandbox:
         #set up headers
         outfile = open("runLevel.py", "w")
         outfile.write("#!usr/bin/python\n")
-        outfile.write("from tilemap import *\n")
-        outfile.write("from avatar import *\n\n")
+        outfile.write("from tilemap import *\n")#NOTE NOTE NOTE: LIMIT ONLY TO USED FUNCTIONS
+        outfile.write("from avatar import *\n\n")#SAME : LIMIT ONLY TO ONES THEYRE GOING TO USE
         outfile.write("def runLevel(plane, map):\n")
 
         codefile = open("code", "r")
@@ -86,23 +78,29 @@ class sandbox:
          # limits the period that the subprocess  will run to 10 seconds. Any code that takes longer than that is either in an infinite loop or is doing something rediculously slow.
          # output =  run_process(["python", "bubblewrap.py", "<#>")
     def run_process(self, args, **kwds):
-        kwds.setdefault("stdout", subprocess.PIPE)
-        kwds.setdefault("stderr", subprocess.STDOUT)
+        kwds.setdefault("stdout", subprocess.PIPE)#sp.PIPE
+        kwds.setdefault("stderr", subprocess.STDOUT)#sp.STDOUT
         usr = subprocess.Popen(args, **kwds)
         time.sleep(5)
         if(usr.poll() == None):
             usr.kill()
-            return ("ERROR:INFINITE")
+            return ("ERROR:TIMEOUT")
         else:
              return usr.communicate()[0]
         
     # TODO
         # generate the AST and parse for illegal imports or obvious errors
         # if there's time, pass a flag into the request and look for different specific issues depending on the level
-    def gen_AST(self, filepath):
-        print "visiting..."
+    def gen_AST(self):
+        
         visitor = ASTvisitor()
-        file = open(filepath, "r")
+        file = open("runLevel.py", "r")
+        ASTfile = open("astoutput", "w")
+#        ASTfile.write("\n")
+        ASTfile.close()
         usrcode = file.read()
         tree = ast.parse(usrcode)
-        visitor.visit_nodes(tree)
+        visitor.generic_visit(tree)
+        #print("dumping...")
+        #print ast.dump(tree, annotate_fields=True, include_attributes=False)
+
