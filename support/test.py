@@ -5,11 +5,9 @@ from avatar import *
 
 if __name__ == '__main__':
     print "!"
-    a = TileMap()
+    a = TileMap("map1")
+    plane = a.getPlane()
     print a
-    a.filetomap("map1")
-    plane = Airplane(a)
-    a.setPlane()
     plane.move()
     print a
     plane.move()
