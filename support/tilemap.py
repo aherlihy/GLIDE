@@ -160,7 +160,7 @@ class TileMap:
         if self.grid[newy][newx].getType() == "GATE":
             #TODO
             #victory condition
-            print "We won!!"
+            self.plane.moveSet+="7"
             return;
         temp = self.grid[self.py][self.px]
         self.grid[self.py][self.px] = self.grid[newy][newx]

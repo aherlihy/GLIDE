@@ -1,0 +1,3 @@
+while(plane.check()!="GOAL"):
+    plane.move()
+plane.move()
