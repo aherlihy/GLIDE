@@ -20,6 +20,6 @@ import sys
 mapArg = sys.argv[1]
 map = TileMap()
 map.filetomap(mapArg)
-plane = Airplane(map)
+plane = map.getPlane()
 runLevel(plane, map)
 

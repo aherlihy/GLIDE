@@ -47,7 +47,7 @@ def compile_this(box, output):
      # <line> (users code)
      # <Error name + description>
 def run_this(box, output, map_path):
-    run_output = box.run_process(["python", "bubblewrap.py", map_path)
+    run_output = box.run_process(["python", "bubblewrap.py", map_path])
 #    print("printing stderr " + run_output)
 #    for i in run_output:
 #        print i
@@ -59,29 +59,29 @@ def run_this(box, output, map_path):
         return False
     else:
         if(run_output == "" or run_output==None):
-           output.write("NO ERRORS!\n")
-           output.write("Careful though - your code may be correct but not do exactly what you want\n")
-           output.close()
-           return True
+            output.write("NO ERRORS!\n")
+            output.write("Careful though - your code may be correct but not do exactly what you want\n")
+            output.close()
+            return True
         else:
 
-           list = run_output.strip().split('\n')
-           output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")           
-           output.write("RUNTIME ERROR\n")
+            list = run_output.strip().split('\n')
+            output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")           
+            output.write("RUNTIME ERROR\n")
 
-           print len(list)
-           length = len(list)
-           for i in range (0,length):
-               if(list[i].startswith("  File \"/gpfs/main/home/aherlihy/GLIDE/sandboxDemo/runLevel.py\",")):
-                   line = list[i].split(',')
-                   linenumber = (line[1].strip() + "\n")
-                   codeline = (list[i+1].strip())
-           output.write(list[length-1]+"\n")
-           output.write(linenumber)
-           output.write("code: \"" + codeline + "\"")
+            print len(list)
+            length = len(list)
+            for i in range (0,length):
+                if(list[i].startswith("  File \"/gpfs/main/home/aherlihy/GLIDE/sandboxDemo/runLevel.py\",")):
+                    line = list[i].split(',')
+                    linenumber = (line[1].strip() + "\n")
+                    codeline = (list[i+1].strip())
+                    output.write(list[length-1]+"\n")
+                    output.write(linenumber)
+                    output.write("code: \"" + codeline + "\"")
 #           output.write("\nFULL: \n" + run_output)
-           output.close()
-           return False
+            output.close()
+            return False
 def analyze_ast(box, output):
     box.gen_AST()
     file = open("astoutput", "r")

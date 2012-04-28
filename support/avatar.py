@@ -1,6 +1,6 @@
 #!/usr/bin/Py
 
-from tilemap import *
+import tilemap
 
 """ Avatar Module
 
@@ -22,9 +22,10 @@ class Airplane:
     """
     
     def __init__(self, tile_map):
+        self.dummy = False
         self.heading = 0
         self.tileMap = tile_map
-        self.moveSet = []
+        self.moveSet = ""
 
     def setDummy(self, boolean):
         self.dummy = boolean;
@@ -48,7 +49,7 @@ class Airplane:
         return self.moveSet;
 
     def resetMoves(self):
-        self.moveSet = []
+        self.moveSet = ""
 
     def setHeading(heading):
         """
@@ -70,7 +71,7 @@ class Airplane:
 #        print "CRASH!!!"
         #TODO
         if self.dummy:
-            self.moveSet.append(6)
+            self.moveSet += "6"
 
     def check(self):
         return self.tileMap.check(self.heading)
@@ -79,19 +80,19 @@ class Airplane:
         #TODO add in animation calls here
         self.heading = (self.heading+1)%4
         if self.dummy:
-            self.moveSet.append(4)
+            self.moveSet += "4"
 
     def turnRight(self):
         self.heading = (self.heading-1)%4
         if self.dummy:
-            self.moveSet.append(5)
+            self.moveSet += "5"
 
     def move(self):
         try:
             self.tileMap.move(self.heading)
             if self.dummy:
-                self.moveSet.append(self.heading)
-        except InvalidMoveException:
+                self.moveSet += str(self.heading)
+        except tilemap.InvalidMoveException:
             self.crash()
 
 

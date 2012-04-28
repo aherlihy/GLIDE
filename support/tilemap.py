@@ -1,4 +1,10 @@
 #!/usr/bin/Python
+import sys
+sys.path.append('/home/jwoberbe/course/cs032/GLIDE/sandbox');
+import runBox1 as runBox
+from sBox import *
+from avatar import *
+import runLevel as run
 
 """ Map Module
 
@@ -49,7 +55,7 @@ class Tile:
     """
 
     def __init__(self, value= "AIR") :
-        self.valid = ["AIR","ISLAND","CLOUD","GATE","PLANE"]
+        self.valid = ["AIR","ISLAND","WALL","GATE","PLANE"]
         self.bitval = ["A","I","W","G","P"]
         self.value = "NULL"
         if value in self.valid:
@@ -68,11 +74,13 @@ class Tile:
         level.
         """
         if self.value == "AIR":
-            return "0";
-        if self.value == "CLOUD":
-            return "1";
+            return "A";
+        if self.value == "ISLAND":
+            return "I";
+        if self.value == "WALL":
+            return "W";
         if self.value == "GATE":
-            return "X";
+            return "G";
         if self.value == "PLANE":
             return "P";
 
@@ -101,14 +109,9 @@ class TileMap:
     def __init__(self, map_path):
         #fix init to a set size, and edge in with clouds
         self.map_path = map_path
-        self.sand = SandBox()
+        self.sand = sandbox()
         self.filetomap(map_path)
-        self.height = 10
-        self.width = 24
-        self.grid = [ [] for i in range(self.height)]
-        for row in self.grid:
-            for j in xrange(self.width):
-                row.append(Tile())
+        print self
         #sets the plane
         found = False
         self.plane = Airplane(self)
@@ -181,19 +184,24 @@ class TileMap:
 
 
     def runLevelDummy(self):
+
+        working = runBox.test(self.map_path)
+        #working = self.sand.start(self.map_path)
+        output = open("output.py","r")
+        print working
         self.dummy = True
         self.plane.setDummy(True)
-        working = self.sand.start(self.map_path)
-        output = open("output.py","r")
-        if working == True:
+        run.runLevel(self.plane)
             #we can run level
-        else:
+#        else:
+#            pass
             #display error message
         self.dummy = False
         self.plane.setDummy(False)
         #TODO get this working?
+        return working;
 
-    def runLevel(self)
+    def runLevel(self):
         return self.plane.getMoves()
 
 
@@ -239,6 +247,7 @@ class TileMap:
         for i in xrange(self.height):
             for j in xrange(self.width):
                 self.grid[i].append(Tile(strmap[i][j]))
+                a = Tile(strmap[i][j])
 #        print self.__str__()
         
             
