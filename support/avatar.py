@@ -24,7 +24,31 @@ class Airplane:
     def __init__(self, tile_map):
         self.heading = 0
         self.tileMap = tile_map
-        self.tileMap.setPlane()
+        self.moveSet = []
+
+    def setDummy(self, boolean):
+        self.dummy = boolean;
+        if boolean:
+            self.resetMoves()
+
+    def getMoves(self):
+        """
+        returns the moves that the plane makes during
+        a level. 
+        0=moveRight
+        1=moveUp
+        2=moveLeft
+        3=moveDown
+        4=turnLeft
+        5=turnRight
+        6=crash
+        7=victory
+        -1=ERROR
+        """
+        return self.moveSet;
+
+    def resetMoves(self):
+        self.moveSet = []
 
     def setHeading(heading):
         """
@@ -45,6 +69,8 @@ class Airplane:
         """
 #        print "CRASH!!!"
         #TODO
+        if self.dummy:
+            self.moveSet.append(6)
 
     def check(self):
         return self.tileMap.check(self.heading)
@@ -52,13 +78,19 @@ class Airplane:
     def turnLeft(self):
         #TODO add in animation calls here
         self.heading = (self.heading+1)%4
+        if self.dummy:
+            self.moveSet.append(4)
 
     def turnRight(self):
         self.heading = (self.heading-1)%4
+        if self.dummy:
+            self.moveSet.append(5)
 
     def move(self):
         try:
             self.tileMap.move(self.heading)
+            if self.dummy:
+                self.moveSet.append(self.heading)
         except InvalidMoveException:
             self.crash()
 

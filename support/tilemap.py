@@ -49,8 +49,8 @@ class Tile:
     """
 
     def __init__(self, value= "AIR") :
-        self.valid = ["AIR","CLOUD","GATE","PLANE"]
-        self.bitval = ["0","1","X","P"]
+        self.valid = ["AIR","ISLAND","CLOUD","GATE","PLANE"]
+        self.bitval = ["A","I","W","G","P"]
         self.value = "NULL"
         if value in self.valid:
             self.value = value
@@ -98,24 +98,20 @@ class TileMap:
     Date:3.19.12
     """
 
-    def __init__(self):
+    def __init__(self, map_path):
         #fix init to a set size, and edge in with clouds
-        self.height = 8
-        self.width = 12 #??
+        self.map_path = map_path
+        self.sand = SandBox()
+        self.filetomap(map_path)
+        self.height = 10
+        self.width = 24
         self.grid = [ [] for i in range(self.height)]
         for row in self.grid:
             for j in xrange(self.width):
                 row.append(Tile())
-
-    """
-    The following methods are used for navigating the plane around the
-    map.
-    """
-    def setPlane(self):
-        """This method sets the coordinates for a plane that has
-        been added to the map from a working file.
-        """
+        #sets the plane
         found = False
+        self.plane = Airplane(self)
         for y in xrange(self.height):
             for x in xrange(self.width):
                 if(self.grid[y][x].getType()=="PLANE"):
@@ -123,8 +119,16 @@ class TileMap:
                     self.py = y
                     self.px = x
         if found == False:
-            raise NoPlaneException()
-
+            raise NoPlaneException() #there wasn't a plane 
+    """
+    The following methods are used for navigating the plane around the
+    map.
+    """
+    def getPlane(self):
+        """This method sets the coordinates for a plane that has
+        been added to the map from a working file.
+        """
+        return self.plane;
 
     def move(self, heading):
         valid = True;
@@ -176,10 +180,21 @@ class TileMap:
             return self.grid[self.px][self.py+1].getType()
 
 
-    def runLevel(self, levelnum):
-        pathname = "level"+str(levelnum)
-        exec pathname
+    def runLevelDummy(self):
+        self.dummy = True
+        self.plane.setDummy(True)
+        working = self.sand.start(self.map_path)
+        output = open("output.py","r")
+        if working == True:
+            #we can run level
+        else:
+            #display error message
+        self.dummy = False
+        self.plane.setDummy(False)
         #TODO get this working?
+
+    def runLevel(self)
+        return self.plane.getMoves()
 
 
 
