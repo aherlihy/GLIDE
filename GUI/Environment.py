@@ -3,16 +3,17 @@
 
 from PIL import Image, ImageTk
 from Tkinter import Tk, Frame, Menu, Button, Canvas, Text, PanedWindow, Scrollbar
-from Tkinter import TOP, FLAT, RAISED, BOTH, X, Y, WORD, DISABLED, E, END, VERTICAL, RIGHT, LEFT
+from Tkinter import TOP, FLAT, RAISED, BOTH, X, Y, WORD, DISABLED, NORMAL, E, W, END, VERTICAL, RIGHT, LEFT
 from Painter import Painter
 import tkFont
 
 DIM_X = 1200
 DIM_Y = 900
 TOOLBAR_Y = 70
-MAX_CHARS = 58
+MAX_CHARS = 59
 BUTTON_X = 155
 BUTTON_Y = 32
+SCREEN_BUTTON_X = 10
 CANVAS_HEIGHT = (DIM_Y - TOOLBAR_Y)/2+25
 
 #--------------------------------------------------------------------------#
@@ -137,15 +138,19 @@ class Environment(Frame):
         m[5][12] = 'I'
         
         m[5][15] = 'G'
+        
+        m[5][20] = 'P'
 
         self.painter = Painter(self.canvas, m)
 
 
     def initTextBoxes(self):
-        panel = PanedWindow(self.parent, width=DIM_X, height=(DIM_Y - TOOLBAR_Y)/2+5, relief=FLAT)
+        panedWindow = PanedWindow(self.parent, width=DIM_X, height=(DIM_Y - TOOLBAR_Y)/2+5, relief=FLAT)
         self.customFont2 = tkFont.Font(family="LMMono10", size=14)
 
-        leftPanel = Frame(panel)
+
+	# left-hand side: text box for the user to type into, plus a scrollbar
+        leftPanel = Frame(panedWindow)
         scrollbar = Scrollbar(leftPanel, orient=VERTICAL)
         textEditor = Text(leftPanel, background="PaleTurquoise", width=MAX_CHARS, font=self.customFont2,
                           wrap=WORD, height=(DIM_Y - TOOLBAR_Y)/2, yscrollcommand=scrollbar.set)
@@ -160,42 +165,105 @@ class Environment(Frame):
 	    else:
 		textEditor.insert(END, line)
 	f.close()
+	
+	# add a scrollbar to the left-hand box
+	scrollbar.config(command=textEditor.yview)
+        scrollbar.pack(side=RIGHT, fill=Y)
+        textEditor.pack(side=LEFT, fill=BOTH, expand=1)
+        panedWindow.add(leftPanel)
 
-        helpBox = Text(panel, background="LemonChiffon", width=MAX_CHARS, font=self.customFont2,
-                       wrap=WORD, height=(DIM_Y - TOOLBAR_Y)/2)
 
-        # read in text from helpTextFile.txt to put into the help box
+	# right hand side: help box, plus buttons to see different help screens
+	customFont = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
+	rightPanel = Frame(panedWindow)
+        self.helpBox = Text(rightPanel, background="LemonChiffon", width=MAX_CHARS, font=self.customFont2,
+                            wrap=WORD, height=15)
+
+        # read in text from helpTextFile.txt to put into the help box - what we want to show on each screen
+        # is in its own string inside the "screens"
         f = open("helpTextFile.txt", 'r')
-        lineNum = 0
+        self.screens = []
+        self.screens.append("")
+        numScreen = 0
+
 	while True:
 	    line = f.readline()
 	    if line == "":
 		break
+	    elif line == "*****\n":
+		self.screens.append("")
+		numScreen += 1
 	    else:
-		helpBox.insert(END, line)
+		self.screens[numScreen] += line
 	f.close()
 	
-	scrollbar.config(command=textEditor.yview)
-        scrollbar.pack(side=RIGHT, fill=Y)
-        textEditor.pack(side=LEFT, fill=BOTH, expand=1)
-        panel.add(leftPanel)
-        helpBox.config(state=DISABLED)
-        panel.add(helpBox)
+	# insert the first screen's text into the help box and set a variable saying so
+	self.helpBox.insert(END, self.screens[0])
+	self.shownScreen = 0
+	
+        self.helpBox.config(state=DISABLED)
+        self.helpBox.pack()
 
-        panel.pack(fill=BOTH, expand=1)
+	helpboxWidth = self.helpBox.winfo_reqwidth()
+        buttonBar = Frame(rightPanel, relief=FLAT, background="LemonChiffon", height=BUTTON_Y, width=helpboxWidth)
+        prevButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Previous", borderwidth=1,
+                                activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.prevScreen,
+                                font=customFont)
+        yourCodeButton = Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Your Code", borderwidth=1,
+                                activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.lastScreen,
+                                font=customFont)
+        nextButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Next", borderwidth=1,
+                                activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.nextScreen,
+                                font=customFont)
+	prevButton.pack(side=LEFT)
+	yourCodeButton.pack(side=LEFT, padx=103)
+	nextButton.pack(side=LEFT)
+	buttonBar.pack(anchor=W)
+	
+        panedWindow.add(rightPanel)
+        panedWindow.pack(fill=BOTH, expand=1)
 
+    def prevScreen(self):
+	if self.shownScreen == 0:
+	    pass
+	else:
+	    self.helpBox.config(state=NORMAL)   # first, turn on editing
+	    self.shownScreen -= 1
+	    self.helpBox.delete(1.0, END)   # clear the text box first
+	    self.helpBox.insert(END, self.screens[self.shownScreen])   # add the prev screen's text
+	    self.helpBox.config(state=DISABLED)  # turn off editing again
+    
+    def lastScreen(self):
+	if self.shownScreen == (len(self.screens)-1):
+	    pass
+	else:
+	    self.helpBox.config(state=NORMAL)   # turn on editing
+	    self.shownScreen = len(self.screens)-1
+	    self.helpBox.delete(1.0, END)   # clear text box
+	    self.helpBox.insert(END, self.screens[self.shownScreen])
+            self.helpBox.config(state=DISABLED)   # turn off editing
+    
+    def nextScreen(self):
+	if self.shownScreen == (len(self.screens)-1):
+	    pass
+	else:
+	    self.helpBox.config(state=NORMAL)   # first, turn on editing
+	    self.shownScreen += 1
+	    self.helpBox.delete(1.0, END)   # clear text box
+	    self.helpBox.insert(END, self.screens[self.shownScreen])
+            self.helpBox.config(state=DISABLED)   # turn off editing
 
     def exit(self):
         self.quit()
 
     def save(self):
-        a = 1
+        pass
 
     def load(self):
-        a = 1
+        pass
 
     def checkCode(self):
-        a = 1
+        pass
 
     def run(self):
 	
