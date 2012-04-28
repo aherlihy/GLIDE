@@ -78,16 +78,20 @@ class sandbox:
          # limits the period that the subprocess  will run to 10 seconds. Any code that takes longer than that is either in an infinite loop or is doing something rediculously slow.
          # output =  run_process(["python", "bubblewrap.py", "<#>")
     def run_process(self, args, **kwds):
-        kwds.setdefault("stdout", subprocess.PIPE)#sp.PIPE
-        kwds.setdefault("stderr", subprocess.STDOUT)#sp.STDOUT
+        file = open("justforfunsiez", "w")
+        file.write("This file is where the stdout of the subprocess will go. For debugging")
+        kwds.setdefault("stdout", file)#sp.PIPE
+        kwds.setdefault("stderr", subprocess.PIPE)#sp.STDOUT
         usr = subprocess.Popen(args, **kwds)
         time.sleep(5)
         if(usr.poll() == None):
             usr.kill()
+            file.close()
             return ("ERROR:TIMEOUT")
         else:
-             return usr.communicate()[0]
-        
+            toreturn =  usr.communicate()[1]
+            file.close()
+            return toreturn
     # TODO
         # generate the AST and parse for illegal imports or obvious errors
         # if there's time, pass a flag into the request and look for different specific issues depending on the level
@@ -96,11 +100,12 @@ class sandbox:
         visitor = ASTvisitor()
         file = open("runLevel.py", "r")
         ASTfile = open("astoutput", "w")
-#        ASTfile.write("\n")
+        printfile = open("tsa", "w")
+        printfile.close()
         ASTfile.close()
         usrcode = file.read()
         tree = ast.parse(usrcode)
         visitor.generic_visit(tree)
-        #print("dumping...")
-        #print ast.dump(tree, annotate_fields=True, include_attributes=False)
+        print("dumping...")
+        print ast.dump(tree, annotate_fields=True, include_attributes=False)
 
