@@ -1,1 +1,14 @@
+* * * * * * * * * * * * * * * * * * * * * * * * * * *
+* W W W W W W W W W W W W W W W W W W W W W W W W W *
+* W I I I I I I I I I I I I I I I I I I I I I I I W *
+* W I I I I I I I I I I I I I I I I I I I I I I I W *
+* W I I I I I I I I I I I I I I I I I I I I I I I W *
+* W I I I I I A A A A A I I I A A G A I I I I I I W *
+* W I I I I I A A A A A A A A A A A A I I I I I I W *
+* W I I I I I A P A A A I I I A A A A I I I I I I W *
+* W I I I I I I I I I I I I I I I I I I I I I I I W *
+* W I I I I I I I I I I I I I I I I I I I I I I I W *
+* W W W W W W W W W W W W W W W W W W W W W W W W W *
+* * * * * * * * * * * * * * * * * * * * * * * * * * *
+
 This file is where the stdout of the subprocess will go. For debugging

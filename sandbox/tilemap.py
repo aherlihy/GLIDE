@@ -1,4 +1,10 @@
 #!/usr/bin/Python
+import sys
+sys.path.append('/home/jwoberbe/course/cs032/GLIDE/sandbox');
+import runBox1 as runBox
+from sBox import *
+from avatar import *
+import runLevel as run
 
 """ Map Module
 
@@ -49,8 +55,8 @@ class Tile:
     """
 
     def __init__(self, value= "AIR") :
-        self.valid = ["AIR","CLOUD","GATE","PLANE"]
-        self.bitval = ["0","1","X","P"]
+        self.valid = ["AIR","ISLAND","WALL","GATE","PLANE"]
+        self.bitval = ["A","I","W","G","P"]
         self.value = "NULL"
         if value in self.valid:
             self.value = value
@@ -68,11 +74,13 @@ class Tile:
         level.
         """
         if self.value == "AIR":
-            return "0";
-        if self.value == "CLOUD":
-            return "1";
+            return "A";
+        if self.value == "ISLAND":
+            return "I";
+        if self.value == "WALL":
+            return "W";
         if self.value == "GATE":
-            return "X";
+            return "G";
         if self.value == "PLANE":
             return "P";
 
@@ -98,24 +106,15 @@ class TileMap:
     Date:3.19.12
     """
 
-    def __init__(self):
+    def __init__(self, map_path):
         #fix init to a set size, and edge in with clouds
-        self.height = 8
-        self.width = 12 #??
-        self.grid = [ [] for i in range(self.height)]
-        for row in self.grid:
-            for j in xrange(self.width):
-                row.append(Tile())
-
-    """
-    The following methods are used for navigating the plane around the
-    map.
-    """
-    def setPlane(self):
-        """This method sets the coordinates for a plane that has
-        been added to the map from a working file.
-        """
+        self.map_path = map_path
+        self.sand = sandbox()
+        self.filetomap(map_path)
+        print self
+        #sets the plane
         found = False
+        self.plane = Airplane(self)
         for y in xrange(self.height):
             for x in xrange(self.width):
                 if(self.grid[y][x].getType()=="PLANE"):
@@ -123,8 +122,30 @@ class TileMap:
                     self.py = y
                     self.px = x
         if found == False:
-            raise NoPlaneException()
+            raise NoPlaneException() #there wasn't a plane 
+        else:
+            #replace the plane with air, for navigation
+            self.grid[self.py][self.px] = Tile("A")
+    """
+    The following methods are used for navigating the plane around the
+    map.
+    """
+    def getPlane(self):
+        """This method sets the coordinates for a plane that has
+        been added to the map from a working file.
+class InvalidMoveException(Exception):
+    def  __init__(self, value="You've hit a wall or grue."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
 
+class NoPlaneException(Exception):
+    def __init__(self, value="There was no plane object on the given map."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+        """
+        return self.plane;
 
     def move(self, heading):
         valid = True;
@@ -148,16 +169,14 @@ class TileMap:
             newy = self.py+1
             if newx >= self.height:
                 raise InvalidMoveException()
-        if self.grid[newy][newx].getType() == "CLOUD":
+        if self.grid[newy][newx].getType() == ("WALL" or "ISLAND"):
             raise InvalidMoveException()
         if self.grid[newy][newx].getType() == "GATE":
             #TODO
             #victory condition
-            print "We won!!"
-            return;
-        temp = self.grid[self.py][self.px]
-        self.grid[self.py][self.px] = self.grid[newy][newx]
-        self.grid[newy][newx] = temp
+            self.py = newy
+            self.px = newx
+            raise VictoryException()
         self.py = newy
         self.px = newx
         #TODO update the map
@@ -176,10 +195,33 @@ class TileMap:
             return self.grid[self.px][self.py+1].getType()
 
 
-    def runLevel(self, levelnum):
-        pathname = "level"+str(levelnum)
-        exec pathname
+    def runLevelDummy(self):
+
+        working = runBox.test(self.map_path)
+        #working = self.sand.start(self.map_path)
+        output = open("output.py","r")
+        print working
+        if working:
+            #establish the path to pass along to GUI
+            self.dummy = True
+            self.plane.setDummy(True)
+            try:
+                run.runLevel(self.plane)
+            except CrashException:
+                pass;
+            except VictoryException:
+                pass; 
+                #do nothing, these are just to keep the user
+                #code from executing forever
+            self.dummy = False
+            self.plane.setDummy(False)
+#        else:
+            #display error message??
         #TODO get this working?
+        return working;
+
+    def runLevel(self):
+        return self.plane.getMoves()
 
 
 
@@ -224,6 +266,7 @@ class TileMap:
         for i in xrange(self.height):
             for j in xrange(self.width):
                 self.grid[i].append(Tile(strmap[i][j]))
+                a = Tile(strmap[i][j])
 #        print self.__str__()
         
             

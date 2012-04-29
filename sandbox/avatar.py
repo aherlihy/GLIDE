@@ -1,6 +1,6 @@
 #!/usr/bin/Py
 
-from tilemap import *
+import tilemap
 
 """ Avatar Module
 
@@ -12,6 +12,18 @@ Author: jwoberbe
 Date: 4.23.12
 """
 
+class CrashException(Exception):
+    def  __init__(self, value="You've hit a wall or grue."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
+class VictoryException(Exception):
+    def __init__(self, value="Level Completed"):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
 class Airplane:
     """Airplane class
 
@@ -22,9 +34,34 @@ class Airplane:
     """
     
     def __init__(self, tile_map):
+        self.dummy = False
         self.heading = 0
         self.tileMap = tile_map
-        self.tileMap.setPlane()
+        self.moveSet = ""
+
+    def setDummy(self, boolean):
+        self.dummy = boolean;
+        if boolean:
+            self.resetMoves()
+
+    def getMoves(self):
+        """
+        returns the moves that the plane makes during
+        a level. 
+        0=moveRight
+        1=moveUp
+        2=moveLeft
+        3=moveDown
+        4=turnLeft
+        5=turnRight
+        6=crash
+        7=victory
+        -1=ERROR
+        """
+        return self.moveSet;
+
+    def resetMoves(self):
+        self.moveSet = ""
 
     def setHeading(heading):
         """
@@ -45,22 +82,41 @@ class Airplane:
         """
 #        print "CRASH!!!"
         #TODO
+        if self.dummy:
+            self.moveSet += "6"
+            raise CrashException()
 
     def check(self):
+        if self.moveSet[len(self.moveSet)-1] == "6":
+            return;
         return self.tileMap.check(self.heading)
 
     def turnLeft(self):
+        if self.moveSet[len(self.moveSet)-1] == "6":
+            return;
         #TODO add in animation calls here
         self.heading = (self.heading+1)%4
+        if self.dummy:
+            self.moveSet += "4"
 
     def turnRight(self):
+        if self.moveSet[len(self.moveSet)-1] == "6":
+            return;
         self.heading = (self.heading-1)%4
+        if self.dummy:
+            self.moveSet += "5"
 
     def move(self):
+        if self.moveSet[len(self.moveSet)-1] == "6":
+            return;
         try:
             self.tileMap.move(self.heading)
-        except InvalidMoveException:
+            if self.dummy:
+                self.moveSet += str(self.heading)
+        except tilemap.InvalidMoveException:
             self.crash()
+        except VictoryException():
+            self.moveSet += "7"
 
 
 

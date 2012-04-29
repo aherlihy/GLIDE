@@ -44,12 +44,12 @@ class sandbox:
         print("**initing level")
         #set up headers
         outfile = open("runLevel.py", "w")
-        outfile.write("...#!usr/bin/python\n")
-        outfile.write("from ap import *\n")#NOTE NOTE NOTE: LIMIT ONLY TO USED FUNCTIONS
+        outfile.write("#!usr/bin/python\n")
+        outfile.write("from tilemap import *\n")#NOTE NOTE NOTE: LIMIT ONLY TO USED FUNCTIONS
         outfile.write("from avatar import *\n\n")#SAME : LIMIT ONLY TO ONES THEYRE GOING TO USE
         outfile.write("def runLevel(plane, map):\n")
 
-        codefile = open("../sandbox/code", "r")
+        codefile = open("code", "r")
         empty = True
 
         #append each line in codefile to outfile, indenting appropriately

@@ -133,4 +133,4 @@ def test(map_path):
 #else:
 #    print("no errors :/")
 if __name__ == '__main__':
-    test("map1")
+    test("../support/levels/level3")

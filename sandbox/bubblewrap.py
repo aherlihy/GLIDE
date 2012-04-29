@@ -18,8 +18,7 @@ import sys
 
 #set up dummy variables
 mapArg = sys.argv[1]
-map = TileMap()
-map.filetomap(mapArg)
+map = TileMap(mapArg)
 plane = map.getPlane()
 runLevel(plane, map)
 
