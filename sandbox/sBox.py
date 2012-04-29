@@ -57,8 +57,8 @@ class sandbox:
             empty = False
             outfile.write("    ")
             outfile.write(line)
+        outfile.write("    return\n")
         if(empty):
-            print("**ERROR: Empty")
             return False
         codefile.close()
         outfile.close()
