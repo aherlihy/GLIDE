@@ -261,13 +261,13 @@ class Environment(Frame):
         f.write(text)
         f.close()
 
-        #error = tilemap.runLevelDummy()
-        error = False
+        error = self.tilemap.runLevelDummy("../GUI/userTextFile.txt")
+        #error = False
 
         if error:
 	    # read in the error file
 	    errText = ""
-	    f = open("errorFile.txt", 'r')
+	    f = open("../sandbox/output.py", 'r')
 	    while True:
 		line = f.readline()
 		if line == "":
@@ -299,8 +299,8 @@ class Environment(Frame):
 	
 	if self.canRun:
 
-	    # cmdList = tilemap.runLevel()
-	    cmdList = "043350000005140043500"
+	    cmdList = self.tilemap.getLevel()
+	    #cmdList = "043350000005140043500"
 	    
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north

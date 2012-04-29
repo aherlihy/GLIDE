@@ -1,6 +1,6 @@
 #!/usr/bin/Python
 import sys
-sys.path.append('/home/jwoberbe/course/cs032/GLIDE/sandbox');
+sys.path.append('/home/ecacciat/course/cs032/GLIDE/sandbox');
 import runBox
 from avatar import *
 import runLevel as run
