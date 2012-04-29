@@ -42,7 +42,7 @@ class StartPopupWindow(Toplevel):
         self.parent = parent
 
         #usernames = self.parent.getUserList()
-        self.usernames = ["Emily", "Ezra", "John", "Anna"]
+        self.usernames = ["Emily", "John", "Anna"]
         #self.usernames = []
 
         # if there are no current users, then just make a New User window
