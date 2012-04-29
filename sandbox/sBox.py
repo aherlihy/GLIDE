@@ -106,6 +106,6 @@ class sandbox:
         usrcode = file.read()
         tree = ast.parse(usrcode)
         visitor.generic_visit(tree)
-        print("dumping...")
-        print ast.dump(tree, annotate_fields=True, include_attributes=False)
+#        print("dumping...")
+#        print ast.dump(tree, annotate_fields=True, include_attributes=False)
 

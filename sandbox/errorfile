@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "bubblewrap.py", line 23, in <module>
-    runLevel(plane, map)
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 6, in runLevel
-    plane.move()
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/avatar.py", line 110, in move
-    if self.moveSet[len(self.moveSet)-1] == "6":
-IndexError: string index out of range

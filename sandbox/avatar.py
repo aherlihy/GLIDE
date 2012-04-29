@@ -87,28 +87,20 @@ class Airplane:
             raise CrashException()
 
     def check(self):
-        if self.moveSet[len(self.moveSet)-1] == "6":
-            return;
         return self.tileMap.check(self.heading)
 
     def turnLeft(self):
-        if self.moveSet[len(self.moveSet)-1] == "6":
-            return;
         #TODO add in animation calls here
         self.heading = (self.heading+1)%4
         if self.dummy:
             self.moveSet += "4"
 
     def turnRight(self):
-        if self.moveSet[len(self.moveSet)-1] == "6":
-            return;
         self.heading = (self.heading-1)%4
         if self.dummy:
             self.moveSet += "5"
 
     def move(self):
-        if self.moveSet[len(self.moveSet)-1] == "6":
-            return;
         try:
             self.tileMap.move(self.heading)
             if self.dummy:
