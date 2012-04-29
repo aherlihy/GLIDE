@@ -47,7 +47,7 @@ def compile_this(box, output):
      # <line> (users code)
      # <Error name + description>
 def run_this(box, output, map_path):
-    run_output = box.run_process(["python", "bubblewrap.py", map_path)
+    run_output = box.run_process(["python", "bubblewrap.py", map_path])
 #    print("printing stderr " + run_output)
 #    for i in run_output:
 #        print i
@@ -64,7 +64,8 @@ def run_this(box, output, map_path):
            output.close()
            return True
         else:
-
+           errorfile = open("errorfile", "w")
+           errorfile.write(run_output)
            list = run_output.strip().split('\n')
            output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")           
            output.write("RUNTIME ERROR\n")
@@ -76,6 +77,7 @@ def run_this(box, output, map_path):
                    line = list[i].split(',')
                    linenumber = (line[1].strip() + "\n")
                    codeline = (list[i+1].strip())
+                   break
            output.write(list[length-1]+"\n")
            output.write(linenumber)
            output.write("code: \"" + codeline + "\"")
@@ -131,4 +133,4 @@ def test(map_path):
 #else:
 #    print("no errors :/")
 if __name__ == '__main__':
-    test()
+    test("map1")

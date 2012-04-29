@@ -2,7 +2,7 @@
 from tilemap import *
 from avatar import *
 
-
-def runLevel(plane):
+def runLevel(plane, map):
     plane.move()
     plane.turnLeft()
+    #plane.check()
