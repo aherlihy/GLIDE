@@ -102,13 +102,13 @@ class Airplane:
 
     def move(self):
         try:
-            self.tileMap.move(self.heading)
             if self.dummy:
                 self.moveSet += str(self.heading)
+            self.tileMap.move(self.heading)
+        except VictoryException:
+            self.moveSet += "7"
         except tilemap.InvalidMoveException:
             self.crash()
-        except VictoryException():
-            self.moveSet += "7"
 
 
 

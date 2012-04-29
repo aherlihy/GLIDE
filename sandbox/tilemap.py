@@ -132,17 +132,6 @@ class TileMap:
     def getPlane(self):
         """This method sets the coordinates for a plane that has
         been added to the map from a working file.
-class InvalidMoveException(Exception):
-    def  __init__(self, value="You've hit a wall or grue."):
-        self.value = value;
-    def __str__(self):
-        return repr(self.value);
-
-class NoPlaneException(Exception):
-    def __init__(self, value="There was no plane object on the given map."):
-        self.value = value;
-    def __str__(self):
-        return repr(self.value);
         """
         return self.plane;
 
@@ -209,8 +198,6 @@ class NoPlaneException(Exception):
                 run.runLevel(self.plane)
             except CrashException:
                 pass;
-            except VictoryException:
-                pass; 
                 #do nothing, these are just to keep the user
                 #code from executing forever
             self.dummy = False
