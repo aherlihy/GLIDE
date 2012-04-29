@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 plane.turnRight()
 plane.move()
 
+=======
+this::is:bad:
+>>>>>>> 7f6219cc638dea358e11aad4d7737d3a313e6f5b
 
 
 

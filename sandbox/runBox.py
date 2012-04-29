@@ -21,18 +21,23 @@ def compile_this(box, output):
         output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")
         output.write("COMPILER ERROR\n")
         #parse py_compiler exception
-        list = compiler_output.split(':', 2)
-        if(len(list)==2):
-            output.write(list[0].strip())#write the type of error
+#        print compiler_output
+        list = compiler_output.split(':', 1)
+#        print list
+        
+        if(list[0]=="Sorry"):
+            list = list[1].split(':', 1)
+            output.write(list[0].strip())
         else:
-            output.write(list[1].strip())
-        list = list[len(list)-1]
+            output.write(list[0].strip())
+        list = list[len(list)-1]#This will be the lefthand side of the error message, after <errortype>:
         list = list.split('\'',5)
         output.write(": " + list[1]+"\n")#write the subtype of error
+#        print list
         nums = list[4].split(',')
         output.write("line " + nums[1].split()[0]+"\n")#row
         #output.write("col(should this be included?): " + nums[2].split()[0]+"\n")#col
-        output.write("code: \"" +list[5][:-4]+"\"\n")
+        output.write("code: \"" +list[5][4:-4]+"\"\n")
 #        output.write(compiler_output)#full output
         output.close()
         return False
@@ -66,11 +71,12 @@ def run_this(box, output, map_path):
         else:
            errorfile = open("errorfile", "w")
            errorfile.write(run_output)
+           errorfile.close()
            list = run_output.strip().split('\n')
            output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")           
            output.write("RUNTIME ERROR\n")
 
-           print len(list)
+#           print len(list)
            length = len(list)
            codeline = "None"
            currentErrorFile = "None"
@@ -95,7 +101,9 @@ def run_this(box, output, map_path):
                output.write("Oh no, looks like there was an error that didn't originate in the user's code. It came from " + currentErrorFile + "\n")
            output.write(list[length-1]+"\n")
            output.write(linenumber + "\n")
-           output.write("code: \"" + codeline + "\"")
+#           print "len-1", codeline[len(codeline)-1]
+#           print "len-2", codeline[len(codeline)-2]
+           output.write("code: \"" + codeline[4:] + "\"")
 #           output.write("\nFULL: \n" + run_output)
            output.close()
            return False
