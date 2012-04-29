@@ -63,7 +63,7 @@ class Airplane:
     def resetMoves(self):
         self.moveSet = ""
 
-    def setHeading(heading):
+    def setHeading(self, heading):
         """
         heading refers to which direction the plane is
         facing.

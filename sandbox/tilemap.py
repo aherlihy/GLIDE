@@ -120,9 +120,6 @@ class TileMap:
                     self.px = x
         if found == False:
             raise NoPlaneException() #there wasn't a plane 
-        else:
-            #replace the plane with air, for navigation
-            self.grid[self.py][self.px] = Tile("A")
     """
     The following methods are used for navigating the plane around the
     map.
@@ -190,9 +187,15 @@ class TileMap:
         output = open("output.py","r")
         if working:
             import runLevel as run
+            for y in xrange(self.height):
+                for x in xrange(self.width):
+                    if(self.grid[y][x].getType()=="PLANE"):
+                        self.py = y
+                        self.px = x
             #establish the path to pass along to GUI
             self.dummy = True
             self.plane.setDummy(True)
+            self.plane.setHeading(0)
             try:
                 run.runLevel(self.plane)
             except CrashException:
