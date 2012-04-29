@@ -72,14 +72,29 @@ def run_this(box, output, map_path):
 
            print len(list)
            length = len(list)
+           codeline = "None"
+           currentErrorFile = "None"
+           linenumber = "None"
+           reasonableError = False
            for i in range (0,length):
-               if(list[i].startswith("  File \"/gpfs/main/home/aherlihy/GLIDE/sandboxDemo/runLevel.py\",")):
-                   line = list[i].split(',')
-                   linenumber = (line[1].strip() + "\n")
-                   codeline = (list[i+1].strip())
-                   break
+               if(list[i].startswith("  File")):
+                   #print "line starts with File", list[i]
+                   fileline = list[i].split(',')
+                   linenumber = fileline[1].strip()
+                   codeline = list[i+1]
+                   filename = fileline[0].split('\"')
+                   #print filename
+                   for name in filename:
+                       if(name.endswith(".py")):
+                           currentErrorFile = name
+                   if(currentErrorFile.endswith("runLevel.py")):
+                       reasonableError=True
+                       break
+           print "linenumber: ", linenumber, " codeline: \"", codeline, "\" currentErrorFile: ", currentErrorFile
+           if not(reasonableError):
+               output.write("Oh no, looks like there was an error that didn't originate in the user's code. It came from " + currentErrorFile + "\n")
            output.write(list[length-1]+"\n")
-           output.write(linenumber)
+           output.write(linenumber + "\n")
            output.write("code: \"" + codeline + "\"")
 #           output.write("\nFULL: \n" + run_output)
            output.close()

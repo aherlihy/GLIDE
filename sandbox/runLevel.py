@@ -10,3 +10,4 @@ def runLevel(plane):
         plane.move()
     plane.turnLeft()
     plane.move()
+    plane.check(10)

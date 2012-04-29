@@ -48,3 +48,10 @@ node type: Attribute
 Name|LINE:12|NAME:plane
 node type: Load
 node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:13|NAME:plane
+node type: Load
+node type: Load
+node type: Num

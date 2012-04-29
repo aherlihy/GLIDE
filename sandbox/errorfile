@@ -1,4 +1,6 @@
 Traceback (most recent call last):
-  File "bubblewrap.py", line 23, in <module>
-    runLevel(plane, map)
-TypeError: runLevel() takes exactly 1 argument (2 given)
+  File "bubblewrap.py", line 22, in <module>
+    runLevel(plane)
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 13, in runLevel
+    plane.check(10)
+TypeError: check() takes exactly 1 argument (2 given)

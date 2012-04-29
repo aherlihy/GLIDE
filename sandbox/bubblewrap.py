@@ -15,7 +15,6 @@ from tilemap import *
 from avatar import *
 from runLevel import *
 import sys
-
 #set up dummy variables
 mapArg = sys.argv[1]
 map = TileMap(mapArg)
