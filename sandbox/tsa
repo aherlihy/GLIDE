@@ -5,4 +5,7 @@ node type: FunctionDef
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
+node type: Expr
+Name|LINE:6|NAME:fjksld
+node type: Load
 node type: Return

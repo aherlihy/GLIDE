@@ -3,7 +3,6 @@ import sys
 sys.path.append('/home/ecacciat/GLIDE/sandbox');
 import runBox
 from avatar import *
-import runLevel as run
 
 """ Map Module
 
@@ -191,6 +190,7 @@ class TileMap:
         output = open("output.py","r")
         print working
         if working:
+            import runLevel as run
             #establish the path to pass along to GUI
             self.dummy = True
             self.plane.setDummy(True)

@@ -30,8 +30,8 @@ def compile_this(box, output):
         list = list.split('\'',5)
         output.write(": " + list[1]+"\n")#write the subtype of error
         nums = list[4].split(',')
-        output.write("line: " + nums[1].split()[0]+"\n")#row
-        output.write("col(should this be included?): " + nums[2].split()[0]+"\n")#col
+        output.write("line " + nums[1].split()[0]+"\n")#row
+        #output.write("col(should this be included?): " + nums[2].split()[0]+"\n")#col
         output.write("code: \"" +list[5][:-4]+"\"\n")
 #        output.write(compiler_output)#full output
         output.close()

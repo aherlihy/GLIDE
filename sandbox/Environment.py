@@ -8,7 +8,7 @@ from Painter import Painter
 import tkFont
 import re
 import sys
-sys.path.append('/home/jwoberbe/course/cs032/GLIDE/sandbox')
+#sys.path.append('/home/ecacciat/course/cs032/GLIDE/sandbox')
 from tilemap import *
 
 DIM_X = 1200
@@ -34,7 +34,7 @@ class Environment(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent, background="MediumTurquoise")
         self.parent = parent
-        self.levelFilename = "/home/jwoberbe/course/cs032/GLIDE/support/levels/level"
+        self.levelFilename = "/home/ecacciat/course/cs032/GLIDE/support/levels/level"
         self.canRun = False
 
         self.initToolbar()
@@ -246,6 +246,7 @@ class Environment(Frame):
             self.helpBox.config(state=DISABLED)   # turn off editing
 
     def exit(self):
+	self.cleanUp()
         self.quit()
 
     def save(self):
@@ -256,15 +257,17 @@ class Environment(Frame):
 
     # Save the user's code in the text editor into a file and tell the tilemap to check the code.
     def checkCode(self):
-        f = open("userTextFile.txt", 'w')
+        f = open("code", 'w')
         text = self.textEditor.get(1.0, END)
         f.write(text)
         f.close()
 
-        error = self.tilemap.runLevelDummy("userTextFile.txt")
-        #error = False
+        noError = self.tilemap.runLevelDummy("code")
 
-        if error:
+        if not noError:
+	    # the error line to highlight in the code
+	    errorLine = 0
+
 	    # read in the error file
 	    errText = ""
 	    f = open("output.py", 'r')
@@ -272,6 +275,13 @@ class Environment(Frame):
 		line = f.readline()
 		if line == "":
 		    break
+		elif line.startswith("line"):
+		    lineStuff = line.split(' ')
+		    errorLine = int(lineStuff[1]) - 5
+		    print "errorline: ", errorLine
+		    line = "line: " + str(errorLine) + "\n"
+		    print "new line: ", line
+		    errText += line
 		else:
 		    errText += line
 	    f.close()
@@ -300,7 +310,6 @@ class Environment(Frame):
 	if self.canRun:
 
 	    cmdList = self.tilemap.getLevel()
-	    #cmdList = "043350000005140043500"
 	    
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north
@@ -375,7 +384,7 @@ class Environment(Frame):
 
 	    # check for a win, or an "inefficient" win - reached goal but had extra cmds at end
 	    match = re.search('7', cmdList)
-	    if match != None and match.start() == length(cmdList)-1:    # actual win
+	    if match != None and match.start() == len(cmdList)-1:    # actual win
 		self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to" \
 				    "move on, or try out other cool stuff with your plane here."
 	    elif match != None:    # inefficient win
@@ -390,6 +399,11 @@ class Environment(Frame):
 	    self.helpBox.delete(1.0, END)   # clear text box
 	    self.helpBox.insert(END, self.screens[self.shownScreen])
 	    self.helpBox.config(state=DISABLED)   # turn off editing
+
+
+    def cleanUp(self):
+	f = open("runLevel.py", "w")
+	f.close()
 
 
 def main():

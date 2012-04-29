@@ -93,12 +93,12 @@ class Airplane:
         #TODO add in animation calls here
         self.heading = (self.heading+1)%4
         if self.dummy:
-            self.moveSet += "4"
+            self.moveSet += "5"
 
     def turnRight(self):
         self.heading = (self.heading-1)%4
         if self.dummy:
-            self.moveSet += "5"
+            self.moveSet += "4"
 
     def move(self):
         try:
