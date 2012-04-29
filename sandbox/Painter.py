@@ -249,7 +249,9 @@ class Painter:
         imgRotated = img.rotate(DIR_EAST)
         self.planeImg = ImageTk.PhotoImage(imgRotated)
         self.plane = self.canvas.create_image(self.planeX, self.planeY, image=self.planeImg, anchor=NW, tags="plane")
-        self.planeRotDeg = DIR_EAST   # keep track of the orientation of the plane 
+        self.planeRotDeg = DIR_EAST   # keep track of the orientation of the plane
+        self.canvas.coords("plane", self.planeX, self.planeY)
+        self.canvas.update()
 
 
     def movePlaneEast(self):

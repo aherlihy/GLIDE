@@ -1,3 +1,4 @@
+plane.turnRight()
 plane.move()
 
 
