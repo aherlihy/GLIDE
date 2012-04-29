@@ -187,6 +187,7 @@ class TileMap:
         output = open("output.py","r")
         if working:
             import runLevel as run
+            reload(run)
             for y in xrange(self.height):
                 for x in xrange(self.width):
                     if(self.grid[y][x].getType()=="PLANE"):

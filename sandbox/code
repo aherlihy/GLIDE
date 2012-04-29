@@ -1,8 +1,5 @@
-plane.turnLeft()
 plane.move()
 plane.move()
-
-
 
 
 
