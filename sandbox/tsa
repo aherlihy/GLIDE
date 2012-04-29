@@ -5,14 +5,22 @@ node type: FunctionDef
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: For
-Name|LINE:6|NAME:i
-node type: Store
+node type: Expr
 node type: Call
-Name|LINE:6|NAME:range
+node type: Attribute
+Name|LINE:6|NAME:plane
 node type: Load
-node type: Num
-node type: Num
-node type: Print
-node type: Str
+node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:7|NAME:plane
+node type: Load
+node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:8|NAME:plane
+node type: Load
+node type: Load
 node type: Return

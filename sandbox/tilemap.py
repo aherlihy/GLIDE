@@ -155,7 +155,8 @@ class TileMap:
             newy = self.py+1
             if newx >= self.height:
                 raise InvalidMoveException()
-        if self.grid[newy][newx].getType() == ("WALL" or "ISLAND"):
+        if self.grid[newy][newx].getType() == "WALL" \
+                or self.grid[newy][newx].getType() == "ISLAND":
             raise InvalidMoveException()
         if self.grid[newy][newx].getType() == "GATE":
             #TODO
