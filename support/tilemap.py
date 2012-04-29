@@ -123,6 +123,9 @@ class TileMap:
                     self.px = x
         if found == False:
             raise NoPlaneException() #there wasn't a plane 
+        else:
+            #replace the plane with air, for navigation
+            self.grid[self.py][self.px] = Tile("A")
     """
     The following methods are used for navigating the plane around the
     map.
@@ -130,6 +133,17 @@ class TileMap:
     def getPlane(self):
         """This method sets the coordinates for a plane that has
         been added to the map from a working file.
+class InvalidMoveException(Exception):
+    def  __init__(self, value="You've hit a wall or grue."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
+class NoPlaneException(Exception):
+    def __init__(self, value="There was no plane object on the given map."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
         """
         return self.plane;
 
@@ -155,16 +169,14 @@ class TileMap:
             newy = self.py+1
             if newx >= self.height:
                 raise InvalidMoveException()
-        if self.grid[newy][newx].getType() == "CLOUD":
+        if self.grid[newy][newx].getType() == ("WALL" or "ISLAND"):
             raise InvalidMoveException()
         if self.grid[newy][newx].getType() == "GATE":
             #TODO
             #victory condition
-            self.plane.moveSet+="7"
-            return;
-        temp = self.grid[self.py][self.px]
-        self.grid[self.py][self.px] = self.grid[newy][newx]
-        self.grid[newy][newx] = temp
+            self.py = newy
+            self.px = newx
+            raise VictoryException()
         self.py = newy
         self.px = newx
         #TODO update the map
@@ -189,15 +201,22 @@ class TileMap:
         #working = self.sand.start(self.map_path)
         output = open("output.py","r")
         print working
-        self.dummy = True
-        self.plane.setDummy(True)
-        run.runLevel(self.plane)
-            #we can run level
+        if working:
+            #establish the path to pass along to GUI
+            self.dummy = True
+            self.plane.setDummy(True)
+            try:
+                run.runLevel(self.plane)
+            except CrashException:
+                pass;
+            except VictoryException:
+                pass; 
+                #do nothing, these are just to keep the user
+                #code from executing forever
+            self.dummy = False
+            self.plane.setDummy(False)
 #        else:
-#            pass
-            #display error message
-        self.dummy = False
-        self.plane.setDummy(False)
+            #display error message??
         #TODO get this working?
         return working;
 

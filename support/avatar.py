@@ -12,6 +12,18 @@ Author: jwoberbe
 Date: 4.23.12
 """
 
+class CrashException(Exception):
+    def  __init__(self, value="You've hit a wall or grue."):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
+class VictoryException(Exception):
+    def __init__(self, value="Level Completed"):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
 class Airplane:
     """Airplane class
 
@@ -72,14 +84,15 @@ class Airplane:
         #TODO
         if self.dummy:
             self.moveSet += "6"
+            raise CrashException()
 
     def check(self):
-        if self.moveSet[len(self.moveSet)-1] == "7":
+        if self.moveSet[len(self.moveSet)-1] == "6":
             return;
         return self.tileMap.check(self.heading)
 
     def turnLeft(self):
-        if self.moveSet[len(self.moveSet)-1] == "7":
+        if self.moveSet[len(self.moveSet)-1] == "6":
             return;
         #TODO add in animation calls here
         self.heading = (self.heading+1)%4
@@ -87,14 +100,14 @@ class Airplane:
             self.moveSet += "4"
 
     def turnRight(self):
-        if self.moveSet[len(self.moveSet)-1] == "7":
+        if self.moveSet[len(self.moveSet)-1] == "6":
             return;
         self.heading = (self.heading-1)%4
         if self.dummy:
             self.moveSet += "5"
 
     def move(self):
-        if self.moveSet[len(self.moveSet)-1] == "7":
+        if self.moveSet[len(self.moveSet)-1] == "6":
             return;
         try:
             self.tileMap.move(self.heading)
@@ -102,6 +115,8 @@ class Airplane:
                 self.moveSet += str(self.heading)
         except tilemap.InvalidMoveException:
             self.crash()
+        except VictoryException():
+            self.moveSet += "7"
 
 
 
