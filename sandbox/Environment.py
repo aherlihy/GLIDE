@@ -261,13 +261,13 @@ class Environment(Frame):
         f.write(text)
         f.close()
 
-        error = self.tilemap.runLevelDummy("../GUI/userTextFile.txt")
+        error = self.tilemap.runLevelDummy("userTextFile.txt")
         #error = False
 
         if error:
 	    # read in the error file
 	    errText = ""
-	    f = open("../sandbox/output.py", 'r')
+	    f = open("output.py", 'r')
 	    while True:
 		line = f.readline()
 		if line == "":
