@@ -49,7 +49,7 @@ class sandbox:
         outfile.write("from avatar import *\n\n")#SAME : LIMIT ONLY TO ONES THEYRE GOING TO USE
         outfile.write("def runLevel(plane):\n")
 
-        codefile = open("code", "r")
+        codefile = open("../sandbox/code", "r")
         empty = True
 
         #append each line in codefile to outfile, indenting appropriately
