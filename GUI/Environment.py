@@ -8,7 +8,7 @@ from Painter import Painter
 import tkFont
 import re
 import sys
-sys.path.append('/home/ecacciat/course/cs032/GLIDE/sandbox')
+sys.path.append('/home/ecacciat/GLIDE/sandbox')
 from tilemap import *
 
 DIM_X = 1200
