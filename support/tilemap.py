@@ -1,8 +1,7 @@
 #!/usr/bin/Python
 import sys
 sys.path.append('/home/jwoberbe/course/cs032/GLIDE/sandbox');
-import runBox1 as runBox
-from sBox import *
+import runBox
 from avatar import *
 import runLevel as run
 
@@ -109,7 +108,6 @@ class TileMap:
     def __init__(self, map_path):
         #fix init to a set size, and edge in with clouds
         self.map_path = map_path
-        self.sand = sandbox()
         self.filetomap(map_path)
         print self
         #sets the plane
@@ -197,7 +195,7 @@ class NoPlaneException(Exception):
 
     def runLevelDummy(self):
 
-        working = runBox.test(self.map_path)
+        working = runBox.run(self.map_path)
         #working = self.sand.start(self.map_path)
         output = open("output.py","r")
         print working
