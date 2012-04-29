@@ -21,9 +21,9 @@ def compile_this(box, output):
         output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")
         output.write("COMPILER ERROR\n")
         #parse py_compiler exception
-        print compiler_output
+#        print compiler_output
         list = compiler_output.split(':', 1)
-        print list
+#        print list
         
         if(list[0]=="Sorry"):
             list = list[1].split(':', 1)
@@ -33,7 +33,7 @@ def compile_this(box, output):
         list = list[len(list)-1]#This will be the lefthand side of the error message, after <errortype>:
         list = list.split('\'',5)
         output.write(": " + list[1]+"\n")#write the subtype of error
-        print list
+#        print list
         nums = list[4].split(',')
         output.write("line " + nums[1].split()[0]+"\n")#row
         #output.write("col(should this be included?): " + nums[2].split()[0]+"\n")#col

@@ -6,16 +6,21 @@ node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
 node type: Expr
-<<<<<<< HEAD
-node type: BinOp
-node type: Num
-node type: Div
-node type: Num
-=======
 node type: Call
 node type: Attribute
 Name|LINE:6|NAME:plane
 node type: Load
 node type: Load
->>>>>>> f1440ce04a862cd798cc218e19374785e17d6c50
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:7|NAME:plane
+node type: Load
+node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:8|NAME:plane
+node type: Load
+node type: Load
 node type: Return
