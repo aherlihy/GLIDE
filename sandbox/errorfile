@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "bubblewrap.py", line 22, in <module>
+    runLevel(plane)
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 9, in runLevel
+    plane.move(1)
+TypeError: move() takes exactly 1 argument (2 given)

@@ -1,13 +1,50 @@
-This is the first page.
+BINARY SEARCH
 
-There's an empty line up there.
+Whenever you're faced with a problem you don't know how to solve, the first thing to do is to try and turn the problem into smaller and smaller problems until you know how to solve them. 
+What if you were looking for a student C in a class of size 1? That's obvious, it would just be that student.
 
+Now the question is: how do we get our problem, of size n, into what we know how to solve, which is size 1?
 
-And two more.
+The next step is to list the things you know to be true. 
+    (1) Student X (the goal student) is in the class
+    (2) The students are arranged alphabetically
+    (3) There are n students, and no 2 students have the same name.
+
 *****
-This is the second page.
 
+What if we had a class of size 2? That would be simple: ask one student, and if it's not that one, then its the other one.
+What about size 3? This is where it gets tricky. You can't just ask each one of them, and if you pick and random, you're not guarenteed to pick the right ones.
+	     _______        _______        _______
+	    |   ?   |      |   ?   |      |   ?   |
+            |_______|      |_______|      |_______|
+	        1              2              3
+
+Let's use what we know. If we pick a random student, then all the students that come before that student in line will have names that go before that student's name.
+All the students after that student will have names that come after that name.
+
+Think about how you would look through a phonebook. Pick a page, sort of near the middle, and see if the page you picked comes before or after the name you're looking for. 
+If it comes before, then you can safetly ignore all the names that come after. And vice versa.
+Bam! Since we know that the name we want comes before the name we picked, we can throw away half the phonebook. So we now have a problem that's half as big as the one before!
+
+Let's say we're looking for a student named Eve.
+So let's pick the middle.
+	     _______        _______        _______
+	    |   ?   |      |  Bob  |      |   ?   |
+            |_______|      |_______|      |_______|
+	        1              2              3
+OK, now we know Eve is not sitting in seat 2. But we also know she can't be sitting in seat 1, since alphabetically E comes after B.
+What do we have left? One student! Which is a problem we know how to solve.
 *****
-This is the third page.
-*****
-Try writing some code of your own in the box to the left!
+OK, so let's go back to a list of size n.
+
+	     _______        _______        _______               _______        _______        _______
+	    |   ?   |      |   ?   |      |   ?   |             |   ?   |      |   ?   |      |   ?   |
+            |_______|      |_______|      |_______|     ...     |_______|      |_______|      |_______|
+	        1              2              3                    n-2            n-1             n
+Where do we pick for our first student? We know the total size of the class, so we know where the middle is! 
+
+Once we know what the name of the student sitting in the middle is, we can throw away the half of the seats which we know the student isn't sitting.
+
+What are left with? A problem of size n/2.
+
+
