@@ -34,7 +34,7 @@ class Environment(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent, background="MediumTurquoise")
         self.parent = parent
-        self.levelFilename = "/home/ecacciat/course/cs032/GLIDE/support/levels/level"
+        self.levelFilename = "../support/levels/level"
         self.canRun = False
 
         self.initToolbar()
