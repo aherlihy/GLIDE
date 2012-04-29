@@ -105,8 +105,6 @@ class Painter:
 
         self.goal = ImageTk.PhotoImage(img_goal)
 
-        planex, planey = 0, 0
-
         for row in range(0, NUM_TILES_HIGH):
 
             for col in range(0, NUM_TILES_WIDE):
@@ -133,14 +131,15 @@ class Painter:
                 # plane - set plane here and make square underneath air
                 elif charArray[row][col] == 'P':
 		    self.canvas.create_image(x, y, image=self.air, anchor=NW)
-		    planex, planey = x, y
+		    self.planeX = x
+		    self.planeY = y
 
                 else:
                     print "Unrecognized character ", charArray[row][col], " in map file."
                     self.canvas.create_image(x, y, image=self.air, anchor=NW)
 
         # after all tiles have been set, draw the plane so it's on top of everything else
-        self.initPlane(planex, planey)
+        self.initPlane()
 
     def makeWall(self, charArray, row, col):
         """ Called when we get a wall character in the charArray. Examines the cells
@@ -245,11 +244,11 @@ class Painter:
         return islands[islandType]
 
 
-    def initPlane(self, x, y):
+    def initPlane(self):
         img = Image.open("Graphics/plane.png")
         imgRotated = img.rotate(DIR_EAST)
         self.planeImg = ImageTk.PhotoImage(imgRotated)
-        self.plane = self.canvas.create_image(x, y, image=self.planeImg, anchor=NW, tags="plane")
+        self.plane = self.canvas.create_image(self.planeX, self.planeY, image=self.planeImg, anchor=NW, tags="plane")
         self.planeRotDeg = DIR_EAST   # keep track of the orientation of the plane 
 
 

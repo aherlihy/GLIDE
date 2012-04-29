@@ -278,9 +278,7 @@ class Environment(Frame):
 		elif line.startswith("line"):
 		    lineStuff = line.split(' ')
 		    errorLine = int(lineStuff[1]) - 5
-		    print "errorline: ", errorLine
 		    line = "line: " + str(errorLine) + "\n"
-		    print "new line: ", line
 		    errText += line
 		else:
 		    errText += line
@@ -291,6 +289,9 @@ class Environment(Frame):
             self.runButton.config(state=DISABLED)
 
         else:
+	    # reset plane
+	    self.painter.initPlane()
+	    
 	    self.screens[-1] = "Yay! No compile or runtime errors!"
 	    self.runButton.config(state=NORMAL)
 	    self.canRun = True
@@ -308,6 +309,9 @@ class Environment(Frame):
     def run(self):
 	
 	if self.canRun:
+	    
+	    # reset plane
+	    self.painter.initPlane()
 
 	    cmdList = self.tilemap.getLevel()
 	    
@@ -343,8 +347,14 @@ class Environment(Frame):
 		    self.painter.rotatePlaneClockwise(90)
 		elif cmd == '5':
 		    self.painter.rotatePlaneCounterclockwise(90)
-		elif cmd == '6':
-		    pass
+		elif cmd == '6':     # crash
+		    self.screens[-1] = "Oh no - your plane crashed!"
+		    self.helpBox.config(state=NORMAL)   # turn on editing
+	            self.shownScreen = len(self.screens)-1
+	            self.helpBox.delete(1.0, END)   # clear text box
+	            self.helpBox.insert(END, self.screens[self.shownScreen])
+	            self.helpBox.config(state=DISABLED)   # turn off editing
+	            return
 		elif cmd == '7':
 		    pass
 		elif cmd == 'a':
@@ -381,6 +391,7 @@ class Environment(Frame):
 		    self.painter.sBendSouthEast()
 		else:
 		    print ("Unknown movement command %i; not executing." % cmd)
+
 
 	    # check for a win, or an "inefficient" win - reached goal but had extra cmds at end
 	    match = re.search('7', cmdList)

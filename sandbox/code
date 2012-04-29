@@ -1,7 +1,4 @@
-plane.turnRight()
 plane.move()
-plane.move()
-
 
 
 

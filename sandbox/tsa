@@ -11,16 +11,4 @@ node type: Attribute
 Name|LINE:6|NAME:plane
 node type: Load
 node type: Load
-node type: Expr
-node type: Call
-node type: Attribute
-Name|LINE:7|NAME:plane
-node type: Load
-node type: Load
-node type: Expr
-node type: Call
-node type: Attribute
-Name|LINE:8|NAME:plane
-node type: Load
-node type: Load
 node type: Return
