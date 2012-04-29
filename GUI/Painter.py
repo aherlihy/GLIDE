@@ -63,7 +63,11 @@ class Painter:
         img_island1101 = Image.open("Graphics/Tiles/Islands/1101_island.png")
         img_island1110 = Image.open("Graphics/Tiles/Islands/1110_island.png")
         img_island1111 = Image.open("Graphics/Tiles/Islands/1111_island.png")
-        
+        img_islandSEcorner = Image.open("Graphics/Tiles/Islands/SEcorner_island.png")
+        img_islandSWcorner = Image.open("Graphics/Tiles/Islands/SWcorner_island.png")
+        img_islandNEcorner = Image.open("Graphics/Tiles/Islands/NEcorner_island.png")
+        img_islandNWcorner = Image.open("Graphics/Tiles/Islands/NWcorner_island.png")
+
         img_goal = Image.open("Graphics/Tiles/goal.png")
 
         self.wall0001 = ImageTk.PhotoImage(img_wall0001)
@@ -94,8 +98,14 @@ class Painter:
         self.island1101 = ImageTk.PhotoImage(img_island1101)
         self.island1110 = ImageTk.PhotoImage(img_island1110)
         self.island1111 = ImageTk.PhotoImage(img_island1111)
+        self.islandSEcorner = ImageTk.PhotoImage(img_islandSEcorner)
+        self.islandSWcorner = ImageTk.PhotoImage(img_islandSWcorner)
+        self.islandNEcorner = ImageTk.PhotoImage(img_islandNEcorner)
+        self.islandNWcorner = ImageTk.PhotoImage(img_islandNWcorner)
 
         self.goal = ImageTk.PhotoImage(img_goal)
+
+        planex, planey = 0, 0
 
         for row in range(0, NUM_TILES_HIGH):
 
@@ -155,29 +165,21 @@ class Painter:
         if (row - 1) >= 0:
             if charArray[row - 1][col] == 'W':
                 wallBin[3] = "1"
-            elif charArray[row - 1][col] == 'I':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
 
         # right
         if (col + 1) <= (n - 1):
             if charArray[row][col + 1] == 'W':
                 wallBin[2] = "1"
-            elif charArray[row][col + 1] == 'I':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
 
         # bottom
         if (row + 1) <= (m - 1):
             if charArray[row + 1][col] == 'W':
                 wallBin[1] = "1"
-            elif charArray[row + 1][col] == 'I':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
 
         # left
         if (col - 1) >= 0:
             if charArray[row][col - 1] == 'W':
                 wallBin[0] = "1"
-            elif charArray[row][col - 1] == 'I':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
 
         # use the string os 0s and 1s a binary index into the array, and return the correct wall
         wallType = int(str(wallBin[3] + wallBin[2] + wallBin[1] + wallBin[0]), 2)
@@ -196,10 +198,10 @@ class Painter:
         # the binary that describes the wall, where (top, right, btm, left) ->
         # binary (xxxx). 0s indicate non-existent types of island (i.e. invalid 
         # map file)
-        islands = [self.island0000,               0,               0, self.island0011,
-                                 0,               0, self.island0110, self.island0111,
-                                 0, self.island1001,               0, self.island1011,
-                   self.island1100, self.island1101, self.island1110, self.island1111]
+        islands = [self.island0000,     0,                   0,                   self.island0011,
+                   0,                   0,                   self.island0110,     self.island0111,
+                   0,                   self.island1001,     0,                   self.island1011,
+                   self.island1100,     self.island1101,     self.island1110,     self.island1111]
 
         # compute binary value of island depending on its neighbors
         islandBin = ["0", "0", "0", "0"]    # default values for when a cell is off the edge
@@ -208,29 +210,32 @@ class Painter:
         if (row - 1) >= 0:
             if charArray[row - 1][col] == 'I':
                 islandBin[3] = "1"
-            elif charArray[row - 1][col] == 'W':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
 
         # right
         if (col + 1) <= (n - 1):
             if charArray[row][col + 1] == 'I':
                 islandBin[2] = "1"
-            elif charArray[row][col + 1] == 'W':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
 
         # bottom
         if (row + 1) <= (m - 1):
             if charArray[row + 1][col] == 'I':
                 islandBin[1] = "1"
-            elif charArray[row + 1][col] == 'W':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
 
         # left
         if (col - 1) >= 0:
             if charArray[row][col - 1] == 'I':
                 islandBin[0] = "1"
-            elif charArray[row][col - 1] == 'W':
-                print "Warning: map might look stupid at cell (", row, ", ", col, ")."
+
+        # corners
+        if islandBin == ["1", "1", "1", "1"]:
+	    if (row - 1 >= 0) and (col - 1 >= 0) and charArray[row - 1][col - 1] != 'I':
+		return self.islandNWcorner
+	    elif (row - 1 >= 0) and (col + 1 <= n-1) and charArray[row - 1][col + 1] != 'I':
+		return self.islandNEcorner
+	    elif (row + 1 <= m-1) and (col - 1 >= 0) and charArray[row + 1][col - 1] != 'I':
+		return self.islandSWcorner
+	    elif (row + 1 <= m-1) and (col + 1 <= n-1) and charArray[row + 1][col + 1] != 'I':
+		return self.islandSEcorner
 
         # use the string os 0s and 1s a binary index into the array, and return the correct wall
         islandType = int(str(islandBin[3] + islandBin[2] + islandBin[1] + islandBin[0]), 2)
@@ -486,10 +491,10 @@ class Painter:
     def takeLeftTurnNorth(self):
 	# make sure we're facing in the correct direction first
 	if self.planeRotDeg != DIR_EAST:
-	    if self.planeRotDeg == DIR_NORTH:   # turn counterclockwise
+	    if self.planeRotDeg == DIR_SOUTH:   # turn counterclockwise
 	        self.rotatePlaneCounterclockwise(90)
 	    else:       # turn clockwise
-		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_EAST))
+		self.rotatePlaneClockwise(360 - abs(self.planeRotDeg - DIR_EAST))
 
 	startx, starty = self.canvas.coords("plane")  # starting position
 	x = 0.0
@@ -570,3 +575,413 @@ class Painter:
 	                                          image=self.planeImg, anchor=NW, tags="plane")
 	    self.canvas.update()
 	self.planeRotDeg = DIR_WEST
+
+
+    def sBendEastNorth(self):
+	# make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_EAST:
+	    if self.planeRotDeg == DIR_SOUTH:   # turn counterclockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(360 - abs(self.planeRotDeg - DIR_EAST))
+
+        startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_WIDTH
+	    y = (x*x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+        self.planeRotDeg = 315
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_HEIGHT
+	    y = math.sqrt(x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = DIR_EAST
+	
+
+    def sBendEastSouth(self):
+        # make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_EAST:
+	    if self.planeRotDeg == DIR_SOUTH:   # turn counterclockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(360 - abs(self.planeRotDeg - DIR_EAST))
+	
+        startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_WIDTH
+	    y = (x*x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+        self.planeRotDeg = 225
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_HEIGHT
+	    y = math.sqrt(x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = DIR_EAST
+
+
+    def sBendWestNorth(self):
+	# make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_WEST:
+	    if self.planeRotDeg == DIR_NORTH:   # turn counterlockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_WEST))
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_WIDTH
+	    y = (x*x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	
+	self.planeRotDeg = 45
+	
+	startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_HEIGHT
+	    y = math.sqrt(x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = DIR_WEST
+
+
+    def sBendWestSouth(self):
+	# make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_WEST:
+	    if self.planeRotDeg == DIR_NORTH:   # turn counterclockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_WEST))
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_WIDTH
+	    y = (x*x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")    # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = 135
+	
+	startx, starty = self.canvas.coords("plane")  # starting position
+	x = 0.0
+	deg = 0
+	while x <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    x += 1.0/TILE_HEIGHT
+	    y = math.sqrt(x)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = DIR_WEST
+
+
+    def sBendNorthEast(self):
+	# make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_NORTH:
+	    if self.planeRotDeg == DIR_EAST:   # turn counterclockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_NORTH))
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_HEIGHT
+	    x = (y*y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = 315
+
+        startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_WIDTH
+	    x = math.sqrt(y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+        self.planeRotDeg = DIR_NORTH
+
+
+    def sBendNorthWest(self):
+	# make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_NORTH:
+	    if self.planeRotDeg == DIR_EAST:   # turn counterclockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_NORTH))
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_HEIGHT
+	    x = (y*y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+        self.planeRotDeg = 45
+        
+        startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_WIDTH
+	    x = math.sqrt(y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty - y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+        self.planeRotDeg = DIR_NORTH
+
+
+    def sBendSouthEast(self):
+	# make sure we're facing in the correct direction first
+	# make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_SOUTH:
+	    if self.planeRotDeg == DIR_WEST:   # turn counterclockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_SOUTH))
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_HEIGHT
+	    x = (y*y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = 225
+	
+	startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_WIDTH
+	    x = math.sqrt(y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")    # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx + x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = DIR_SOUTH
+
+
+    def sBendSouthWest(self):
+	# make sure we're facing in the correct direction first
+	if self.planeRotDeg != DIR_SOUTH:
+	    if self.planeRotDeg == DIR_WEST:   # turn counterclockwise
+	        self.rotatePlaneCounterclockwise(90)
+	    else:       # turn clockwise
+		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_SOUTH))
+
+	startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_HEIGHT
+	    x = (y*y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_HEIGHT
+	    self.canvas.delete("plane")   # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg - deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = 135
+	
+	startx, starty = self.canvas.coords("plane")  # starting position
+	y = 0.0
+	deg = 0
+	while y <= 1.0:
+	    time.sleep(.025)
+
+	    # calculate values for a hyperbola with a scale of 1
+	    y += 1.0/TILE_WIDTH
+	    x = math.sqrt(y)/2
+	    
+	    # rotate plane and rescale x, y values for this coordinate system
+	    deg += 45.0/TILE_WIDTH
+	    self.canvas.delete("plane")    # get rid of the old plane before making the new one
+	    img = Image.open("Graphics/plane.png")
+	    imgRotated = img.rotate(self.planeRotDeg + deg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(startx - x * TILE_WIDTH, starty + y * TILE_HEIGHT, 
+	                                          image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	self.planeRotDeg = DIR_SOUTH
