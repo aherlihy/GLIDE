@@ -109,7 +109,6 @@ class TileMap:
         self.dummy = False
         self.map_path = map_path
         self.filetomap(map_path)
-        print self
         #sets the plane
         found = False
         self.plane = Airplane(self)
@@ -188,7 +187,6 @@ class TileMap:
         working = runBox.run(self.map_path)
         #working = self.sand.start(self.map_path)
         output = open("output.py","r")
-        print working
         if working:
             import runLevel as run
             #establish the path to pass along to GUI
