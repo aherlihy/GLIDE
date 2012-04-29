@@ -107,6 +107,7 @@ class TileMap:
 
     def __init__(self, map_path):
         #fix init to a set size, and edge in with clouds
+        self.dummy = False
         self.map_path = map_path
         self.filetomap(map_path)
         print self
@@ -174,7 +175,8 @@ class NoPlaneException(Exception):
             #victory condition
             self.py = newy
             self.px = newx
-            raise VictoryException()
+            if self.dummy:
+                raise VictoryException()
         self.py = newy
         self.px = newx
         #TODO update the map
@@ -218,7 +220,7 @@ class NoPlaneException(Exception):
         #TODO get this working?
         return working;
 
-    def runLevel(self):
+    def getLevel(self):
         return self.plane.getMoves()
 
 

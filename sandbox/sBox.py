@@ -47,7 +47,7 @@ class sandbox:
         outfile.write("#!usr/bin/python\n")
         outfile.write("from tilemap import *\n")#NOTE NOTE NOTE: LIMIT ONLY TO USED FUNCTIONS
         outfile.write("from avatar import *\n\n")#SAME : LIMIT ONLY TO ONES THEYRE GOING TO USE
-        outfile.write("def runLevel(plane, map):\n")
+        outfile.write("def runLevel(plane):\n")
 
         codefile = open("code", "r")
         empty = True

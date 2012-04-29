@@ -5,15 +5,46 @@ node type: FunctionDef
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-Name|LINE:5|NAME:map
-node type: Param
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:6|NAME:plane
+node type: Load
+node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:7|NAME:plane
+node type: Load
+node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:8|NAME:plane
+node type: Load
+node type: Load
 node type: For
-Name|LINE:6|NAME:i
+Name|LINE:9|NAME:i
 node type: Store
 node type: Call
-Name|LINE:6|NAME:range
+Name|LINE:9|NAME:range
 node type: Load
 node type: Num
-node type: Num
-node type: Print
-node type: Str
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:10|NAME:plane
+node type: Load
+node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:11|NAME:plane
+node type: Load
+node type: Load
+node type: Expr
+node type: Call
+node type: Attribute
+Name|LINE:12|NAME:plane
+node type: Load
+node type: Load

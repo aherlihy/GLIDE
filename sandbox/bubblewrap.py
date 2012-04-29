@@ -20,5 +20,5 @@ import sys
 mapArg = sys.argv[1]
 map = TileMap(mapArg)
 plane = map.getPlane()
-runLevel(plane, map)
+runLevel(plane)
 
