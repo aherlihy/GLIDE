@@ -1,6 +1,6 @@
 Traceback (most recent call last):
   File "bubblewrap.py", line 22, in <module>
     runLevel(plane)
-  File "/gpfs/main/home/ecacciat/course/cs032/GLIDE/sandbox/runLevel.py", line 6, in runLevel
-    fjksld
-NameError: global name 'fjksld' is not defined
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 6, in runLevel
+    10/0
+ZeroDivisionError: integer division or modulo by zero

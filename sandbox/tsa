@@ -5,14 +5,9 @@ node type: FunctionDef
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: For
-Name|LINE:6|NAME:i
-node type: Store
-node type: Call
-Name|LINE:6|NAME:range
-node type: Load
+node type: Expr
+node type: BinOp
 node type: Num
+node type: Div
 node type: Num
-node type: Print
-node type: Str
 node type: Return
