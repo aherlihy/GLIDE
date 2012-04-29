@@ -90,7 +90,7 @@ def run_this(box, output, map_path):
                    if(currentErrorFile.endswith("runLevel.py")):
                        reasonableError=True
                        break
-           print "linenumber: ", linenumber, " codeline: \"", codeline, "\" currentErrorFile: ", currentErrorFile
+#           print "linenumber: ", linenumber, " codeline: \"", codeline, "\" currentErrorFile: ", currentErrorFile
            if not(reasonableError):
                output.write("Oh no, looks like there was an error that didn't originate in the user's code. It came from " + currentErrorFile + "\n")
            output.write(list[length-1]+"\n")
@@ -148,4 +148,4 @@ def run(map_path):
 #else:
 #    print("no errors :/")
 if __name__ == '__main__':
-    print run("../support/levels/level3")
+    run("../support/levels/level3")

@@ -41,7 +41,7 @@ class sandbox:
     # initializes the level file by appending the user's script to a function definition with the correct imports
     # saves the file as runLevel<#>
     def init_level(self):
-        print("**initing level")
+#        print("**initing level")
         #set up headers
         outfile = open("runLevel.py", "w")
         outfile.write("#!usr/bin/python\n")

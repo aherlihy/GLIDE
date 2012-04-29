@@ -5,7 +5,14 @@ node type: FunctionDef
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: Expr
-Name|LINE:6|NAME:fjksld
+node type: For
+Name|LINE:6|NAME:i
+node type: Store
+node type: Call
+Name|LINE:6|NAME:range
 node type: Load
+node type: Num
+node type: Num
+node type: Print
+node type: Str
 node type: Return
