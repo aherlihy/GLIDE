@@ -1,21 +1,9 @@
+file = open("errorfile", 'w')
+print "this"
+print "this", file
+
 plane.move()
+plane.check()
 plane.move()
-plane.turnLeft()
-plane.move(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

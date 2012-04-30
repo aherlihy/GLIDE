@@ -22,7 +22,10 @@ class ASTvisitor(ast.NodeVisitor):
     # Here I've override generic_visit to print out the name of the node (for debugging). Note that my generic_visit then calls the super's generic_visit to continue the recursive tree traversal
     def generic_visit(self, node):
         file = open("tsa", "a")
-        file.write("node type: " + type(node).__name__ + "\n")
+        file.write("node type: " + type(node).__name__)
+        if (hasattr(node,'lineno')):
+            file.write(" linenumber:" + str(node.lineno))
+        file.write("\n")
         file.close()
         ast.NodeVisitor.generic_visit(self, node) # essentially a call to super
     def visit_Import(self, node):
@@ -36,11 +39,12 @@ class ASTvisitor(ast.NodeVisitor):
         ast.NodeVisitor.generic_visit(self, node) # can recurse using super because it will be overriden by the above def
     def visit_ImportFrom(self, node):
         file = open("astoutput", "a")
-        file.write("ImportFrom|LINE:"+ str(node.lineno))
-        file.write("|FROM:"+ node.module+ "|NAMES:")
-        for name in node.names:
-            file.write(name.name + "|")
-        file.write("\n")
+        if not (str(node.lineno)=="2" or str(node.lineno)=="3"):
+            file.write("ImportFrom|LINE:"+ str(node.lineno))
+            file.write("|FROM:"+ node.module+ "|NAMES:")
+            for name in node.names:
+                file.write(name.name + "|")
+            file.write("\n")
         file.close()
         ast.NodeVisitor.generic_visit(self, node)
     def visit_Name(self, node):
@@ -48,15 +52,20 @@ class ASTvisitor(ast.NodeVisitor):
         file.write("Name|LINE:" + str(node.lineno) + "|NAME:"+ node.id + "\n")
         file.close()
         ast.NodeVisitor.generic_visit(self, node)
-#    def visit_Call(self, node):
-#        file=open("tsa", "a")
-#        file.write("Call|LINE:" + str(node.lineno) + "|NAME:" + str(node.func.value) + "|CTX:" + str(node.func.ctx) + "\n")
-#        for l in node._fields:
-#           print l
-#        print node.func.id
-#        print node.func.ctx
-#        file.close()
-#        ast.NodeVisitor.generic_visit(self, node)
+        return node.id
+    def visit_Call(self, node):
+        file=open("tsa", "a")
+        file.write("Call|LINE:" + str(node.lineno)+"\n")
+        for l in node._fields:
+           print l
+        ast.NodeVisitor.generic_visit(self, node.func)
+        file.close()
+        ast.NodeVisitor.generic_visit(self, node)
+    def visit_Attribute(self, node):
+        print "visiting attribute", node.attr
+        file = open("tsa", "a")
+        file.write("attribute node: " + node.attr + "\n")
+        ast.NodeVisitor.generic_visit(self, node)
 #print "visiting..."
 #visitor = ASTvisitor()
 #file = open(sys.argv[1], "r")

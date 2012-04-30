@@ -1,1 +1,3 @@
+this
+this <open file 'errorfile', mode 'w' at 0xb7512910>
 This file is where the stdout of the subprocess will go. For debugging

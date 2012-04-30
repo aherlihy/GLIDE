@@ -112,7 +112,7 @@ def analyze_ast(box, output):
     file = open("astoutput", "r")
     r = file.read()
 
-    if(r == "ImportFrom|LINE:2|FROM:tilemap|NAMES:*|\nImportFrom|LINE:3|FROM:avatar|NAMES:*|\n"):
+    if(r == ""):
         file.close()
         return True
     else:

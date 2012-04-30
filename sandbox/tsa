@@ -1,33 +1,50 @@
 node type: Module
 node type: alias
 node type: alias
-node type: FunctionDef
+node type: FunctionDef linenumber:5
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: Expr
-node type: Call
-node type: Attribute
-Name|LINE:6|NAME:plane
+node type: Assign linenumber:6
+Name|LINE:6|NAME:file
+node type: Store
+node type: Load
+Call|LINE:6
+Name|LINE:6|NAME:open
+node type: Load
+node type: Str linenumber:6
+node type: Str linenumber:6
+node type: Print linenumber:7
+node type: Str linenumber:7
+node type: Print linenumber:8
+node type: Str linenumber:8
+Name|LINE:8|NAME:file
+node type: Load
+node type: Expr linenumber:10
+Name|LINE:10|NAME:plane
 node type: Load
 node type: Load
-node type: Expr
-node type: Call
-node type: Attribute
-Name|LINE:7|NAME:plane
+Call|LINE:10
+Name|LINE:10|NAME:plane
 node type: Load
 node type: Load
-node type: Expr
-node type: Call
-node type: Attribute
-Name|LINE:8|NAME:plane
+attribute node: move
+node type: Expr linenumber:11
+Name|LINE:11|NAME:plane
 node type: Load
 node type: Load
-node type: Expr
-node type: Call
-node type: Attribute
-Name|LINE:9|NAME:plane
+Call|LINE:11
+Name|LINE:11|NAME:plane
 node type: Load
 node type: Load
-node type: Num
-node type: Return
+attribute node: check
+node type: Expr linenumber:12
+Name|LINE:12|NAME:plane
+node type: Load
+node type: Load
+Call|LINE:12
+Name|LINE:12|NAME:plane
+node type: Load
+node type: Load
+attribute node: move
+node type: Return linenumber:15
