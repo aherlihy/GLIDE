@@ -7,8 +7,6 @@ from Tkinter import TOP, FLAT, RAISED, BOTH, X, Y, WORD, DISABLED, NORMAL, E, W,
 from Painter import Painter
 import tkFont
 import re
-import sys
-#sys.path.append('/home/ecacciat/course/cs032/GLIDE/sandbox')
 from tilemap import *
 
 DIM_X = 1200
@@ -35,13 +33,18 @@ class Environment(Frame):
         Frame.__init__(self, parent, background="MediumTurquoise")
         self.parent = parent
         self.levelFilename = "../support/levels/level"
+        self.stencilFilename = "../support/stencil/level"
+        self.helpFilename = "../support/help/level"
         self.canRun = False
 
         self.initToolbar()
         self.initCanvas()
         self.initTextBoxes()
         self.initUI()
-        self.initLevel(3)
+        
+        self.currLevel = 1
+        self.beatenLevels = []
+        self.initLevel(self.currLevel)
 
 
     def initUI(self):
@@ -53,6 +56,8 @@ class Environment(Frame):
 
 
     def initLevel(self, levelNum):
+	
+	# create the canvas
 	name = self.levelFilename + str(levelNum)
 	self.tilemap = TileMap(name)
 	
@@ -66,6 +71,52 @@ class Environment(Frame):
 	f.close()
 	
 	self.painter = Painter(self.canvas, levelMap)
+	
+	# clear the text editor
+	self.textEditor.delete(1.0, END)
+	
+	# put stencil code into the text editor
+	name = self.stencilFilename + str(levelNum)
+        f = open(name, 'r')
+        lineNum = 0
+	while True:
+	    line = f.readline()
+	    if line == "":
+		break
+	    else:
+		self.textEditor.insert(END, line)
+	f.close()
+	
+	# allow editing for the help box and clear it
+	self.helpBox.config(state=NORMAL)
+	self.helpBox.delete(1.0, END)   # clear text boxes
+	
+	# put help files into the help box - what we want to show on each screen
+        # is in its own string inside the "screens"
+        name = self.helpFilename + str(levelNum)
+        f = open(name, 'r')
+        self.screens = []
+        self.screens.append("")
+        numScreen = 0
+
+	while True:
+	    line = f.readline()
+	    if line == "":
+		break
+	    elif line == "*****\n":
+		self.screens.append("")
+		numScreen += 1
+	    else:
+		self.screens[numScreen] += line
+	f.close()
+	
+	# insert the first screen's text into the help box and set a variable saying so
+	self.helpBox.insert(END, self.screens[0])
+	self.shownScreen = 0
+	
+	# disable editing again
+        self.helpBox.config(state=DISABLED)
+
 
     def initToolbar(self):
         toolbar = Frame(self.parent, relief=FLAT, background="MediumTurquoise")
@@ -98,12 +149,26 @@ class Environment(Frame):
         self.runButton.image = runImg
         self.runButton.grid(row=0, column=3)
 
+        img = Image.open("Graphics/Icons/prevLevelIcon.png")
+        prevLevelImg = ImageTk.PhotoImage(img)  
+        self.prevLevelButton = Button(toolbar, image=prevLevelImg, relief=FLAT, background="Turquoise", state=DISABLED,
+                                 activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.prevLevel)
+        self.prevLevelButton.image = prevLevelImg
+        self.prevLevelButton.grid(row=0, column=4)
+
+        img = Image.open("Graphics/Icons/nextLevelIcon.png")
+        nextLevelImg = ImageTk.PhotoImage(img)  
+        self.nextLevelButton = Button(toolbar, image=nextLevelImg, relief=FLAT, background="Turquoise", state=DISABLED,
+                                 activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.nextLevel)
+        self.nextLevelButton.image = nextLevelImg
+        self.nextLevelButton.grid(row=0, column=5)
+
         img = Image.open("Graphics/Icons/quitIcon.png")
         quitImg = ImageTk.PhotoImage(img)  
         quitButton = Button(toolbar, image=quitImg, relief=FLAT, background="Turquoise",
                             activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.exit)
         quitButton.image = quitImg
-        quitButton.grid(row=0, column=4, sticky=E)
+        quitButton.grid(row=0, column=7, sticky=E)
 
         toolbar.pack(side=TOP, fill=X)
 
@@ -125,17 +190,6 @@ class Environment(Frame):
                                wrap=WORD, height=(DIM_Y - TOOLBAR_Y)/2, yscrollcommand=scrollbar.set)
         self.textEditor.bind("<<Modified>>", self.textEditorModified)
         self.resettingModifiedFlag = False
-
-        # read in text from userTextFile.txt to put into the text editor
-        f = open("userTextFile.txt", 'r')
-        lineNum = 0
-	while True:
-	    line = f.readline()
-	    if line == "":
-		break
-	    else:
-		self.textEditor.insert(END, line)
-	f.close()
 	
 	# add a scrollbar to the left-hand box
 	scrollbar.config(command=self.textEditor.yview)
@@ -143,43 +197,16 @@ class Environment(Frame):
         self.textEditor.pack(side=LEFT, fill=BOTH, expand=1)
         panedWindow.add(leftPanel)
 
-
 	# right hand side: help box, plus buttons to see different help screens
 	customFont = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
 	rightPanel = Frame(panedWindow)
 	boxPanel = Frame(rightPanel, width=DIM_Y/2, height=DIM_X - 2*TOOLBAR_Y)
         self.helpBox = Text(boxPanel, background="LemonChiffon", font=self.customFont2,
                             wrap=WORD, height=15)
-
-        # read in text from helpTextFile.txt to put into the help box - what we want to show on each screen
-        # is in its own string inside the "screens"
-        f = open("helpTextFile.txt", 'r')
-        self.screens = []
-        self.screens.append("")
-        numScreen = 0
-
-	while True:
-	    line = f.readline()
-	    if line == "":
-		break
-	    elif line == "*****\n":
-		self.screens.append("")
-		numScreen += 1
-	    else:
-		self.screens[numScreen] += line
-	f.close()
-	
-	# insert the first screen's text into the help box and set a variable saying so
-	self.helpBox.insert(END, self.screens[0])
-	self.shownScreen = 0
-	
-        self.helpBox.config(state=DISABLED)
         self.helpBox.pack(expand=1)
         boxPanel.pack()
-        
-        # set box panel's size so it doesn't resize
 
-
+        # add buttons to help box
 	helpboxWidth = self.helpBox.winfo_reqwidth()
         buttonBar = Frame(rightPanel, relief=FLAT, background="LemonChiffon", height=BUTTON_Y, width=helpboxWidth)
         prevButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Previous", borderwidth=1,
@@ -199,12 +226,16 @@ class Environment(Frame):
         panedWindow.add(rightPanel)
         panedWindow.pack(fill=BOTH, expand=1)
 
+
+    # deals with making the "run code" button appear grayed-out when the user modifies the
+    # input box, so that you have to re-compile before running
     def clearModifiedFlag(self):
 	self.resettingModifiedFlag = True
 	self.textEditor.edit_modified(False)
 	self.resettingModifiedFlag = False
 
 
+    # same as above comment
     def textEditorModified(self, selfCall=False, event=None):
 	if self.resettingModifiedFlag == True:
 	    return
@@ -213,6 +244,7 @@ class Environment(Frame):
 	self.clearModifiedFlag()
 
 
+    # Show the previous screen in the help box
     def prevScreen(self):
 	if self.shownScreen == 0:
 	    pass
@@ -224,6 +256,7 @@ class Environment(Frame):
 	    self.helpBox.config(state=DISABLED)  # turn off editing again
 
 
+    # Show the last ("Your Code") screen in the help box
     def lastScreen(self):
 	if self.shownScreen == (len(self.screens)-1):
 	    pass
@@ -235,6 +268,7 @@ class Environment(Frame):
             self.helpBox.config(state=DISABLED)   # turn off editing
 
 
+    # Show the next screen in the help box
     def nextScreen(self):
 	if self.shownScreen == (len(self.screens)-1):
 	    pass
@@ -245,6 +279,8 @@ class Environment(Frame):
 	    self.helpBox.insert(END, self.screens[self.shownScreen])
             self.helpBox.config(state=DISABLED)   # turn off editing
 
+
+    # Exit the GUI
     def exit(self):
 	self.cleanUp()
         self.quit()
@@ -314,7 +350,6 @@ class Environment(Frame):
 	    self.painter.initPlane()
 
 	    cmdList = self.tilemap.getLevel()
-	    print cmdList
 	    
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north
@@ -399,6 +434,8 @@ class Environment(Frame):
 	    if match != None and match.start() == len(cmdList)-1:    # actual win
 		self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to" \
 				    "move on, or try out other cool stuff with your plane here."
+		self.beatenLevels.append(self.currLevel)
+		self.nextLevelButton.config(state=NORMAL)
 	    elif match != None:    # inefficient win
 		self.screens[-1] = "You reached the goal, but your code contained some extra stuff -" \
 				    "try making your plane reach the goal in as few lines of code as possible."
@@ -411,6 +448,32 @@ class Environment(Frame):
 	    self.helpBox.delete(1.0, END)   # clear text box
 	    self.helpBox.insert(END, self.screens[self.shownScreen])
 	    self.helpBox.config(state=DISABLED)   # turn off editing
+
+
+    def prevLevel(self):
+	self.currLevel -= 1
+	self.initLevel(self.currLevel)
+	
+	# do the appropriate graying-out of buttons
+	if self.currLevel == 1:
+	    self.prevLevelButton.config(state=DISABLED)
+	else:
+	    self.prevLevelButton.config(state=NORMAL)
+	self.nextLevelButton.config(state=NORMAL)
+	self.runButton.config(state=DISABLED)
+
+
+    def nextLevel(self):
+	self.currLevel += 1
+	self.initLevel(self.currLevel)
+	
+	# do the appropriate graying-out of buttons
+	if self.currLevel in self.beatenLevels and self.currLevel < 3:
+	    self.nextLevelButton.config(state=NORMAL)
+	else:
+	    self.nextLevelButton.config(state=DISABLED)
+	self.prevLevelButton.config(state=NORMAL)
+	self.runButton.config(state=DISABLED)
 
 
     def cleanUp(self):
