@@ -3,16 +3,12 @@ from tilemap import *
 from avatar import *
 
 def runLevel(plane):
-    import sys
-    from avatar import *
-    file = open("errorfile", 'w')
-    print "this"
-    print "this", file
-    import sys
     plane.move()
-    sys.argv[0]
     plane.move()
-    
-    
-    sys.getprofile()
+    plane.turnLeft()
+    plane.turnRight()
+    plane.turnLeft()
+    f = open("output.py", "r")
+    import sys
+    sys.showprofile()
     return

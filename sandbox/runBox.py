@@ -142,7 +142,7 @@ def analyze_ast(box, output):
                           if(c[0]=="ATTRIBUTE"):
                                output.write("\"" + c[1] + "\"")
                           if(c[0]=="NAME"):
-                               output.write("on \"" + c[1] + "\"")
+                               output.write(" on \"" + c[1] + "\"")
                      output.write("\n\n")
 #        for line in list:
 #            if(line==""):
@@ -156,9 +156,13 @@ def analyze_ast(box, output):
 #                if(c[0]=="FROM"):
 #                    output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
                     #don't do anything with the name of the imported functions - not really important so not printed. Basically, as soon as the line has been identified there's no question that they shouldn't be importing it    
-        output.close()
+       
         file.close()
-        return False
+        if(noErrors):
+            return True
+        else:
+            output.close()
+            return False
 def run(map_path):
     output = open("output.py", "w")
     box = sandbox() 

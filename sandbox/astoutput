@@ -1,14 +1,16 @@
 |NAME:plane
-Import|LINE:6|FROM:sys|
+Call|LINE:6|ATTRIBUTE:move|NAME:plane
 
-ImportFrom|LINE:7|FROM:avatar|NAMES:*|
-|NAME:file
-Call|LINE:8|NAME:open
-|NAME:file
-Import|LINE:11|FROM:sys|
+Call|LINE:7|ATTRIBUTE:move|NAME:plane
 
-Call|LINE:12|ATTRIBUTE:move|NAME:plane
-|ATTRIBUTE:argv|NAME:sys
-Call|LINE:14|ATTRIBUTE:move|NAME:plane
+Call|LINE:8|ATTRIBUTE:turnLeft|NAME:plane
 
-Call|LINE:17|ATTRIBUTE:getprofile|NAME:sys
+Call|LINE:9|ATTRIBUTE:turnRight|NAME:plane
+
+Call|LINE:10|ATTRIBUTE:turnLeft|NAME:plane
+|NAME:f
+Call|LINE:11|NAME:open
+
+Import|LINE:12|FROM:sys|
+
+Call|LINE:13|ATTRIBUTE:showprofile|NAME:sys

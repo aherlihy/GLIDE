@@ -5,37 +5,36 @@ node type: FunctionDef linenumber:5
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: alias
-node type: alias
-node type: Assign linenumber:8
-Name|LINE:8|NAME:file
-node type: Store
+node type: Expr linenumber:6
+Call|LINE:6
+Name|LINE:6|NAME:plane
+attribute node: move
+node type: Expr linenumber:7
+Call|LINE:7
+Name|LINE:7|NAME:plane
+attribute node: move
+node type: Expr linenumber:8
 Call|LINE:8
-Name|LINE:8|NAME:open
-node type: Str linenumber:8
-node type: Str linenumber:8
-node type: Print linenumber:9
-node type: Str linenumber:9
-node type: Print linenumber:10
-node type: Str linenumber:10
-Name|LINE:10|NAME:file
+Name|LINE:8|NAME:plane
+attribute node: turnLeft
+node type: Expr linenumber:9
+Call|LINE:9
+Name|LINE:9|NAME:plane
+attribute node: turnRight
+node type: Expr linenumber:10
+Call|LINE:10
+Name|LINE:10|NAME:plane
+attribute node: turnLeft
+node type: Assign linenumber:11
+Name|LINE:11|NAME:f
+node type: Store
+Call|LINE:11
+Name|LINE:11|NAME:open
+node type: Str linenumber:11
+node type: Str linenumber:11
 node type: alias
-node type: Expr linenumber:12
-Call|LINE:12
-Name|LINE:12|NAME:plane
-attribute node: move
 node type: Expr linenumber:13
-node type: Subscript linenumber:13
+Call|LINE:13
 Name|LINE:13|NAME:sys
-attribute node: argv
-node type: Index
-node type: Num linenumber:13
-node type: Expr linenumber:14
-Call|LINE:14
-Name|LINE:14|NAME:plane
-attribute node: move
-node type: Expr linenumber:17
-Call|LINE:17
-Name|LINE:17|NAME:sys
-attribute node: getprofile
-node type: Return linenumber:18
+attribute node: showprofile
+node type: Return linenumber:14
