@@ -1,0 +1,14 @@
+|NAME:plane
+Import|LINE:6|FROM:sys|
+
+ImportFrom|LINE:7|FROM:avatar|NAMES:*|
+|NAME:file
+Call|LINE:8|NAME:open
+|NAME:file
+Import|LINE:11|FROM:sys|
+
+Call|LINE:12|ATTRIBUTE:move|NAME:plane
+|ATTRIBUTE:argv|NAME:sys
+Call|LINE:14|ATTRIBUTE:move|NAME:plane
+
+Call|LINE:17|ATTRIBUTE:getprofile|NAME:sys

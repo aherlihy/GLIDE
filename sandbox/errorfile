@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "bubblewrap.py", line 22, in <module>
-    runLevel(plane)
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 11, in runLevel
-    plane.check()
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/avatar.py", line 90, in check
-    return self.tileMap.check(self.heading)
-TypeError: check() takes exactly 1 argument (2 given)

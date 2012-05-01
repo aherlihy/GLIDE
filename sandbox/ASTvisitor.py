@@ -30,7 +30,7 @@ class ASTvisitor(ast.NodeVisitor):
         ast.NodeVisitor.generic_visit(self, node) # essentially a call to super
     def visit_Import(self, node):
         file = open("astoutput", "a")
-        file.write("Import|LINE:"+ str(node.lineno)+ "|FROM:")
+        file.write("\nImport|LINE:"+ str(node.lineno)+ "|FROM:")
 #        file.write("Import:FROM:"+ node.module+ "\n")
         for name in node.names:
             file.write(name.name + "|")
@@ -40,7 +40,7 @@ class ASTvisitor(ast.NodeVisitor):
     def visit_ImportFrom(self, node):
         file = open("astoutput", "a")
         if not (str(node.lineno)=="2" or str(node.lineno)=="3"):
-            file.write("ImportFrom|LINE:"+ str(node.lineno))
+            file.write("\nImportFrom|LINE:"+ str(node.lineno))
             file.write("|FROM:"+ node.module+ "|NAMES:")
             for name in node.names:
                 file.write(name.name + "|")
@@ -49,23 +49,36 @@ class ASTvisitor(ast.NodeVisitor):
         ast.NodeVisitor.generic_visit(self, node)
     def visit_Name(self, node):
         file = open("tsa", "a")
+        out=open("astoutput", "a")
         file.write("Name|LINE:" + str(node.lineno) + "|NAME:"+ node.id + "\n")
+        out.write("|NAME:"+ node.id)
+        out.close()
         file.close()
+        print "visiting name node: ", node.id
         ast.NodeVisitor.generic_visit(self, node)
         return node.id
     def visit_Call(self, node):
         file=open("tsa", "a")
+        out=open("astoutput", "a")
+        out.write("\nCall|LINE:" + str(node.lineno))
         file.write("Call|LINE:" + str(node.lineno)+"\n")
-        for l in node._fields:
-           print l
-        ast.NodeVisitor.generic_visit(self, node.func)
+        
         file.close()
+        out.close()
         ast.NodeVisitor.generic_visit(self, node)
+        out=open("astoutput", "a")
+        out.write("\n")
+        out.close()
     def visit_Attribute(self, node):
         print "visiting attribute", node.attr
         file = open("tsa", "a")
+        out = open("astoutput", "a")
+        out.write("|ATTRIBUTE:" + node.attr)
         file.write("attribute node: " + node.attr + "\n")
+        out.close()
         ast.NodeVisitor.generic_visit(self, node)
+    def visit_Load(self, node):
+        pass
 #print "visiting..."
 #visitor = ASTvisitor()
 #file = open(sys.argv[1], "r")
