@@ -112,27 +112,57 @@ def analyze_ast(box, output):
     file = open("astoutput", "r")
     r = file.read()
 
-    if(r == "ImportFrom|LINE:2|FROM:tilemap|NAMES:*|\nImportFrom|LINE:3|FROM:avatar|NAMES:*|\n"):
+    if(r == ""):
         file.close()
         return True
     else:
-        output.write("Hey! Great job, it looks like your code is correct. Problem is, it's trying to do something that's not allowed.\n\n")
+#        output.write("Hey! Great job, it looks like your code is correct. Problem is, it's trying to do something that's not allowed.\n\n")
         list = r.split('\n')
+        noErrors=True
         for line in list:
-            if(line==""):
-                break
-            a = line.split('|')
-            output.write("The module you used was " + a[0] + "\n")
-            b = a[1].split(':')
-            output.write("line " + b[1] + "\n")
-            for i in range(2, len(a)):
-                c=a[i].split(':')
-                if(c[0]=="FROM"):
-                    output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
+             if(line.startswith("|")):
+                 continue
+             elif(line.startswith("Import")):
+                 noErrors=False
+                 breaks=line.split('|')
+                 output.write("The module you used was " + breaks[0] + " on line " + breaks[1].split(':')[1] + "\n")
+                 output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
+             elif(line.startswith("Call")):
+                 breaks=line.split('|')
+                 if("NAME:plane" in line):
+                     continue
+                 else:
+                     noErrors=False
+                     output.write("It looks like you're trying to call a function that's not allowed.\n")
+                     for b in breaks[1:]:
+                          print "b", b
+                          c = b.split(':')
+                          if(c[0]=="LINE"):
+                               output.write("On line " + c[1]+ " you call ")
+                          if(c[0]=="ATTRIBUTE"):
+                               output.write("\"" + c[1] + "\"")
+                          if(c[0]=="NAME"):
+                               output.write(" on \"" + c[1] + "\"")
+                     output.write("\n\n")
+#        for line in list:
+#            if(line==""):
+#                break
+#            a = line.split('|')
+#            output.write("The module you used was " + a[0] + "\n")
+#            b = a[1].split(':')
+#            output.write("line " + b[1] + "\n")
+#            for i in range(2, len(a)):
+#                c=a[i].split(':')
+#                if(c[0]=="FROM"):
+#                    output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
                     #don't do anything with the name of the imported functions - not really important so not printed. Basically, as soon as the line has been identified there's no question that they shouldn't be importing it    
-        output.close()
+       
         file.close()
-        return False
+        if(noErrors):
+            return True
+        else:
+            output.close()
+            return False
 def run(map_path):
     output = open("output.py", "w")
     box = sandbox() 
