@@ -40,7 +40,7 @@ class sandbox:
 
     # initializes the level file by appending the user's script to a function definition with the correct imports
     # saves the file as runLevel<#>
-    def init_level(self):
+    def init_level(self, level, user):
 #        print("**initing level")
         #set up headers
         outfile = open("runLevel.py", "w")
@@ -48,8 +48,8 @@ class sandbox:
         outfile.write("from tilemap import *\n")#NOTE NOTE NOTE: LIMIT ONLY TO USED FUNCTIONS
         outfile.write("from avatar import *\n\n")#SAME : LIMIT ONLY TO ONES THEYRE GOING TO USE
         outfile.write("def runLevel(plane):\n")
-
-        codefile = open("../sandbox/code", "r")
+        code = "code" + str(level) + user
+        codefile = open(code, "r")
         empty = True
 
         #append each line in codefile to outfile, indenting appropriately

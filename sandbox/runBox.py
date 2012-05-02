@@ -129,7 +129,7 @@ def analyze_ast(box, output):
                  output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
              elif(line.startswith("Call")):
                  breaks=line.split('|')
-                 if("NAME:plane" in line):
+                 if(("NAME:plane" in line) or ("NAME:range" in line)):
                      continue
                  else:
                      noErrors=False
@@ -163,10 +163,10 @@ def analyze_ast(box, output):
         else:
             output.close()
             return False
-def run(map_path):
+def run(map_path, level, user):
     output = open("output.py", "w")
     box = sandbox() 
-    if not(box.init_level()):
+    if not(box.init_level(level, user)):
         output.write("ERROR:EMPTY")
         output.close()
         return False
@@ -186,4 +186,4 @@ def run(map_path):
 #else:
 #    print("no errors :/")
 if __name__ == '__main__':
-    run("../support/levels/level3")
+    run("../support/levels/level3", 3, "anna")
