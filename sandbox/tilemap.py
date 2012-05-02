@@ -115,13 +115,15 @@ class TileMap:
 
     def __init__(self, map_path):
         #fix init to a set size, and edge in with clouds
-        self.level = int(map_path[5:])
+        self.level = int(map_path[len(map_path)-1:])
         self.dummy = False
         self.map_path = map_path
         self.filetomap(map_path)
         if self.level == 5:
+            pass;
             #TODO randomized Binary search stuff
-        else if self.level == 6:
+        elif self.level == 6:
+            pass;
             #TODO drunken walk stuff
         #sets the plane
         found = False
@@ -136,6 +138,7 @@ class TileMap:
             raise NoPlaneException() #there wasn't a plane 
     
     def createMaze(self):
+        pass;
         #TODO Anna, I need your help here
 
 
