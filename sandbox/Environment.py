@@ -216,7 +216,8 @@ class Environment(Frame):
         leftPanel = Frame(panedWindow)
         scrollbar = Scrollbar(leftPanel, orient=VERTICAL)
         self.textEditor = Text(leftPanel, background="PaleTurquoise", width=MAX_CHARS, font=self.customFont2,
-                               wrap=WORD, height=(DIM_Y - TOOLBAR_Y)/2, yscrollcommand=scrollbar.set)
+                               wrap=WORD, height=(DIM_Y - TOOLBAR_Y)/2, yscrollcommand=scrollbar.set,
+                               selectbackground="Turquoise")
         self.textEditor.bind("<<Modified>>", self.textEditorModified)
         self.resettingModifiedFlag = False
 	
@@ -230,7 +231,7 @@ class Environment(Frame):
 	customFont = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
 	rightPanel = Frame(panedWindow)
 	boxPanel = Frame(rightPanel, width=DIM_Y/2, height=DIM_X - 2*TOOLBAR_Y)
-        self.helpBox = Text(boxPanel, background="LemonChiffon", font=self.customFont2,
+        self.helpBox = Text(boxPanel, background="LemonChiffon", font=self.customFont2, selectbackground="Gold",
                             wrap=WORD, height=15)
         self.helpBox.pack(expand=1)
         boxPanel.pack()
@@ -238,6 +239,7 @@ class Environment(Frame):
         # add buttons to help box
 	helpboxWidth = self.helpBox.winfo_reqwidth()
         buttonBar = Frame(rightPanel, relief=FLAT, background="LemonChiffon", height=BUTTON_Y, width=helpboxWidth)
+
         prevButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Previous", borderwidth=1,
                                 activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.prevScreen,
                                 font=customFont)
@@ -247,10 +249,15 @@ class Environment(Frame):
         nextButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Next", borderwidth=1,
                                 activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.nextScreen,
                                 font=customFont)
+
 	prevButton.pack(side=LEFT)
-	yourCodeButton.pack(side=LEFT, padx=103)
-	nextButton.pack(side=LEFT)
-	buttonBar.pack(anchor=W)
+	nextButton.pack(side=RIGHT)
+	yourCodeButton.pack(padx=103)
+
+	buttonBar.pack(fill=X)
+	
+	# set up tags to highlight errors in the text editor
+	self.textEditor.tag_config("error", background="OrangeRed", foreground="White")
 	
         panedWindow.add(rightPanel)
         panedWindow.pack(fill=BOTH, expand=1)
@@ -340,7 +347,29 @@ class Environment(Frame):
         self.painter.hideCheckingText()
 
         if not noError:
-	    # the error line to highlight in the code
+	    self.handleError()
+
+        else:
+	    # reset plane
+	    self.painter.initPlane()
+	    
+	    # make sure no lines are highlighted as error lines
+	    self.textEditor.tag_remove("error", 1.0, END)
+	    
+	    self.screens[-1] = "Yay! No compile or runtime errors!"
+	    self.runButton.config(state=NORMAL)
+	    self.canRun = True
+
+	# show the new text in the "your code" part of the help box
+	self.helpBox.config(state=NORMAL)   # turn on editing
+	self.shownScreen = len(self.screens)-1
+	self.helpBox.delete(1.0, END)   # clear text box
+	self.helpBox.insert(END, self.screens[self.shownScreen])
+	self.helpBox.config(state=DISABLED)   # turn off editing
+
+
+    def handleError(self):
+	# the error line to highlight in the code
 	    errorLine = 0
 
 	    # read in the error file
@@ -355,6 +384,9 @@ class Environment(Frame):
 		    errorLine = int(lineStuff[1]) - 5
 		    line = "line: " + str(errorLine) + "\n"
 		    errText += line
+		    
+		    # highlight line in textEditor
+		    self.textEditor.tag_add("error", "%d.%d" % (errorLine, 0), "%d.%s" % (errorLine, END))
 		else:
 		    errText += line
 	    f.close()
@@ -362,21 +394,6 @@ class Environment(Frame):
             # set the error text in the self.screens variable
             self.screens[-1] = errText
             self.runButton.config(state=DISABLED)
-
-        else:
-	    # reset plane
-	    self.painter.initPlane()
-	    
-	    self.screens[-1] = "Yay! No compile or runtime errors!"
-	    self.runButton.config(state=NORMAL)
-	    self.canRun = True
-
-	# show the new text in the "your code" part of the help box
-	self.helpBox.config(state=NORMAL)   # turn on editing
-	self.shownScreen = len(self.screens)-1
-	self.helpBox.delete(1.0, END)   # clear text box
-	self.helpBox.insert(END, self.screens[self.shownScreen])
-	self.helpBox.config(state=DISABLED)   # turn off editing
 
 
     # Get the list of commands to execute from the tilemap and tell the painter to do them. This
@@ -476,14 +493,19 @@ class Environment(Frame):
 	    # check for a win, or an "inefficient" win - reached goal but had extra cmds at end
 	    match = re.search('7', cmdList)
 	    if match != None and match.start() == len(cmdList)-1:    # actual win
-		self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to" \
+		self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to " \
 				    "move on, or try out other cool stuff with your plane here."
 		self.beatenLevels.append(self.currLevel)
 		currStates[5] = "normal"
-	    elif match != None:    # inefficient win
-		self.screens[-1] = "You reached the goal, but your code contained some extra stuff -" \
-				    "try making your plane reach the goal in as few lines of code as possible."
-	    else:      # didn't hit goal at all
+		self.painter.animateWin()
+
+            # inefficient win
+	    elif match != None:
+		self.screens[-1] = "You passed the goal - looks your code contained some extra stuff. " \
+				    "Try making your plane reach the goal in as few moves as possible."
+
+            # didn't hit goal at all
+            else:
 		self.screens[-1] = "Oops! Your plane didn't make it to the goal."
 
 	    # show the new text in the "your code" part of the help box
