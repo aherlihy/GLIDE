@@ -3,12 +3,13 @@ from tilemap import *
 from avatar import *
 
 def runLevel(plane):
-    plane.move()
-    plane.move()
+    for i in range(0,3):
+        plane.move()
     plane.turnLeft()
+    plane.move()
     plane.turnRight()
+    for i in range(0,6):
+        plane.move()
     plane.turnLeft()
-    f = open("output.py", "r")
-    import sys
-    sys.showprofile()
+    plane.move()
     return
