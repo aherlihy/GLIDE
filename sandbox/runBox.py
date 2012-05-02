@@ -163,10 +163,10 @@ def analyze_ast(box, output):
         else:
             output.close()
             return False
-def run(map_path):
+def run(map_path, level, user):
     output = open("output.py", "w")
     box = sandbox() 
-    if not(box.init_level()):
+    if not(box.init_level(level, user)):
         output.write("ERROR:EMPTY")
         output.close()
         return False
@@ -186,4 +186,4 @@ def run(map_path):
 #else:
 #    print("no errors :/")
 if __name__ == '__main__':
-    run("../support/levels/level3")
+    run("../support/levels/level3", 3, "anna")

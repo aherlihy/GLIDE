@@ -54,7 +54,7 @@ class ASTvisitor(ast.NodeVisitor):
         out.write("|NAME:"+ node.id)
         out.close()
         file.close()
-        print "visiting name node: ", node.id
+#        print "visiting name node: ", node.id
         ast.NodeVisitor.generic_visit(self, node)
         return node.id
     def visit_Call(self, node):
@@ -70,7 +70,7 @@ class ASTvisitor(ast.NodeVisitor):
         out.write("\n")
         out.close()
     def visit_Attribute(self, node):
-        print "visiting attribute", node.attr
+#        print "visiting attribute", node.attr
         file = open("tsa", "a")
         out = open("astoutput", "a")
         out.write("|ATTRIBUTE:" + node.attr)
