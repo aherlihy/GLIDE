@@ -5,6 +5,7 @@ from Tkinter import *
 from PIL import Image, ImageTk
 import time
 import cmath, math
+import tkFont
 
 TILE_WIDTH = 48
 TILE_HEIGHT = 44
@@ -26,7 +27,14 @@ class Painter:
 
         self.canvas = canvas
         self.paintMap(charArray)
+        
+        self.waitingOutline = self.canvas.create_rectangle(460, 90, 720, 130, fill="Yellow",
+                                                           dash='3', width=2, state=HIDDEN)
+        self.waitingText = self.canvas.create_text(588, 110, font=tkFont.Font(family="Pupcat", size=20, 
+	                                           weight=tkFont.BOLD), text="Checking your code...", state=HIDDEN)
 
+        self.firework((550, 350), 'red')
+        self.firework((600, 300), 'blue')
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -141,6 +149,7 @@ class Painter:
         # after all tiles have been set, draw the plane so it's on top of everything else
         self.initPlane()
 
+
     def makeWall(self, charArray, row, col):
         """ Called when we get a wall character in the charArray. Examines the cells
             to the top, bottom, left, and right of the cell at (row, col) to determine
@@ -253,6 +262,15 @@ class Painter:
         self.canvas.coords("plane", self.planeX, self.planeY)
         self.canvas.update()
 
+
+    def showCheckingText(self):
+	self.canvas.itemconfig(self.waitingOutline, state=NORMAL)
+        self.canvas.itemconfig(self.waitingText, state=NORMAL)
+
+
+    def hideCheckingText(self):
+	self.canvas.itemconfig(self.waitingOutline, state=HIDDEN)
+	self.canvas.itemconfig(self.waitingText, state=HIDDEN)
 
     def movePlaneEast(self):
 	# make sure we're facing in the correct direction first
@@ -986,3 +1004,73 @@ class Painter:
 	                                          image=self.planeImg, anchor=NW, tags="plane")
 	    self.canvas.update()
 	self.planeRotDeg = DIR_SOUTH
+
+
+    def firework(self, startPos, color):
+	x, y = startPos[0], startPos[1]
+	
+	l1 = self.canvas.create_line(x, y, x+10, y+10, fill=color, width=3, smooth=1)
+	l2 = self.canvas.create_line(x+10, y+10, x+20, y, fill=color, width=3, smooth=1)
+	l3 = self.canvas.create_line(x+11, y+10, x+21, y+10, fill=color, width=3, smooth=1)
+	l4 = self.canvas.create_line(x+9, y+10, x-1, y+10, fill=color, width=3, smooth=1)
+        self.canvas.update()
+
+        time.sleep(.5)
+        self.canvas.delete(l1)
+        self.canvas.delete(l2)
+        self.canvas.delete(l3)
+        self.canvas.delete(l4)
+        l1 = self.canvas.create_line(x-4, y, x+6, y+6, fill=color, width=3, smooth=1)
+        l2 = self.canvas.create_line(x+14, y+6, x+24, y, fill=color, width=3, smooth=1)
+        l3 = self.canvas.create_line(x+15, y+10, x+25, y+14, fill=color, width=3, smooth=1)
+        l4 = self.canvas.create_line(x+5, y+10, x-5, y+14, fill=color, width=3, smooth=1)
+        self.canvas.update()
+
+        time.sleep(.5)
+        self.canvas.delete(l1)
+        self.canvas.delete(l2)
+        self.canvas.delete(l3)
+        self.canvas.delete(l4)
+        l1 = self.canvas.create_line(x-8, y, x+2, y+2, fill=color, width=3, smooth=1)
+        l2 = self.canvas.create_line(x+18, y+2, x+28, y, fill=color, width=3, smooth=1)
+        l3 = self.canvas.create_line(x+19, y+12, x+29, y+19, fill=color, width=3, smooth=1)
+        l4 = self.canvas.create_line(x+1, y+12, x-9, y+19, fill=color, width=3, smooth=1)
+        self.canvas.update()
+
+        time.sleep(.5)
+        self.canvas.delete(l1)
+        self.canvas.delete(l2)
+        self.canvas.delete(l3)
+        self.canvas.delete(l4)
+        l1 = self.canvas.create_line(x-12, y, x-2, y, fill=color, width=3, smooth=1)
+        l2 = self.canvas.create_line(x+22, y, x+32, y, fill=color, width=3, smooth=1)
+        l3 = self.canvas.create_line(x+23, y+13, x+28, y+23, fill=color, width=3, smooth=1)
+        l4 = self.canvas.create_line(x-3, y+13, x-8, y+23, fill=color, width=3, smooth=1)
+        self.canvas.update()
+
+        time.sleep(.5)
+        self.canvas.delete(l1)
+        self.canvas.delete(l2)
+        self.canvas.delete(l3)
+        self.canvas.delete(l4)
+        l1 = self.canvas.create_line(x-16, y+3, x-6, y-2, fill=color, width=3, smooth=1)
+        l2 = self.canvas.create_line(x+36, y+3, x+26, y-2, fill=color, width=3, smooth=1)
+        l3 = self.canvas.create_line(x+28, y+15, x+29, y+24, fill=color, width=3, smooth=1)
+        l4 = self.canvas.create_line(x-8, y+15, x-9, y+24, fill=color, width=3, smooth=1)
+        self.canvas.update()
+
+        time.sleep(.5)
+        self.canvas.delete(l1)
+        self.canvas.delete(l2)
+        self.canvas.delete(l3)
+        self.canvas.delete(l4)
+        l1 = self.canvas.create_line(x-18, y+8, x-12, y, fill=color, width=3, smooth=1)
+        l2 = self.canvas.create_line(x+38, y+8, x+32, y, fill=color, width=3, smooth=1)
+        l3 = self.canvas.create_line(x+28, y+18, x+29, y+27, fill=color, width=3, smooth=1)
+        l4 = self.canvas.create_line(x-8, y+18, x-9, y+27, fill=color, width=3, smooth=1)
+        
+        time.sleep(.5)
+        self.canvas.delete(l1)
+        self.canvas.delete(l2)
+        self.canvas.delete(l3)
+        self.canvas.delete(l4)
