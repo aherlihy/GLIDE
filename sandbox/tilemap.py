@@ -2,6 +2,7 @@
 import sys
 sys.path.append('/home/ecacciat/GLIDE/sandbox');
 import runBox
+import random
 from avatar import *
 
 """ Map Module
@@ -42,6 +43,12 @@ class NoPlaneException(Exception):
     def __str__(self):
         return repr(self.value);
 
+class OutOfGuessException(Exception):
+    def __init__(self, value="You're out of guesses!"):
+        self.value = value;
+    def __str__(self):
+        return repr(self.value);
+
 
 class Tile:
     """Map Tile Class
@@ -53,8 +60,8 @@ class Tile:
     """
 
     def __init__(self, value= "AIR") :
-        self.valid = ["AIR","ISLAND","WALL","GATE","PLANE"]
-        self.bitval = ["A","I","W","G","P"]
+        self.valid = ["AIR","ISLAND","WALL","GATE","PLANE","DESK"]
+        self.bitval = ["A","I","W","G","P","?"]
         self.value = "NULL"
         if value in self.valid:
             self.value = value
@@ -81,6 +88,8 @@ class Tile:
             return "G";
         if self.value == "PLANE":
             return "P";
+        if self.value == "DESK":
+            return "?"
 
     def getType(self):
         return self.value;
@@ -106,9 +115,14 @@ class TileMap:
 
     def __init__(self, map_path):
         #fix init to a set size, and edge in with clouds
+        self.level = int(map_path[5:])
         self.dummy = False
         self.map_path = map_path
         self.filetomap(map_path)
+        if self.level == 5:
+            #TODO randomized Binary search stuff
+        else if self.level == 6:
+            #TODO drunken walk stuff
         #sets the plane
         found = False
         self.plane = Airplane(self)
@@ -120,10 +134,41 @@ class TileMap:
                     self.px = x
         if found == False:
             raise NoPlaneException() #there wasn't a plane 
-    """
-    The following methods are used for navigating the plane around the
-    map.
-    """
+    
+    def createMaze(self):
+        #TODO Anna, I need your help here
+
+
+    def initBinary(self):
+        #TODO for the potential boxes in the maze, create random names
+        names = ["AARON","ALEXA","BETTY","BILL","CAROL","COREY","DIANNE",
+                "DYLAN","ELIZA","ETHAN","FRANK","FRANNIE","GILDENSTERN","GEORGIA",
+                "HIDALGO","HAMLET","ISABELLE","ISAAC","JOHN","JENNA","KIT",
+                "KATE","LAURA","LIAM","MALCOLM","MATHILDA","NAIOMI","NATHAN",
+                "OREK","OTHELLO","PAUL","PRINCE","QUINCY","QUINN","ROSENCRANTZ",
+                "RYAN","SAM","SHIRLEY","TINA","TOM","ULYSSES","UGENE","VANESSA",
+                "VING","WALDO","WITT","XANDER","XENA","YOLANDA","YVETTE",
+                "ZACH","ZIM"]
+        use = ["MARY"]
+        for i in xrange(21):
+            use.append(names.pop(random.randint(0,len(names)-1)))
+        use.sort()
+        self.names = use
+        self.guess = 5
+        
+    def askName(self):
+        if self.grid[self.py][self.px].getType() != "DESK":
+            return None;
+        num = self.py-2
+        #TODO animate the desk turning over
+        if use[num]=="MARY":
+            raise VictoryException()
+        else:
+            self.guess -= 1
+            if self.guess == 0:
+                raise OutOfGuessException()
+            return use[num]
+
     def getPlane(self):
         """This method sets the coordinates for a plane that has
         been added to the map from a working file.
@@ -180,9 +225,9 @@ class TileMap:
             return self.grid[self.px][self.py+1].getType()
 
 
-    def runLevelDummy(self, user_path):
+    def runLevelDummy(self, user_path, user_name):
 
-        working = runBox.run(self.map_path)
+        working = runBox.run(self.map_path, self.level, user_name)
         #working = self.sand.start(self.map_path)
         output = open("output.py","r")
         if working:
