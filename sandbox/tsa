@@ -5,16 +5,19 @@ node type: FunctionDef
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
+node type: alias
 node type: Expr
 node type: Call
 node type: Attribute
-Name|LINE:6|NAME:plane
+Name|LINE:7|NAME:sys
 node type: Load
 node type: Load
-node type: Expr
+node type: Assign
+Name|LINE:8|NAME:file
+node type: Store
 node type: Call
-node type: Attribute
-Name|LINE:7|NAME:plane
+Name|LINE:8|NAME:open
 node type: Load
-node type: Load
+node type: Str
+node type: Str
 node type: Return

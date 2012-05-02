@@ -9,6 +9,8 @@ import tkFont
 import re
 from tilemap import *
 
+import time
+
 DIM_X = 1200
 DIM_Y = 900
 TOOLBAR_Y = 70
@@ -123,24 +125,24 @@ class Environment(Frame):
 
         img = Image.open("Graphics/Icons/saveIcon.png")
         saveImg1 = ImageTk.PhotoImage(img)  
-        saveLevelButton = Button(toolbar, image=saveImg1, relief=FLAT, background="Turquoise",
-                                 activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.save)
-        saveLevelButton.image = saveImg1
-        saveLevelButton.grid(row=0, column=0)
+        self.saveLevelButton = Button(toolbar, image=saveImg1, relief=FLAT, background="Turquoise",
+                                      activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.save)
+        self.saveLevelButton.image = saveImg1
+        self.saveLevelButton.grid(row=0, column=0)
 
         img = Image.open("Graphics/Icons/loadIcon.png")
-        runImg = ImageTk.PhotoImage(img)  
-        runButton = Button(toolbar, image=runImg, relief=FLAT, background="Turquoise",
-                           activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.load)
-        runButton.image = runImg
-        runButton.grid(row=0, column=1)
+        loadImg = ImageTk.PhotoImage(img)  
+        self.loadButton = Button(toolbar, image=loadImg, relief=FLAT, background="Turquoise",
+                                 activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.load)
+        self.loadButton.image = loadImg
+        self.loadButton.grid(row=0, column=1)
 
         img = Image.open("Graphics/Icons/checkIcon.png")
         checkImg = ImageTk.PhotoImage(img)  
-        checkButton = Button(toolbar, image=checkImg, relief=FLAT, background="Turquoise",
-                             activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.checkCode)
-        checkButton.image = checkImg
-        checkButton.grid(row=0, column=2)
+        self.checkButton = Button(toolbar, image=checkImg, relief=FLAT, background="Turquoise",
+                                  activebackground="yellow", width=BUTTON_X, height=BUTTON_Y, command=self.checkCode)
+        self.checkButton.image = checkImg
+        self.checkButton.grid(row=0, column=2)
 
         img = Image.open("Graphics/Icons/runIcon.png")
         runImg = ImageTk.PhotoImage(img)  
@@ -172,6 +174,33 @@ class Environment(Frame):
 
         toolbar.pack(side=TOP, fill=X)
 
+
+    def disableButtons(self):
+	currStates = [self.saveLevelButton.config().get('state')[4],
+	              self.loadButton.config().get('state')[4],
+	              self.checkButton.config().get('state')[4],
+	              self.runButton.config().get('state')[4],
+	              self.prevLevelButton.config().get('state')[4],
+	              self.nextLevelButton.config().get('state')[4]]
+	
+	# set all to disabled
+	self.saveLevelButton.config(state=DISABLED)
+	self.loadButton.config(state=DISABLED)
+	self.checkButton.config(state=DISABLED)
+	self.runButton.config(state=DISABLED)
+	self.prevLevelButton.config(state=DISABLED)
+	self.nextLevelButton.config(state=DISABLED)
+	
+	return currStates
+	
+    def returnButtonsToStates(self, states):
+	self.saveLevelButton.config(state=states[0])
+	self.loadButton.config(state=states[1])
+	self.checkButton.config(state=states[2])
+	self.runButton.config(state=states[3])
+	self.prevLevelButton.config(state=states[4])
+	self.nextLevelButton.config(state=states[5])
+	
 
     def initCanvas(self):
         self.canvas = Canvas(self.parent, width=DIM_X, height=CANVAS_HEIGHT, background="white", relief=FLAT)
@@ -298,7 +327,17 @@ class Environment(Frame):
         f.write(text)
         f.close()
 
+        # disable buttons & show "checking" dialog while we run the level dummy
+        currStates = self.disableButtons()
+        self.painter.showCheckingText()
+        self.update()
+
+        # run the level dummy to see if the code compiles
         noError = self.tilemap.runLevelDummy("code")
+
+        # return buttons to their states once the method has returned & hide "checking" dialog
+        self.returnButtonsToStates(currStates)
+        self.painter.hideCheckingText()
 
         if not noError:
 	    # the error line to highlight in the code
@@ -345,6 +384,11 @@ class Environment(Frame):
     def run(self):
 	
 	if self.canRun:
+	    
+	    # make the run button un-clickable for the duration of the animation
+	    #self.runButton.config(state=DISABLED)
+	    # disable buttons while we run the level dummy
+            currStates = self.disableButtons()
 	    
 	    # reset plane
 	    self.painter.initPlane()
@@ -435,7 +479,7 @@ class Environment(Frame):
 		self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to" \
 				    "move on, or try out other cool stuff with your plane here."
 		self.beatenLevels.append(self.currLevel)
-		self.nextLevelButton.config(state=NORMAL)
+		currStates[5] = "normal"
 	    elif match != None:    # inefficient win
 		self.screens[-1] = "You reached the goal, but your code contained some extra stuff -" \
 				    "try making your plane reach the goal in as few lines of code as possible."
@@ -448,6 +492,10 @@ class Environment(Frame):
 	    self.helpBox.delete(1.0, END)   # clear text box
 	    self.helpBox.insert(END, self.screens[self.shownScreen])
 	    self.helpBox.config(state=DISABLED)   # turn off editing
+	    
+	    # make the run button clickable again
+	    #self.runButton.config(state=NORMAL)
+	    self.returnButtonsToStates(currStates)
 
 
     def prevLevel(self):

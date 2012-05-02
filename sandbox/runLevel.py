@@ -3,21 +3,7 @@ from tilemap import *
 from avatar import *
 
 def runLevel(plane):
-    plane.move()
-    plane.move()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    import sys
+    sys.showprofile()
+    file = open("output.py", "r")
     return
