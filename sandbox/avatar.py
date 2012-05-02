@@ -80,14 +80,30 @@ class Airplane:
         runs into an immmovable object (NPC, wall, fire,
         etc.)
         """
-#        print "CRASH!!!"
-        #TODO
         if self.dummy:
             self.moveSet += "6"
             raise CrashException()
 
+    def askName(self):
+        """
+        This method is used for binary search level
+        """
+        try:
+            a = self.tileMap.askName()
+            return a
+        except VictoryException:
+            self.moveSet += "7"
+        except tilemap.OutOfGuessException:
+            self.crash()
+
     def check(self):
-        return self.tileMap.check(self.heading)
+        front = self.tileMap.check(self.heading)
+        if front == "WALL" or front == "ISLAND":
+            return "CLOUD"
+        if front == "AIR":
+            return "AIR"
+        if front == "GATE":
+            return "TARGET"
 
     def turnLeft(self):
         #TODO add in animation calls here
