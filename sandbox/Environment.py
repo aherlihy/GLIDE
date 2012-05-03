@@ -48,7 +48,8 @@ class Environment(Frame):
         
         self.currLevel = 1
         self.beatenLevels = []
-        self.initLevel(self.currLevel)
+        self.initLevelCanvas()
+        self.initLevelText()
 
 
     def initUI(self):
@@ -59,14 +60,13 @@ class Environment(Frame):
         self.parent.geometry('%dx%d+%d+%d' % (DIM_X, DIM_Y, x, y))
 
 
-    def initLevel(self, levelNum):
+    def initLevelCanvas(self):
 	
 	# create the canvas
-	name = self.levelFilename + str(levelNum)
+	name = self.levelFilename + str(self.currLevel)
 	self.tilemap = TileMap(name)
 	
 	f = open(name, 'r')
-	#f = open("../support/levels/level6", 'r')
 	levelMap = []
 	while True:
 	    line = f.readline()
@@ -76,12 +76,30 @@ class Environment(Frame):
 	f.close()
 	
 	self.painter = Painter(self.canvas, levelMap)
+
+    # Redraw the canvas, but do not create a new tilemap. Used so that the levels
+    # with randomized maps can be redrawn without creating a new tilemap.
+    def redrawLevelCanvas(self):
 	
+	name = self.levelFilename + str(self.currLevel)
+	f = open(name, 'r')
+	levelMap = []
+	while True:
+	    line = f.readline()
+	    if line == '':
+		break
+	    levelMap.append(line)
+	f.close()
+	
+	self.painter = Painter(self.canvas, levelMap)
+
+
+    def initLevelText(self):
 	# clear the text editor
 	self.textEditor.delete(1.0, END)
 	
 	# put stencil code into the text editor
-	name = self.stencilFilename + str(levelNum)
+	name = self.stencilFilename + str(self.currLevel)
         f = open(name, 'r')
         lineNum = 0
 	while True:
@@ -98,7 +116,7 @@ class Environment(Frame):
 	
 	# put help files into the help box - what we want to show on each screen
         # is in its own string inside the "screens"
-        name = self.helpFilename + str(levelNum)
+        name = self.helpFilename + str(self.currLevel)
         f = open(name, 'r')
         self.screens = []
         self.screens.append("")
@@ -354,8 +372,11 @@ class Environment(Frame):
 	    self.handleError()
 
         else:
+	    # redraw the level - if we're in one of the randomized levels, the map/maze will change with
+	    # each compilation
+	    self.redrawLevelCanvas()
 	    # reset plane
-	    self.painter.initPlane()
+	    #self.painter.initPlane()
 	    
 	    # make sure no lines are highlighted as error lines
 	    self.textEditor.tag_remove("error", 1.0, END)
@@ -374,30 +395,35 @@ class Environment(Frame):
 
     def handleError(self):
 	# the error line to highlight in the code
-	    errorLine = 0
+	errorLine = 0
 
-	    # read in the error file
-	    errText = ""
-	    f = open("output.py", 'r')
-	    while True:
-		line = f.readline()
-		if line == "":
-		    break
-		elif line.startswith("line"):
-		    lineStuff = line.split(' ')
-		    errorLine = int(lineStuff[1]) - 5
-		    line = "line: " + str(errorLine) + "\n"
+	# read in the error file
+	errText = ""
+	f = open("output.py", 'r')
+	while True:
+	    line = f.readline()
+	    if line == "":
+		break
+	    elif line.startswith("code"):
+	        errText += line
+	        continue
+
+            m = re.findall("\d+", line)
+	    if m != []:
+		for val in m:
+		    errorLine = int(val) - 5
+		    line = re.sub(val, str(errorLine), line)
 		    errText += line
-		    
+
 		    # highlight line in textEditor
 		    self.textEditor.tag_add("error", "%d.%d" % (errorLine, 0), "%d.%s" % (errorLine, END))
-		else:
-		    errText += line
-	    f.close()
+	    else:
+		errText += line
+	f.close()
 
-            # set the error text in the self.screens variable
-            self.screens[-1] = errText
-            self.runButton.config(state=DISABLED)
+	# set the error text in the self.screens variable
+	self.screens[-1] = errText
+	self.runButton.config(state=DISABLED)
 
 
     # Get the list of commands to execute from the tilemap and tell the painter to do them. This
@@ -525,7 +551,8 @@ class Environment(Frame):
 
     def prevLevel(self):
 	self.currLevel -= 1
-	self.initLevel(self.currLevel)
+	self.initLevelCanvas()
+	self.initLevelText()
 	
 	# do the appropriate graying-out of buttons
 	if self.currLevel == 1:
@@ -538,7 +565,8 @@ class Environment(Frame):
 
     def nextLevel(self):
 	self.currLevel += 1
-	self.initLevel(self.currLevel)
+	self.initLevelCanvas()
+	self.initLevelText()
 	
 	# do the appropriate graying-out of buttons
 	if self.currLevel in self.beatenLevels and self.currLevel < 3:
