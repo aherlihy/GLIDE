@@ -63,7 +63,8 @@ class Environment(Frame):
 	name = self.levelFilename + str(levelNum)
 	self.tilemap = TileMap(name)
 	
-	f = open(name, 'r')
+	#f = open(name, 'r')
+	f = open("../support/levels/level6", 'r')
 	levelMap = []
 	while True:
 	    line = f.readline()
@@ -329,7 +330,7 @@ class Environment(Frame):
 
     # Save the user's code in the text editor into a file and tell the tilemap to check the code.
     def checkCode(self):
-        f = open("code", 'w')
+        f = open("code1anna", 'w')
         text = self.textEditor.get(1.0, END)
         f.write(text)
         f.close()
@@ -340,7 +341,7 @@ class Environment(Frame):
         self.update()
 
         # run the level dummy to see if the code compiles
-        noError = self.tilemap.runLevelDummy("code")
+        noError = self.tilemap.runLevelDummy("code", "anna")
 
         # return buttons to their states once the method has returned & hide "checking" dialog
         self.returnButtonsToStates(currStates)
@@ -516,7 +517,6 @@ class Environment(Frame):
 	    self.helpBox.config(state=DISABLED)   # turn off editing
 	    
 	    # make the run button clickable again
-	    #self.runButton.config(state=NORMAL)
 	    self.returnButtonsToStates(currStates)
 
 
