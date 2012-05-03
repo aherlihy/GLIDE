@@ -228,7 +228,7 @@ class TileMap:
             return self.grid[self.px][self.py+1].getType()
 
 
-    def runLevelDummy(self, user_path, user_name):
+    def runLevelDummy(self, user_name):
 
         working = runBox.run(self.map_path, self.level, user_name)
         #working = self.sand.start(self.map_path)
