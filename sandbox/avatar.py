@@ -97,13 +97,19 @@ class Airplane:
             self.crash()
 
     def check(self):
-        front = self.tileMap.check(self.heading)
-        if front == "WALL" or front == "ISLAND":
+        try:
+            if self.tileMap.level==6:
+                front = self.tileMap.check6(self.heading)
+            else:
+                front = self.tileMap.check(self.heading)
+            if front == "WALL" or front == "ISLAND":
+                return "CLOUD"
+            if front == "AIR":
+                return "AIR"
+            if front == "GATE":
+                return "TARGET"
+        except MapBorderException:
             return "CLOUD"
-        if front == "AIR":
-            return "AIR"
-        if front == "GATE":
-            return "TARGET"
 
     def turnLeft(self):
         #TODO add in animation calls here
@@ -120,7 +126,10 @@ class Airplane:
         try:
             if self.dummy:
                 self.moveSet += str(self.heading)
-            self.tileMap.move(self.heading)
+            if self.tileMap.level==6:
+                self.tileMap.move6(self.heading)
+            else:
+                self.tileMap.move(self.heading)
         except VictoryException:
             self.moveSet += "7"
         except tilemap.InvalidMoveException:

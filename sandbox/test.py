@@ -7,5 +7,6 @@ if __name__ == '__main__':
     print "!"
     a = TileMap("../support/levels/level3")
     plane = a.getPlane()
-    a.runLevelDummy()
+    plane.move()
+    plane.check()
     print "commands are: " + a.getLevel()

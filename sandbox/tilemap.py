@@ -63,9 +63,20 @@ class Tile:
     def __init__(self, value= "AIR") :
         self.valid = ["AIR","ISLAND","WALL","GATE","PLANE","DESK"]
         self.bitval = ["A","I","W","G","P","?"]
+        self.six = ["0","1","2","3","4","5","6","7","8","9","a",
+                "b","c","d","e","f"]
+        self.sixes = ["0000","0001","0010","0011","0100","0101","0110",
+                "0111","1000","1001","1010","1011","1100","1101","1110","1111"]
         self.value = "NULL"
         if value in self.valid:
             self.value = value
+        elif value in self.sixes:
+            self.value = value
+        elif value in self.six:
+            for i in xrange(len(self.six)):
+                if value == self.six[i]:
+                    self.value = self.sixes[i]
+
         else:
             for i in xrange(len(self.bitval)):
                 if value == self.bitval[i]:
@@ -78,6 +89,7 @@ class Tile:
         """ Returns a text representation of the tile in the
         map, for use of generating a text-based map of the
         level.
+        Does not work on level6
         """
         if self.value == "AIR":
             return "A";
@@ -149,24 +161,35 @@ class TileMap:
                 "VING","WALDO","WITT","XANDER","XENA","YOLANDA","YVETTE",
                 "ZACH","ZIM"]
         use = ["MARY"]
-        for i in xrange(21):
+        for i in xrange(23):
             use.append(names.pop(random.randint(0,len(names)-1)))
         use.sort()
         self.names = use
         self.guess = 5
         
-    def askName(self):
-        if self.grid[self.py][self.px].getType() != "DESK":
+    def askDeskName(self, desknum):
+        if self.grid[self.py+1][self.px].getType() != "DESK":
             return None;
-        num = self.py-2
+        dist = 0
+        if self.px < desknum:
+            heading = 0
+            dist = desknum-self.px
+        elif self.px > desknum:
+            heading = 2
+            dist = self.px-desknum
+        self.plane.setHeading(heading)
+        for i in xrange(dist):
+            self.plane.move()
+        #plane should now be above the desk of number desknum
         #TODO animate the desk turning over
-        if use[num]=="MARY":
+        self.plane.moveSet.append(8)
+        if self.names[num]=="MARY":
             raise VictoryException()
         else:
             self.guess -= 1
             if self.guess == 0:
                 raise OutOfGuessException()
-            return use[num]
+            return self.names[num]
 
     def getPlane(self):
         """This method sets the coordinates for a plane that has
@@ -175,7 +198,6 @@ class TileMap:
         return self.plane;
 
     def move(self, heading):
-        valid = True;
         if heading==0:
             newx = self.px+1
             newy = self.py
@@ -196,10 +218,12 @@ class TileMap:
             newy = self.py+1
             if newx >= self.height:
                 raise InvalidMoveException()
-        if self.grid[newy][newx].getType() == "WALL" \
-                or self.grid[newy][newx].getType() == "ISLAND":
+        front = self.grid[newy][newx].getType()
+        if front == "WALL" \
+                or front == "ISLAND" \
+                or front == "DESK":
             raise InvalidMoveException()
-        if self.grid[newy][newx].getType() == "GATE":
+        if front == "GATE":
             #TODO
             #victory condition
             self.py = newy
@@ -210,19 +234,102 @@ class TileMap:
         self.px = newx
         #TODO update the map
 
-    def check(heading):
+    def move6(self, heading):
+        x = self.grid[self.py][self.px].getType()
+        e = True if (x[0] is "0") else False
+        n = True if (x[3] is "0") else False
+        w = True if (x[1] is "0") else False
+        s = True if (x[2] is "0") else False
+        if heading==0:
+            newx = self.px+1
+            newy = self.py
+            if not e:
+                raise InvalidMoveException()
+        elif heading==1:
+            newx = self.px
+            newy = self.py-1
+            if not n:
+                raise InvalidMoveException()
+        elif heading==2:
+            newx = self.px-1
+            newy = self.py
+            if not w:
+                raise InvalidMoveException()
+        elif heading==3:
+            newx = self.px
+            newy = self.py+1
+            if not s:
+                raise InvalidMoveException()
+        front = self.grid[newy][newx].getType()
+        if front == "GATE":
+            #TODO
+            #victory condition
+            self.py = newy
+            self.px = newx
+            if self.dummy:
+                raise VictoryException()
+        self.py = newy
+        self.px = newx
+        
+    def check6(self, heading):
+        x = self.grid[self.py][self.px].getType()
+        e = True if (x[0] is "0") else False
+        n = True if (x[3] is "0") else False
+        w = True if (x[1] is "0") else False
+        s = True if (x[2] is "0") else False
+        if heading==0:
+            newx = self.px+1
+            newy = self.py
+            if not e:
+                raise MapBorderException()
+        if heading==1:
+            newx = self.px
+            newy = self.py-1
+            if not n:
+                raise MapBorderException()
+        if heading==2:
+            newx = self.px-1
+            newy = self.py
+            if not w:
+                raise MapBorderException()
+        if heading==3:
+            newx = self.px
+            newy = self.py+1
+            if not s:
+                raise MapBorderException()
+        front = self.grid[newy][newx].getType()
+        if front == "GATE":
+            return "GATE"
+        else:
+            return "AIR"
+
+
+
+    def check(self, heading):
         """returns a string representing the type of object in fron
         of the plane
         """
         if heading==0:
-            return self.grid[self.px+1][self.py].getType()
+            newx = self.px+1
+            newy = self.py
+            if newx >= self.width:
+                raise MapBorderException()
         if heading==1:
-            return self.grid[self.px][self.py-1].getType()
+            newx = self.px
+            newy = self.py-1
+            if newx < 0:
+                raise MapBorderException()
         if heading==2:
-            return self.grid[self.px-1][self.py].getType()
+            newx = self.px-1
+            newy = self.py
+            if newx < 0:
+                raise MapBorderException()
         if heading==3:
-            return self.grid[self.px][self.py+1].getType()
-
+            newx = self.px
+            newy = self.py+1
+            if newx >= self.height:
+                raise MapBorderException()
+        return self.grid[newy][newx].getType()
 
     def runLevelDummy(self, user_name):
 
