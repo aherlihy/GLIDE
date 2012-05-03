@@ -58,3 +58,6 @@ What are left with? A problem of size n/2.
 Just do the same thing on the half of the class where you know Sally will be sitting!
 
 *****
+Values that you have access to:
+    'size' is the number of students in the class
+New powers!
