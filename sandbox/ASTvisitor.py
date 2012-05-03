@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: iso-8859-1 -*-
 # This class represents the visitor that will go through and parse the AST generated from the user's code. 
 # There are two ways to limit functionality: I could specify the visitors' behavior for certain nodes that the user shouldn't invoke
 # Or, I could limit any external function calls. I chose to go this way since the number of nodes that could be potentially dangerous is enormous.
