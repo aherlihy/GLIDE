@@ -5,11 +5,8 @@ from PIL import Image, ImageTk
 from Tkinter import Tk, Frame, Menu, Button, Canvas, Text, PanedWindow, Scrollbar
 from Tkinter import TOP, FLAT, RAISED, BOTH, X, Y, WORD, DISABLED, NORMAL, E, W, END, VERTICAL, RIGHT, LEFT
 from Painter import Painter
-import tkFont
-import re
+import tkFont, re, time
 from tilemap import *
-
-import time
 
 DIM_X = 1200
 DIM_Y = 900
@@ -31,9 +28,9 @@ CANVAS_HEIGHT = (DIM_Y - TOOLBAR_Y)/2+25
 
 class Environment(Frame):
 
-    def __init__(self, parent, username):
-        Frame.__init__(self, parent, background="MediumTurquoise")
-        self.parent = parent
+    def __init__(self, root, username):
+        Frame.__init__(self, root, background="MediumTurquoise")
+        self.parent = root
         self.username = username
 
         self.levelFilename = "../support/levels/level"
@@ -46,7 +43,7 @@ class Environment(Frame):
         self.initTextBoxes()
         self.initUI()
         
-        self.currLevel = 1
+        self.currLevel = 6
         self.beatenLevels = []
         self.initLevelCanvas()
         self.initLevelText()
@@ -337,10 +334,20 @@ class Environment(Frame):
             self.helpBox.config(state=DISABLED)   # turn off editing
 
 
-    # Exit the GUI
+    # Return to the main window
     def exit(self):
 	self.cleanUp()
-        self.quit()
+	self.painter = None
+	
+	for widget in self.parent.pack_slaves():
+	    widget.pack_forget()
+	
+        from MainWindow import MainWindow
+	mw = MainWindow(self.parent)
+	mw.pack()
+	
+        self.destroy()
+
 
     def save(self):
         pass
@@ -441,6 +448,7 @@ class Environment(Frame):
 	    self.painter.initPlane()
 
 	    cmdList = self.tilemap.getLevel()
+	    print cmdList
 	    
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north

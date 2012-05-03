@@ -3,7 +3,7 @@
 
 from Tkinter import *
 from PIL import Image, ImageTk
-import time, cmath, math, tkFont, thread, re
+import time, cmath, math, tkFont, thread, re, random
 
 TILE_WIDTH = 48
 TILE_HEIGHT = 44
@@ -51,6 +51,7 @@ class Painter:
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=tkFont.Font(family="Pupcat", size=20, 
 	                                           weight=tkFont.BOLD), text="Checking your code...", state=HIDDEN)
+        self.dropWaterBalloon(400, 100)
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -1227,3 +1228,61 @@ class Painter:
         self.canvas.delete(l8)
         self.canvas.delete(l9)
         self.canvas.delete(l10)
+
+
+    def dropWaterBalloon(self, x, y):
+	# pick a random color
+	num = random.randint(1, 6)
+	if num == 1:
+	    color = "red"
+	elif num == 2:
+	    color = "orange"
+	elif num == 3:
+	    color = "yellow"
+	elif num == 4:
+	    color = "green"
+	elif num == 5:
+	    color = "blue"
+	else:
+	    color = "purple"
+	string = "Graphics/waterBalloon_" + color
+
+        img = Image.open(string + ".png")
+        self.balloon = ImageTk.PhotoImage(img)
+        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
+        self.canvas.update()
+
+        # drop balloon
+        for i in range(5*TILE_HEIGHT):
+            time.sleep(.025)
+            self.canvas.move("balloon", 0, 1)
+            self.canvas.update()
+
+        # set y to new y position
+        y = y + 5*TILE_HEIGHT
+
+        # first stage of bursting
+        img = Image.open(string + "2.png")
+        self.canvas.delete("balloon")
+        self.balloon = ImageTk.PhotoImage(img)
+        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
+        self.canvas.update()
+        time.sleep(.25)
+
+        # second stage of bursting
+        img = Image.open(string + "3.png")
+        self.canvas.delete("balloon")
+        self.balloon = ImageTk.PhotoImage(img)
+        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
+        self.canvas.update()
+        time.sleep(.25)
+
+        # third stage of bursting
+        img = Image.open(string + "4.png")
+        self.canvas.delete("balloon")
+        self.balloon = ImageTk.PhotoImage(img)
+        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
+        self.canvas.update()
+        time.sleep(.25)
+
+        self.canvas.delete("balloon")

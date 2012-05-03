@@ -199,7 +199,11 @@ class StartPopupWindow(Toplevel):
     # we can just delete the currently selected name
     def deleteUser(self):
         name = self.userList.get(self.userList.curselection())
-        # do real file-deleting stuff
+
+        # real file-deleting stuff
+
+
+        # updating the name list
         self.usernames.remove(name)
         self.currFrame.destroy()
         if len(self.usernames) > 0:

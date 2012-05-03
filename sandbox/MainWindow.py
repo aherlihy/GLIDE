@@ -22,7 +22,7 @@ class MainWindow(Frame):
         Frame.__init__(self, parent)
         self.parent = parent
         self.parent.title("GLIDE")
-        welcomeScreen = WelcomeScreen(self.parent, self)  # can create a StartPopupWindow
+        self.welcomeScreen = WelcomeScreen(self.parent, self)  # can create a StartPopupWindow
 
         x = (self.parent.winfo_screenwidth() - DIM_X)/2
         y = (self.parent.winfo_screenheight() - DIM_Y)/2
@@ -30,8 +30,10 @@ class MainWindow(Frame):
         self.pack()
 
     def createNewEnvt(self, username):
-        envt = Environment(self.parent, username)
-        self.pack()
+	self.welcomeScreen.pack_forget()
+        self.envt = Environment(self.parent, username)
+        self.envt.pack()
+
 
 def main():
     root = Tk()
