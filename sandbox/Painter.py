@@ -3,10 +3,7 @@
 
 from Tkinter import *
 from PIL import Image, ImageTk
-import time
-import cmath, math
-import tkFont
-import thread
+import time, cmath, math, tkFont, thread, re
 
 TILE_WIDTH = 48
 TILE_HEIGHT = 44
@@ -54,6 +51,7 @@ class Painter:
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=tkFont.Font(family="Pupcat", size=20, 
 	                                           weight=tkFont.BOLD), text="Checking your code...", state=HIDDEN)
+	self.animateWin()
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -95,6 +93,22 @@ class Painter:
         img_islandNEcorner = Image.open("Graphics/Tiles/Islands/NEcorner_island.png")
         img_islandNWcorner = Image.open("Graphics/Tiles/Islands/NWcorner_island.png")
 
+        img_maze1 = Image.open("Graphics/Tiles/Maze/maze1.png")
+        img_maze2 = Image.open("Graphics/Tiles/Maze/maze2.png")
+        img_maze3 = Image.open("Graphics/Tiles/Maze/maze3.png")
+        img_maze4 = Image.open("Graphics/Tiles/Maze/maze4.png")
+        img_maze5 = Image.open("Graphics/Tiles/Maze/maze5.png")
+        img_maze6 = Image.open("Graphics/Tiles/Maze/maze6.png")
+        img_maze7 = Image.open("Graphics/Tiles/Maze/maze7.png")
+        img_maze8 = Image.open("Graphics/Tiles/Maze/maze8.png")
+        img_maze9 = Image.open("Graphics/Tiles/Maze/maze9.png")
+        img_mazea = Image.open("Graphics/Tiles/Maze/mazea.png")
+        img_mazeb = Image.open("Graphics/Tiles/Maze/mazeb.png")
+        img_mazec = Image.open("Graphics/Tiles/Maze/mazec.png")
+        img_mazed = Image.open("Graphics/Tiles/Maze/mazed.png")
+        img_mazee = Image.open("Graphics/Tiles/Maze/mazee.png")
+        img_mazef = Image.open("Graphics/Tiles/Maze/mazef.png")
+
         img_goal = Image.open("Graphics/Tiles/goal.png")
 
         self.wall0001 = ImageTk.PhotoImage(img_wall0001)
@@ -129,8 +143,26 @@ class Painter:
         self.islandSWcorner = ImageTk.PhotoImage(img_islandSWcorner)
         self.islandNEcorner = ImageTk.PhotoImage(img_islandNEcorner)
         self.islandNWcorner = ImageTk.PhotoImage(img_islandNWcorner)
+        
+        self.maze1 = ImageTk.PhotoImage(img_maze1)
+        self.maze2 = ImageTk.PhotoImage(img_maze2)
+        self.maze3 = ImageTk.PhotoImage(img_maze3)
+        self.maze4 = ImageTk.PhotoImage(img_maze4)
+        self.maze5 = ImageTk.PhotoImage(img_maze5)
+        self.maze6 = ImageTk.PhotoImage(img_maze6)
+        self.maze7 = ImageTk.PhotoImage(img_maze7)
+        self.maze8 = ImageTk.PhotoImage(img_maze8)
+        self.maze9 = ImageTk.PhotoImage(img_maze9)
+        self.mazea = ImageTk.PhotoImage(img_mazea)
+        self.mazeb = ImageTk.PhotoImage(img_mazeb)
+        self.mazec = ImageTk.PhotoImage(img_mazec)
+        self.mazed = ImageTk.PhotoImage(img_mazed)
+        self.mazee = ImageTk.PhotoImage(img_mazee)
+        self.mazef = ImageTk.PhotoImage(img_mazef)
 
         self.goal = ImageTk.PhotoImage(img_goal)
+        
+        hexPattern = re.compile("[\da-f]")
 
         for row in range(0, NUM_TILES_HIGH):
 
@@ -160,6 +192,9 @@ class Painter:
 		    self.canvas.create_image(x, y, image=self.air, anchor=NW)
 		    self.planeX = x
 		    self.planeY = y
+
+                elif hexPattern.match(charArray[row][col]) != None:
+		    self.canvas.create_image(x, y, image=(self.makeMaze(charArray, row, col)), anchor=NW)
 
                 else:
                     print "Unrecognized character ", charArray[row][col], " in map file."
@@ -272,8 +307,22 @@ class Painter:
         return islands[islandType]
 
 
+    def makeMaze(self, charArray, row, col):
+	
+	mazePieces = [self.air,   self.maze1, self.maze2, self.maze3,
+	              self.maze4, self.maze5, self.maze6, self.maze7,
+	              self.maze8, self.maze9, self.mazea, self.mazeb,
+	              self.mazec, self.mazed, self.mazee, self.mazef]
+	
+	hexChar = charArray[row][col]
+	decValue = int(hexChar, 16)
+	
+	return mazePieces[decValue]
+
+
     def initPlane(self):
-        img = Image.open("Graphics/plane.png")
+        #img = Image.open("Graphics/plane.png")
+        img = Image.open("Graphics/smallPlane.png")
         imgRotated = img.rotate(DIR_EAST)
         self.planeImg = ImageTk.PhotoImage(imgRotated)
         self.plane = self.canvas.create_image(self.planeX, self.planeY, image=self.planeImg, anchor=NW, tags="plane")
