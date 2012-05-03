@@ -3,6 +3,7 @@ import sys
 sys.path.append('/home/ecacciat/GLIDE/sandbox');
 import runBox
 import random
+import maze
 from avatar import *
 
 """ Map Module
@@ -120,10 +121,10 @@ class TileMap:
         self.map_path = map_path
         self.filetomap(map_path)
         if self.level == 5:
-            pass;
+            self.initBinary()
             #TODO randomized Binary search stuff
         elif self.level == 6:
-            pass;
+            maze.create_maze()
             #TODO drunken walk stuff
         #sets the plane
         found = False
@@ -137,11 +138,6 @@ class TileMap:
         if found == False:
             raise NoPlaneException() #there wasn't a plane 
     
-    def createMaze(self):
-        pass;
-        #TODO Anna, I need your help here
-
-
     def initBinary(self):
         #TODO for the potential boxes in the maze, create random names
         names = ["AARON","ALEXA","BETTY","BILL","CAROL","COREY","DIANNE",
@@ -234,6 +230,10 @@ class TileMap:
         #working = self.sand.start(self.map_path)
         output = open("output.py","r")
         if working:
+            if self.level == 6:
+                maze.create_maze()
+            elif self.level == 5:
+                self.initBinary()
             import runLevel as run
             reload(run)
             for y in xrange(self.height):
