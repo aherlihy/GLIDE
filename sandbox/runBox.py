@@ -21,11 +21,8 @@ def compile_this(box, output):
         output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")
         output.write("COMPILER ERROR\n")
         #parse py_compiler exception
-#        print compiler_output
-        list = compiler_output.split(':', 1)
-#        print list
-        
-        if(list[0]=="Sorry"):
+        list = compiler_output.split(':', 1)      
+        if(list[0]=="Sorry"):#because the python compiler is inconsistently polite
             list = list[1].split(':', 1)
             output.write(list[0].strip())
         else:
@@ -33,12 +30,9 @@ def compile_this(box, output):
         list = list[len(list)-1]#This will be the lefthand side of the error message, after <errortype>:
         list = list.split('\'',5)
         output.write(": " + list[1]+"\n")#write the subtype of error
-#        print list
         nums = list[4].split(',')
         output.write("line " + nums[1].split()[0]+"\n")#row
-        #output.write("col(should this be included?): " + nums[2].split()[0]+"\n")#col
         output.write("code: \"" +list[5][4:-4]+"\"\n")
-#        output.write(compiler_output)#full output
         output.close()
         return False
     else:
@@ -53,9 +47,6 @@ def compile_this(box, output):
      # <Error name + description>
 def run_this(box, output, map_path):
     run_output = box.run_process(["python", "bubblewrap.py", map_path])
-#    print("printing stderr " + run_output)
-#    for i in run_output:
-#        print i
     if(run_output == "ERROR:TIMEOUT"):
         output.write("Yikes! Your code took too long to run :(\nYou probably have an infinite loop or you're doing something extremely inefficiently\nCheck out the help pages if you're not sure how to fix it!\n\n")
         output.write("RUNTIME ERROR\n")
@@ -76,7 +67,6 @@ def run_this(box, output, map_path):
            output.write("Oh no! Looks like you've got an error in your code :(\nCheck out the help pages if you're not sure how to fix it!\n\n")           
            output.write("RUNTIME ERROR\n")
 
-#           print len(list)
            length = len(list)
            codeline = "None"
            currentErrorFile = "None"
@@ -84,27 +74,21 @@ def run_this(box, output, map_path):
            reasonableError = False
            for i in range (0,length):
                if(list[i].startswith("  File")):
-                   #print "line starts with File", list[i]
                    fileline = list[i].split(',')
                    linenumber = fileline[1].strip()
                    codeline = list[i+1]
                    filename = fileline[0].split('\"')
-                   #print filename
                    for name in filename:
                        if(name.endswith(".py")):
                            currentErrorFile = name
                    if(currentErrorFile.endswith("runLevel.py")):
                        reasonableError=True
                        break
-#           print "linenumber: ", linenumber, " codeline: \"", codeline, "\" currentErrorFile: ", currentErrorFile
            if not(reasonableError):
-               output.write("Oh no, looks like there was an error that didn't originate in the user's code. It came from " + currentErrorFile + "\n")
+               output.write("Oh no, looks like there was an error that didn't originate in the user's code. It came from " + currentErrorFile + "\nYou can check out errorfile for the full stack trace\n")
            output.write(list[length-1]+"\n")
            output.write(linenumber + "\n")
-#           print "len-1", codeline[len(codeline)-1]
-#           print "len-2", codeline[len(codeline)-2]
            output.write("code: \"" + codeline[4:] + "\"")
-#           output.write("\nFULL: \n" + run_output)
            output.close()
            return False
 def analyze_ast(box, output):
@@ -144,25 +128,14 @@ def analyze_ast(box, output):
                           if(c[0]=="NAME"):
                                output.write(" on \"" + c[1] + "\"")
                      output.write("\n\n")
-#        for line in list:
-#            if(line==""):
-#                break
-#            a = line.split('|')
-#            output.write("The module you used was " + a[0] + "\n")
-#            b = a[1].split(':')
-#            output.write("line " + b[1] + "\n")
-#            for i in range(2, len(a)):
-#                c=a[i].split(':')
-#                if(c[0]=="FROM"):
-#                    output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
-                    #don't do anything with the name of the imported functions - not really important so not printed. Basically, as soon as the line has been identified there's no question that they shouldn't be importing it    
-       
         file.close()
         if(noErrors):
             return True
         else:
             output.close()
             return False
+# Top-level method call. This will be called by the support code.
+# This sandbox is able to take different code without reinitializing everything, but unfortunately the support code needs to be re-initialized each time, and the sandbox is contained in that code, so this will be reinited each time.
 def run(map_path, level, user):
     output = open("output.py", "w")
     box = sandbox() 
@@ -177,13 +150,5 @@ def run(map_path, level, user):
     if not(run_this(box, output, map_path)):
         return False
     return True
-
-#print("compiling...")
-#try:
-#    py_compile.compile(sys.argv[1], doraise=True)
-#except py_compile.PyCompileError, e:
-#    print ("CERROR:", e)
-#else:
-#    print("no errors :/")
 if __name__ == '__main__':
     run("../support/levels/level3", 3, "anna")
