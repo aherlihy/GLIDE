@@ -131,7 +131,6 @@ class TileMap:
         self.level = int(map_path[len(map_path)-1:])
         self.dummy = False
         self.map_path = map_path
-        self.filetomap(map_path)
         if self.level == 5:
             self.initBinary()
             #TODO randomized Binary search stuff
@@ -139,6 +138,7 @@ class TileMap:
             maze.create_maze()
             #TODO drunken walk stuff
         #sets the plane
+        self.filetomap(map_path)
         found = False
         self.plane = Airplane(self)
         for y in xrange(self.height):
@@ -339,6 +339,7 @@ class TileMap:
         if working:
             if self.level == 6:
                 maze.create_maze()
+                self.filetomap(map_path)
             elif self.level == 5:
                 self.initBinary()
             import runLevel as run
