@@ -75,11 +75,14 @@ def drunkenWalk(rooms, x, y):
         #if neighbor exists, and a connection does not exist for the opposite end
         elif(rooms[neighbor_x][neighbor_y].get_opposite_wall(d) == 'N'):
             #create random connection in x,y
-            r = random.randint(0,1)
-            if(r==1):
+            r = random.randint(0,10)
+            if(r<=10):
                 rooms[x][y].set_wall(d, 'W')
+                #print "wall"
             else:
+               # print "open"
                 rooms[x][y].set_wall(d, 'A')
+#            rooms[x][y].set_wall(d, 'W')
        #if neighbor exists, and a connection exists for the opposite end
         else:
             #set the connection in x,y to match
