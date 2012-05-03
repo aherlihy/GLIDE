@@ -31,9 +31,11 @@ CANVAS_HEIGHT = (DIM_Y - TOOLBAR_Y)/2+25
 
 class Environment(Frame):
 
-    def __init__(self, parent):
+    def __init__(self, parent, username):
         Frame.__init__(self, parent, background="MediumTurquoise")
         self.parent = parent
+        self.username = username
+
         self.levelFilename = "../support/levels/level"
         self.stencilFilename = "../support/stencil/level"
         self.helpFilename = "../support/help/level"
@@ -63,8 +65,8 @@ class Environment(Frame):
 	name = self.levelFilename + str(levelNum)
 	self.tilemap = TileMap(name)
 	
-	#f = open(name, 'r')
-	f = open("../support/levels/level6", 'r')
+	f = open(name, 'r')
+	#f = open("../support/levels/level6", 'r')
 	levelMap = []
 	while True:
 	    line = f.readline()
@@ -330,7 +332,8 @@ class Environment(Frame):
 
     # Save the user's code in the text editor into a file and tell the tilemap to check the code.
     def checkCode(self):
-        f = open("code1anna", 'w')
+	filename = "code" + str(self.currLevel) + self.username
+        f = open(filename, 'w')
         text = self.textEditor.get(1.0, END)
         f.write(text)
         f.close()
@@ -341,7 +344,7 @@ class Environment(Frame):
         self.update()
 
         # run the level dummy to see if the code compiles
-        noError = self.tilemap.runLevelDummy("code", "anna")
+        noError = self.tilemap.runLevelDummy(self.username)
 
         # return buttons to their states once the method has returned & hide "checking" dialog
         self.returnButtonsToStates(currStates)
@@ -452,7 +455,7 @@ class Environment(Frame):
 	            self.helpBox.delete(1.0, END)   # clear text box
 	            self.helpBox.insert(END, self.screens[self.shownScreen])
 	            self.helpBox.config(state=DISABLED)   # turn off editing
-	            return
+	            break
 		elif cmd == '7':
 		    pass
 		elif cmd == 'a':
@@ -553,7 +556,7 @@ class Environment(Frame):
 
 def main():
     root = Tk()
-    app = Environment(root)
+    app = Environment(root, "anna")
     root.mainloop()
 
 

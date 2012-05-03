@@ -51,7 +51,6 @@ class Painter:
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=tkFont.Font(family="Pupcat", size=20, 
 	                                           weight=tkFont.BOLD), text="Checking your code...", state=HIDDEN)
-	self.animateWin()
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -162,7 +161,7 @@ class Painter:
 
         self.goal = ImageTk.PhotoImage(img_goal)
         
-        hexPattern = re.compile("[\da-f]")
+        hexPattern = re.compile("[\da-g]")
 
         for row in range(0, NUM_TILES_HIGH):
 
@@ -315,14 +314,15 @@ class Painter:
 	              self.mazec, self.mazed, self.mazee, self.mazef]
 	
 	hexChar = charArray[row][col]
-	decValue = int(hexChar, 16)
-	
-	return mazePieces[decValue]
+	if hexChar == 'g':
+	    return self.island1111
+	else:
+	    decValue = int(hexChar, 16)
+	    return mazePieces[decValue]
 
 
     def initPlane(self):
-        #img = Image.open("Graphics/plane.png")
-        img = Image.open("Graphics/smallPlane.png")
+        img = Image.open("Graphics/plane.png")
         imgRotated = img.rotate(DIR_EAST)
         self.planeImg = ImageTk.PhotoImage(imgRotated)
         self.plane = self.canvas.create_image(self.planeX, self.planeY, image=self.planeImg, anchor=NW, tags="plane")

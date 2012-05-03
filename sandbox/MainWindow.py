@@ -29,8 +29,8 @@ class MainWindow(Frame):
         self.parent.geometry('%dx%d+%d+%d' % (DIM_X, DIM_Y, x, y))
         self.pack()
 
-    def createNewEnvt(self):
-        envt = Environment(self.parent)
+    def createNewEnvt(self, username):
+        envt = Environment(self.parent, username)
         self.pack()
 
 def main():
