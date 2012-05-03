@@ -120,8 +120,8 @@ class WelcomeScreen(Frame):
         self.parent.destroy()
 
 
-    def createEnvt(self):
-        self.mw.createNewEnvt()
+    def createEnvt(self, username):
+        self.mw.createNewEnvt(username)
 
 
 def main():

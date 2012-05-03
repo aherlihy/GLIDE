@@ -43,7 +43,6 @@ class StartPopupWindow(Toplevel):
 
         #usernames = self.parent.getUserList()
         self.usernames = ["Emily", "John", "Anna"]
-        #self.usernames = []
 
         # if there are no current users, then just make a New User window
         if len(self.usernames) > 0:
@@ -227,7 +226,7 @@ class StartPopupWindow(Toplevel):
 
     def continueToLevels(self, *args):
         # do something with self.userList.get(self.userList.curselection())
-        self.parent.createEnvt()
+        self.parent.createEnvt(self.userList.get(self.userList.curselection()))
         self.back()
 
     def createNewUser(self):
