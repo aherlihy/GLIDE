@@ -339,7 +339,7 @@ class TileMap:
         if working:
             if self.level == 6:
                 maze.create_maze()
-                self.filetomap(map_path)
+                self.filetomap(self.map_path)
             elif self.level == 5:
                 self.initBinary()
             import runLevel as run
