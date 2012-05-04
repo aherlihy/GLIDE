@@ -1,2 +1,2 @@
-level3
+../support/levels/level6
 This file is where the stdout of the subprocess will go. For debugging
