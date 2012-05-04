@@ -108,8 +108,10 @@ class Airplane:
                 return "AIR"
             if front == "GATE":
                 return "TARGET"
-        except MapBorderException:
+        except tilemap.MapBorderException:
             return "CLOUD"
+    	except tilemap.InvalidMoveException:
+	    return "CLOUD"
 
     def turnLeft(self):
         #TODO add in animation calls here
