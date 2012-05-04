@@ -147,6 +147,10 @@ class TileMap:
                     found = True
                     self.py = y
                     self.px = x
+        if self.level == 6:
+            self.py = 0
+            self.px = 0
+
         if found == False:
             raise NoPlaneException() #there wasn't a plane 
     
@@ -260,8 +264,7 @@ class TileMap:
             newy = self.py+1
             if not s:
                 raise InvalidMoveException()
-        front = self.grid[newy][newx].getType()
-        if front == "GATE":
+        if (newx==24) and (newy==9):
             #TODO
             #victory condition
             self.py = newy
