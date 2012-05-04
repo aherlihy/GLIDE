@@ -130,7 +130,7 @@ class Airplane:
                 self.tileMap.move6(self.heading)
             else:
                 self.tileMap.move(self.heading)
-        except VictoryException:
+        except tilemap.VictoryException:
             self.moveSet += "7"
         except tilemap.InvalidMoveException:
             self.crash()
