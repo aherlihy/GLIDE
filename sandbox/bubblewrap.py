@@ -17,6 +17,7 @@ from runLevel import *
 import sys
 #set up dummy variables
 mapArg = sys.argv[1]
+print mapArg
 map = TileMap(mapArg)
 plane = map.getPlane()
 runLevel(plane)

@@ -406,6 +406,7 @@ class TileMap:
         for i in range(len(strmap)):
             temp  = strmap[i].strip()
             if len(temp) != self.width:
+                print len(temp), self.width
                 raise InvalidMapFileException()
             strmap[i] = temp
         self.grid = [ [] for i in range(self.height)]
