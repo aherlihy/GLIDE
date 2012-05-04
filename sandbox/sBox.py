@@ -60,7 +60,7 @@ class sandbox:
             empty = False
             outfile.write("    ")
             outfile.write(line)
-        outfile.write("    return\n")
+        outfile.write("\n    return\n")
         if(empty):
             return False
         codefile.close()
