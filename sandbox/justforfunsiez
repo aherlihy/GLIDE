@@ -1,2 +1,4 @@
 ../support/levels/level6
+PLANE
+CLOUD
 This file is where the stdout of the subprocess will go. For debugging

@@ -3,7 +3,6 @@ from tilemap import *
 from avatar import *
 
 def runLevel(plane):
-    if plane.check()=="AIR":
-    	plane.move()
+    print plane.check()
 
     return

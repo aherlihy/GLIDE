@@ -139,6 +139,7 @@ class TileMap:
             #TODO drunken walk stuff
         #sets the plane
         self.filetomap(map_path)
+	print self.grid[0][0].getType()
         found = False
         self.plane = Airplane(self)
         for y in xrange(self.height):
@@ -148,6 +149,7 @@ class TileMap:
                     self.py = y
                     self.px = x
         if self.level == 6:
+	    found = True
             self.py = 0
             self.px = 0
 
