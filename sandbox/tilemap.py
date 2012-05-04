@@ -281,22 +281,22 @@ class TileMap:
             newx = self.px+1
             newy = self.py
             if not e:
-                raise MapBorderException()
+                raise InvalidMoveException()
         if heading==1:
             newx = self.px
             newy = self.py-1
             if not n:
-                raise MapBorderException()
+                raise InvalidMoveException()
         if heading==2:
             newx = self.px-1
             newy = self.py
             if not w:
-                raise MapBorderException()
+                raise InvalidMoveException()
         if heading==3:
             newx = self.px
             newy = self.py+1
             if not s:
-                raise MapBorderException()
+                raise InvalidMoveException()
         front = self.grid[newy][newx].getType()
         if front == "GATE":
             return "GATE"
@@ -317,7 +317,7 @@ class TileMap:
         if heading==1:
             newx = self.px
             newy = self.py-1
-            if newx < 0:
+            if newy < 0:
                 raise MapBorderException()
         if heading==2:
             newx = self.px-1
@@ -327,7 +327,7 @@ class TileMap:
         if heading==3:
             newx = self.px
             newy = self.py+1
-            if newx >= self.height:
+            if newy >= self.height:
                 raise MapBorderException()
         return self.grid[newy][newx].getType()
 
