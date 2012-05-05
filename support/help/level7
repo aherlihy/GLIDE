@@ -83,3 +83,21 @@ So we will keep visiting rooms until we either (1) finish visiting all exits, or
 If we finish exploring all exits without finding the goal, then we will back track to the level up (where we can pick up where we left off) and finish exploring the rest of the neighbors.
 
 This magic is called recursion!
+
+****
+
+runLevel(plane)
+
+    function def explore(room):
+       room.visited=True
+       if(room.goal):
+          return
+       else
+         for n in neighbors:
+             if not (n.visited)
+                 goto(n)
+                 explore(n)
+                 goto(room)
+#so actually call it
+    start = plane.whereami
+    explore(start)
