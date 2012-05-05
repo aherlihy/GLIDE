@@ -1,17 +1,16 @@
-Congradulations, you found Sally! Yet as you descend to deliver the whack Aaron requested, a huge gust of wind blew you out the window!
+Congratulations, you found Sally! Yet as you descend to deliver the whack Aaron requested, a huge gust of wind blew you out the window!
 
 You find yourself at the start of a maze of clouds! Oh noes! You must find you way back to the classroom to find Aaron!
 
 The only thing you have with you is a piece of string and chalk.
 
 Unfortunately, you are powered only by the force of the wind and it's not a very windy day! You have no idea how big the maze is...the only thing you know is what you can see in front of you.
-
 *****
 Let's be a little smarter about exploring this maze. If you're not careful with your choices you may wander the maze forever.
 
-Once again, we are faced with a problem we don't know how to solve. But this one is a lot more complicated that finding Sally in a class full of students.
+Once again, we are faced with a problem we don't know how to solve. So let's try and make it into smaller problems!
 
-Another good strategy for problem solving is to identify the smaller problems that make up the big question. What are the two dangers of traversing a maze?
+What are the major dangers of traversing a maze?
 
     (1) You can go around in loops, never realizing that you've already been there.
     (2) If you reach a fork in the road, you want to choose a path to explore - but how do you know to go back to that fork and explore the other path?
@@ -19,11 +18,7 @@ Another good strategy for problem solving is to identify the smaller problems th
 Luckily, you have two tools in your toolbox. Chalk, to mark the rooms so you know not to go in circles, and a piece of string, so you can retrace your steps$
 
 *****
-So how do you represent chalk and string in code?
-
-Chalk can be represented with a simple boolean flag. For each room, it can either be visited or not visited.
-
-String is a little more complicated. Let's first take a look at what exactly we're going to be doing.
+Let's first take a look at what exactly we're going to be doing.
 
 Enter the maze.
  Check if you're at the exit
@@ -42,18 +37,20 @@ Enter the maze.
             for each exit out of that room
                 ....etc, etc
 Hmm, this is getting kind of repetitive. It looks like we're going to want to simplify this into some kind of loop.
-
 ****
 So how do you represent chalk and string in code?
 
 Chalk can be represented with a simple boolean flag. For each room, it can either be visited or not visited.
 
 String is a little more complicated.
-What do we need out of our string? We need to be able to return to exactly where we were. Also, we need to avoid the repition that we saw when we tried to write down everything we're going to do.
-Have you ever been halfway through a task and wished you could pause everything - go do something else - and when you return, everything will be in the exact same spot you left it?
-In computer science, we can do that! Using your favorite function call, you can expect pick up exactly where you left off. (**FUNCTION DEF PAGE**)
 
-So let's define this function. What does it need to take as parameters?
+What do we need out of our string? We need to be able to return to exactly where we were. Also, we need to avoid the repition that we saw when we tried to write down everything we're going to do.
+
+Have you ever been halfway through a task and wished you could pause everything - go do something else - and when you return, everything will be in the exact same spot you left it?
+If you remember from the function tutorial, we can do that! Using your favorite function call, you can expect pick up exactly where you left off. Check out the function pages of the glossary if you don't remeber!
+*****
+OK let's build a function.
+What does it need to take as parameters?
     Well, what is the only thing that changes everytime you take a step? The room!
     So let's pass the current room in as a parameter.
 Where will we need to call this?
@@ -83,9 +80,7 @@ So we will keep visiting rooms until we either (1) finish visiting all exits, or
 If we finish exploring all exits without finding the goal, then we will back track to the level up (where we can pick up where we left off) and finish exploring the rest of the neighbors.
 
 This magic is called recursion!
-
-****
-
+*****
 runLevel(plane)
 
     function def explore(room):
@@ -93,6 +88,7 @@ runLevel(plane)
        if(room.goal):
           return
        else
+         #glue down string
          for n in neighbors:
              if not (n.visited)
                  goto(n)
@@ -101,3 +97,4 @@ runLevel(plane)
 #so actually call it
     start = plane.whereami
     explore(start)
+*****
