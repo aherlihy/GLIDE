@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from Tkinter import *
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw, ImageFont
 import time, cmath, math, tkFont, thread, re, random
+import Tkinter as tk
 
 TILE_WIDTH = 48
 TILE_HEIGHT = 44
@@ -46,11 +47,14 @@ class Painter:
 
         self.canvas = canvas
         self.paintMap(charArray)
-        
+
+        self.waitingFont = tkFont.Font(family="Pupcat", size=20, weight=tkFont.BOLD)
+        self.dialogFont = tkFont.Font(family="Pupcat", size=12, weight=tkFont.BOLD)
+
         self.waitingOutline = self.canvas.create_rectangle(460, 90, 720, 130, fill="Yellow",
                                                            dash='3', width=2, state=HIDDEN)
-        self.waitingText = self.canvas.create_text(588, 110, font=tkFont.Font(family="Pupcat", size=20, 
-	                                           weight=tkFont.BOLD), text="Checking your code...", state=HIDDEN)
+        self.waitingText = self.canvas.create_text(588, 110, font=self.waitingFont, text="Checking your code...", state=HIDDEN)
+
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -121,6 +125,23 @@ class Painter:
         img_head8 = Image.open("Graphics/Tiles/Recess/head8a.png")
         img_head9 = Image.open("Graphics/Tiles/Recess/head9a.png")
         img_head10 = Image.open("Graphics/Tiles/Recess/head10a.png")
+        
+        img_floor = Image.open("Graphics/Tiles/Classroom/floor.png")
+        img_desk1 = Image.open("Graphics/Tiles/Classroom/desk1.png")
+        img_desk2 = Image.open("Graphics/Tiles/Classroom/desk2.png")
+        img_desk3 = Image.open("Graphics/Tiles/Classroom/desk3.png")
+        img_desk4 = Image.open("Graphics/Tiles/Classroom/desk4.png")
+        img_desk5 = Image.open("Graphics/Tiles/Classroom/desk5.png")
+        img_desk6 = Image.open("Graphics/Tiles/Classroom/desk6.png")
+        img_desk7 = Image.open("Graphics/Tiles/Classroom/desk7.png")
+        img_desk8 = Image.open("Graphics/Tiles/Classroom/desk8.png")
+        img_desk9 = Image.open("Graphics/Tiles/Classroom/desk9.png")
+        img_desk10 = Image.open("Graphics/Tiles/Classroom/desk10.png")
+        img_teacher = Image.open("Graphics/Tiles/Classroom/teacher.png")
+        
+        img_bubble1 = Image.open("Graphics/bubble1.png")
+        img_bubble2 = Image.open("Graphics/bubble2.png")
+        img_bubble3 = Image.open("Graphics/bubble3.png")
 
         self.wall0001 = ImageTk.PhotoImage(img_wall0001)
         self.wall0010 = ImageTk.PhotoImage(img_wall0010)
@@ -185,10 +206,30 @@ class Painter:
         self.head9 = ImageTk.PhotoImage(img_head9)
         self.head10 = ImageTk.PhotoImage(img_head10)
         
+        self.floor = ImageTk.PhotoImage(img_floor)
+        self.desk1 = ImageTk.PhotoImage(img_desk1)
+        self.desk2 = ImageTk.PhotoImage(img_desk2)
+        self.desk3 = ImageTk.PhotoImage(img_desk3)
+        self.desk4 = ImageTk.PhotoImage(img_desk4)
+        self.desk5 = ImageTk.PhotoImage(img_desk5)
+        self.desk6 = ImageTk.PhotoImage(img_desk6)
+        self.desk7 = ImageTk.PhotoImage(img_desk7)
+        self.desk8 = ImageTk.PhotoImage(img_desk8)
+        self.desk9 = ImageTk.PhotoImage(img_desk9)
+        self.desk10 = ImageTk.PhotoImage(img_desk10)
+        self.teacher = ImageTk.PhotoImage(img_teacher)
+        
+        self.bubble1 = ImageTk.PhotoImage(img_bubble1)
+        self.bubble2 = ImageTk.PhotoImage(img_bubble2)
+        self.bubble3 = ImageTk.PhotoImage(img_bubble3)
+        
         hexPattern = re.compile("[\da-g]")
         
         self.planeX = 0
         self.planeY = 0
+        
+        teacherLoc = None
+        paintFloor = False
 
         for row in range(0, NUM_TILES_HIGH):
 
@@ -197,9 +238,12 @@ class Painter:
                 x = col*TILE_WIDTH
                 y = row*TILE_HEIGHT
 
-                # air
+                # air / floor
                 if charArray[row][col] == 'A':
-                    self.canvas.create_image(x, y, image=self.air, anchor=NW)
+                    if paintFloor:
+			self.canvas.create_image(x, y, image=self.floor, anchor=NW)
+	            else: 
+			self.canvas.create_image(x, y, image=self.air, anchor=NW)
 
                 # cloud wall
                 elif charArray[row][col] == 'W':
@@ -220,10 +264,23 @@ class Painter:
                 # brick
                 elif charArray[row][col] == 'B':
                     self.canvas.create_image(x, y, image=self.brick, anchor=NW)
+                    paintFloor = True
+
+		# desk
+		elif charArray[row][col] == 'D':
+		    self.canvas.create_image(x, y, image=self.createDesk(), anchor=NW)
+
+                # teacher
+		elif charArray[row][col] == 'T':
+		    self.canvas.create_image(x, y, image=self.floor, anchor=NW)
+		    teacherLoc = (x, y)
 
                 # plane - set plane here and make square underneath air
                 elif charArray[row][col] == 'P':
-		    self.canvas.create_image(x, y, image=self.air, anchor=NW)
+		    if teacherLoc is not None:
+			self.canvas.create_image(x, y, image=self.floor, anchor=NW)
+                    else:
+		        self.canvas.create_image(x, y, image=self.air, anchor=NW)
 		    self.planeX = x
 		    self.planeY = y
 
@@ -233,6 +290,10 @@ class Painter:
                 else:
                     print "Unrecognized character ", charArray[row][col], " in map file."
                     self.canvas.create_image(x, y, image=self.air, anchor=NW)
+
+        # if we have a teacher's desk in this level, draw it on top of other stuff
+        if teacherLoc is not None:
+	    self.canvas.create_image(teacherLoc[0], teacherLoc[1], image=self.teacher, anchor=SE)
 
         # after all tiles have been set, draw the plane so it's on top of everything else
         self.initPlane()
@@ -364,6 +425,14 @@ class Painter:
 	return heads[num]
 
 
+    def createDesk(self):
+	desks = [self.desk1, self.desk2, self.desk3, self.desk4, self.desk5,
+	         self.desk6, self.desk7, self.desk8, self.desk9, self.desk10]
+
+	num = random.randint(0, 9)
+	return desks[num]
+
+
     def initPlane(self):
         img = Image.open("Graphics/plane.png")
         imgRotated = img.rotate(DIR_EAST)
@@ -431,10 +500,10 @@ class Painter:
     def movePlaneSouth(self):
 	# make sure we're facing in the correct direction first
 	if self.planeRotDeg != DIR_SOUTH:
-	    if self.planeRotDeg == DIR_EAST:   # turn counterclockwise
-	        self.rotatePlaneCounterclockwise(90)
-	    else:       # turn clockwise
-		self.rotatePlaneClockwise(abs(self.planeRotDeg - DIR_SOUTH))
+	    if self.planeRotDeg == DIR_EAST:   # turn clockwise
+	        self.rotatePlaneClockwise(90)
+	    else:       # turn counterclockwise
+		self.rotatePlaneCounterclockwise(abs(self.planeRotDeg - DIR_SOUTH))
 	self.planeRotDeg = DIR_SOUTH
 
 	for i in range(0, TILE_WIDTH):
@@ -1328,3 +1397,22 @@ class Painter:
         time.sleep(.25)
 
         self.canvas.delete("balloon")
+
+
+    def askName(self, name, index):
+	x = TILE_WIDTH*(2.5+index) 
+	y = TILE_HEIGHT*7
+	y2 = y
+
+	if index % 3 == 1:
+	    y2 += 36
+	    i = self.bubble1
+	elif index % 3 == 2:
+	    y2 += 71
+	    i = self.bubble2
+	else:
+	    y2 += 103
+	    i = self.bubble3
+	
+	self.canvas.create_image(x, y, image=i, anchor=N)
+	self.canvas.create_text(x, y2, text=name, font=self.dialogFont)

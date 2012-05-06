@@ -62,7 +62,7 @@ class Tile(object):
 
     def __init__(self, value= "AIR") :
         self.valid = ["AIR","ISLAND","WALL","GATE","PLANE","DESK","BRICK","STUDENT","TEACHER"]
-        self.bitval = ["A","I","W","G","P","?","B","S","T"]
+        self.bitval = ["A","I","W","G","P","D","B","S","T"]
         self.six = ["0","1","2","3","4","5","6","7","8","9","a",
                 "b","c","d","e","f"]
         self.sixes = ["0000","0001","0010","0011","0100","0101","0110",

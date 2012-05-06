@@ -42,8 +42,9 @@ class Environment(Frame):
         self.initCanvas()
         self.initTextBoxes()
         self.initUI()
-        
+
         self.currLevel = 1
+
         self.beatenLevels = []
         self.initLevelCanvas()
         self.initLevelText()
@@ -350,7 +351,10 @@ class Environment(Frame):
 
 
     def save(self):
-        pass
+	nameList = ["Rosencrantz", "Guilderstern", "Emily"]
+        self.painter.askName(nameList[1], 2)
+        self.painter.askName(nameList[0], 1)
+        self.painter.askName(nameList[2], 3)
 
     def load(self):
         pass
