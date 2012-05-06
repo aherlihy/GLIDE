@@ -1,73 +1,105 @@
-So Aaron is sitting in class, bored. Completely oblivious to the dull mumblings of his teacher, he gazes wistfully out the window. Warm spring air wafts in lazily from the open window, bringing with it the soft drone of the lawnmower outside.
+Congratulations, you found Sally! Yet as you descend to deliver the whack Aaron requested, a huge gust of wind blew you out the window!
 
-Looking across the room, Aaron sees his best friend, Sally, has fallen asleep. Knowing that Sally is already in trouble for forgetting her homework, Aaron realizes he needs to wake her up without letting his teacher find out. Aaron quickly rips a sheet out of his notebook and fashions the most versatile and awesome paper airplane known to man, YOU.
+You find yourself at the start of a maze of clouds! Oh noes! You must find you way back to the classroom to find Aaron!
 
-"Go, GLIDE" he whispers, "go find the student named Sally and wake her from her slumber!"
+The only thing you have with you is a piece of string and chalk.
+
+Unfortunately, you are powered only by the force of the wind and it's not a very windy day! You have no idea how big the maze is...the only thing you know is what you can see in front of you.
 *****
-Unfortunately Aaron's teacher, Jack Janooti, is super evil and hates when his students have fun. 
+Let's be a little smarter about exploring this maze. If you're not careful with your choices you may wander the maze forever.
 
-He has assigned the students to sit in alphabetical order so that Aaron and Sally are not near each other. 
+Once again, we are faced with a problem we don't know how to solve. So let's try and make it into smaller problems!
 
-You, GLIDE, need to find which seat is Sally's without causing too much of a commotion.
+What are the major dangers of traversing a maze?
 
-You may ask less than half the students for their names, depending on how awake JJ is feeling.
+    (1) You can go around in loops, never realizing that you've already been there.
+    (2) If you reach a fork in the road, you want to choose a path to explore - but how do you know to go back to that fork and explore the other path?
 
-Let's begin!!!
-*****
-Whenever you're faced with a problem you don't know how to solve, the first thing to do is to try and turn the problem into smaller and smaller problems until you know how to solve them. 
-
-What if you were looking for a student C in a class of size 1? That's obvious, it would just be that student.
-
-Now the question is: how do we get our problem, of size n, into what we know how to solve, which is size 1?
+Luckily, you have two tools in your toolbox. Chalk, to mark the rooms so you know not to go in circles, and a piece of string, so you can retrace your steps$
 
 *****
-What if we had a class of size 2? That would be simple: ask one student, and if it's not that one, then its the other one.
-What about size 3? This is where it gets tricky. You can't just ask each one of them, and if you pick and random, you're not guarenteed to pick the right ones.
-	     _______        _______        _______
-            |       |      |       |      |       |
-	    |   ?   |      |   ?   |      |   ?   |
-            |_______|      |_______|      |_______|
-	        1              2              3
-The next step is to list the things you know to be true. 
-    (1) Sally is in the class
-    (2) The students are arranged alphabetically
-    (3) There are n students, and no 2 students have the same name.
+Let's first take a look at what exactly we're going to be doing.
+
+Enter the maze.
+ Check if you're at the exit
+    if so, rejoyce!
+    otherwise, glue down your string so you know to return.
+    for each each exit out of your current room
+        enter the new room.
+        check if you're at the exit
+        if so, rejoyce!
+        otherwise, glue down your string so you know to return
+        for each exit out of that room
+            enter the new room
+            check if you're at the exit
+            if so, rejoyce!
+            otherwise, glue down your string so you know to return
+            for each exit out of that room
+                ....etc, etc
+Hmm, this is getting kind of repetitive. It looks like we're going to want to simplify this into some kind of loop.
 *****
-Let's use what we know. If we pick a random student, then all the students that come before that student in line will have names that go before that student's name. All the students after that student will have names that come after that name.
+So how do you represent chalk and string in code?
 
-Think about how you would look through a phonebook. Pick a page and see if the page you picked comes before or after the name you're looking for. If it comes before, then you can safety ignore all the names that come after. And vice versa.
+Chalk can be represented with a simple boolean flag. For each room, it can either be visited or not visited.
 
-Since we know that the name we want comes before the name we picked, BAM! We can throw away half the phonebook. So we now have a problem that's half as big as the one before!
+String is a little more complicated.
+
+What do we need out of our string? We need to be able to return to exactly where we were. Also, we need to avoid the repition that we saw when we tried to write down everything we're going to do.
+
+Have you ever been halfway through a task and wished you could pause everything - go do something else - and when you return, everything will be in the exact same spot you left it?
+If you remember from the function tutorial, we can do that! Using your favorite function call, you can expect pick up exactly where you left off. Check out the function pages of the glossary if you don't remeber!
 *****
-Let's say we're looking for a student named Eve.
-So let's pick the middle.
-	     _______        _______        _______
-            |       |      |       |      |       |
-	    |   ?   |      |  Bob  |      |   ?   |
-            |_______|      |_______|      |_______|
-	        1              2              3
-OK, now we know Eve is not sitting in seat 2. But we also know she can't be sitting in seat 1, since alphabetically E comes after B.
-What do we have left?
-
-One student! Which is a problem we know how to solve.
+OK let's build a function.
+What does it need to take as parameters?
+    Well, what is the only thing that changes everytime you take a step? The room!
+    So let's pass the current room in as a parameter.
+Where will we need to call this?
+    Exactly where we would glue down our string.
 *****
-OK, so let's go back to a list of size n.
- ___   ___   ___       ___   ___   ___ 
-|   | |   | |   |     |   | |   | |   |
-| ? | | ? | | ? | ... | ? | | ? | | ? |
-|___| |___| |___|     |___| |___| |___| 
-  1     2     3        n-2   n-1    n
-    
-Where do we pick for our first student? We know the total size of the class, so we know where the middle is! 
-
-Once we know what the name of the student sitting in the middle is, we can throw away the half of the seats which we know the student isn't sitting.
-
-What are left with? A problem of size n/2. Keep halving the size of the problem, and eventually you will get down to 1!
-
+So we're defining our function to take in a room. 
+<code>
+def explore(room):
+    #What's our first step?
+    if the room is the exit:
+        return
+    else:
+        for each exit to nextRoom
+              explore(nextRoom)
+</code>
+Can you see what we've forgotten here? 
 *****
-LEVEL 6 MANUAL
-Values that you have access to:
-    'size' is the number of students in the class
-New powers!
-    plane.askName(integer S) will return the name of the student who is sitting at desk S
+We seem to have our string in place, but not the chalk!
+<code>
+def explore(room):
+    set visited to true
+    if the room is the exit:
+        return
+    else:
+        for each exit to nextRoom
+              if the next room is not visited:
+                   enter(next room)
+                   explore(next room)
+                   enter(room)
+</code>
+So we will keep visiting rooms until we either (1) finish visiting all exits, or (2) reach the exit.
+If we finish exploring all exits without finding the goal, then we will back track to the level up (where we can pick up where we left off) and finish exploring the rest of the neighbors.
 
+This magic is called recursion!
+*****
+ANSWER, IGNORE
+runLevel(plane)
+    function def explore(room):
+       room.visited=True
+       if(room.goal):
+          return
+       else
+         #glue down string
+         for n in neighbors:
+             if not (n.visited)
+                 goto(n)
+                 explore(n)
+                 goto(room)
+#so actually call it
+    start = plane.whereami
+    explore(start)
+*****
