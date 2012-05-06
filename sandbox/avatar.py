@@ -84,12 +84,12 @@ class Airplane:
             self.moveSet += "6"
             raise CrashException()
 
-    def askName(self):
+    def askName(self, desknum):
         """
         This method is used for binary search level
         """
         try:
-            a = self.tileMap.askName()
+            a = self.tileMap.askName(desknum)
             return a
         except VictoryException:
             self.moveSet += "7"
@@ -137,6 +137,58 @@ class Airplane:
         except tilemap.InvalidMoveException:
             self.crash()
 
+    def goto(self, room):
+        """
+        This is the move method for the DFS level.  It takes in
+        a room object (subclass of a Tile), and if the room is
+        adjacent to the room the plane currently occupies, the
+        plane travels to that room.
+        """
+        if self.tilemap.level == 6:
+            if room in self.roomNeighbors(room):
+                head = self.tileMap.getHead(room)
+                self.setHeading(head)
+                self.move()
+
+
+    def whereAmI(self):
+        """
+        Returns the room object the plane occupies
+        """
+        if self.tileMap.level != 6:
+            return
+        else:
+            return self.tileMap.grid[self.tileMap.py][self.tileMap.px]
+
+    def markRoom(self):
+        """
+        Marks the room the plane currently occupies with "chalk"
+        """
+        if self.tilemap.level == 6:
+            self.tileMap.grid[self.tileMap.py][self.tileMap.px].mark()
+
+    def isMarked(self):
+        """
+        Returns a boolean representing whether the current room is
+        marked or not
+        """
+        if self.tilemap.levl == 6:
+            return self.tileMap.grid[self.tileMap.py][self.tileMap.px].isMarked()
+        else:
+            return False
+
+    def neilpatrickharris(self):
+        self.moveSet += "7"
+
+    def roomNeighbors(self, room):
+        """
+        returns the neighbors of the passed-in room
+        """
+        if self.tileMap.level==6:
+            return room.neighbors() 
+
+
+
 
 
 class Plane(Airplane):
@@ -154,9 +206,23 @@ class Plane(Airplane):
         #sadly, I see no way to get around a parameter
         super(Plane, self).__init__(tile_map)
 
+    def goto(self, room):
+        Airplane.goto(self, room)
 
     def move(self):
         Airplane.move(self)
+
+    def isMarked(self):
+        Airplane.isMarked(self)
+
+    def markRoom(self):
+        Airplane.markRoom(self)
+
+    def whereAmI(self):
+        Airplane.whereAmI(self)
+
+    def askName(self, desknum):
+        Airplane.askName(self, desknum)
 
     def check(self):
         Airplane.check(self)
@@ -166,3 +232,6 @@ class Plane(Airplane):
 
     def turnRight(self):
         Airplane.turnRight(self)
+
+    def neilpatrickharris(self):
+        Airplane.neilpatrickharris(self)
