@@ -576,7 +576,7 @@ class Environment(Frame):
 	self.initLevelText()
 	
 	# do the appropriate graying-out of buttons
-	if self.currLevel in self.beatenLevels and self.currLevel < 3:
+	if self.currLevel in self.beatenLevels and self.currLevel < 6:
 	    self.nextLevelButton.config(state=NORMAL)
 	else:
 	    self.nextLevelButton.config(state=DISABLED)

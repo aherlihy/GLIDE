@@ -51,8 +51,6 @@ class Painter:
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=tkFont.Font(family="Pupcat", size=20, 
 	                                           weight=tkFont.BOLD), text="Checking your code...", state=HIDDEN)
-        self.planeX = 0
-        self.planeY = 0
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -188,6 +186,9 @@ class Painter:
         self.head10 = ImageTk.PhotoImage(img_head10)
         
         hexPattern = re.compile("[\da-g]")
+        
+        self.planeX = 0
+        self.planeY = 0
 
         for row in range(0, NUM_TILES_HIGH):
 
