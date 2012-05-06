@@ -102,7 +102,7 @@ class Airplane:
                 front = self.tileMap.check6(self.heading)
             else:
                 front = self.tileMap.check(self.heading)
-            if front == "WALL" or front == "ISLAND":
+            if front == "WALL" or front == "ISLAND" or front == "BRICK":
                 return "CLOUD"
             if front == "AIR":
                 return "AIR"
