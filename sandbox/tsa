@@ -39,6 +39,11 @@ Call|LINE:12
 Name|LINE:12|NAME:plane
 attribute node: goto
 Name|LINE:12|NAME:room
+node type: Expr linenumber:13
+node type: BinOp linenumber:13
+node type: Num linenumber:13
+node type: Div
+node type: Num linenumber:13
 node type: Assign linenumber:14
 Name|LINE:14|NAME:start
 node type: Store
@@ -49,4 +54,4 @@ node type: Expr linenumber:15
 Call|LINE:15
 Name|LINE:15|NAME:explore
 Name|LINE:15|NAME:start
-node type: Return linenumber:19
+node type: Return linenumber:17

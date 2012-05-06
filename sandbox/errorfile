@@ -3,8 +3,6 @@ Traceback (most recent call last):
     runLevel(plane)
   File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 15, in runLevel
     explore(start)
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 7, in explore
-    plane.markRoom()
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/avatar.py", line 171, in markRoom
-    self.tileMap.grid[self.tileMap.py][self.tileMap.px].mark()
-AttributeError: 'Room' object has no attribute 'mark'
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 13, in explore
+    10/0
+ZeroDivisionError: integer division or modulo by zero

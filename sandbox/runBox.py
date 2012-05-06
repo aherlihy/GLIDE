@@ -37,6 +37,12 @@ def compile_this(box, output):
         return False
     else:
 	return True
+#This is a helper file for run_this
+def write_error(output, list, linenumber, length, codeline):
+#   output.write(list[length-1]+"\n")
+   output.write(linenumber + "\n")
+   output.write("code: \"" + codeline[4:] + "\"\n")
+
 # Runs the code and parses any errors thrown
 # Could dynamically parse the traceback and build an awesome flowchart of what's calling what
 # Only thing is that the user only ever writes one method. Maybe if this program is extended to huge levels, but for now that's overkill and we can ignore the traceback entirely.
@@ -83,12 +89,13 @@ def run_this(box, output, map_path):
                            currentErrorFile = name
                    if(currentErrorFile.endswith("runLevel.py")):
                        reasonableError=True
-                       break
-           if not(reasonableError):
+                       write_error(output, list, linenumber, length, codeline)
+                       
+           if(reasonableError):
+               output.write(list[length-1]+"\n")
+#               output.write("code: \"" + codeline[4:] + "\"")
+           else:
                output.write("Oh no, looks like there was an error that didn't originate in the user's code. It came from " + currentErrorFile + "\nYou can check out errorfile for the full stack trace\n")
-           output.write(list[length-1]+"\n")
-           output.write(linenumber + "\n")
-           output.write("code: \"" + codeline[4:] + "\"")
            output.close()
            return False
 def analyze_ast(box, output):

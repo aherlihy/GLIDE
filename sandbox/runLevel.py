@@ -10,10 +10,8 @@ def runLevel(plane):
                 plane.goto(n)
                 explore(n)
                 plane.goto(room)
-    
+        10/0
     start = plane.whereAmI()
     explore(start)
-    
-    
 
     return
