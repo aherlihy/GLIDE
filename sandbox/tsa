@@ -1,0 +1,12 @@
+node type: Module
+node type: alias
+node type: alias
+node type: FunctionDef linenumber:5
+node type: arguments
+Name|LINE:5|NAME:plane
+node type: Param
+node type: Expr linenumber:6
+Call|LINE:6
+Name|LINE:6|NAME:plane
+attribute node: neilpatrickharris
+node type: Return linenumber:8

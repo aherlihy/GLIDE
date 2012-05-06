@@ -1,4 +1,2 @@
-../support/levels/level6
-dummy is False
-Using move6, the directions are 1101at heading 3
+../support/levels/level4
 This file is where the stdout of the subprocess will go. For debugging

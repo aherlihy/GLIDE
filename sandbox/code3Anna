@@ -1,0 +1,9 @@
+plane.move()
+plane.move()
+plane.turnLeft()
+plane.move()
+plane.turnRight()
+for i in range(7):
+ plane.move()
+plane.turnLeft()
+plane.move()
