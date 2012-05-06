@@ -3,15 +3,18 @@ from tilemap import *
 from avatar import *
 
 def runLevel(plane):
-    def explore(room):
-        plane.markRoom()
-        for n in plane.roomNeighbors(room):
-            if not(plane.isMarked):
-                plane.goto(n)
-                explore(n)
-                plane.goto(room)
-        10/0
-    start = plane.whereAmI()
-    explore(start)
+    
+    def loopy(plane, room):
+    	plane.markRoom()
+    	for n in plane.roomNeighbors(room):
+    
+    		if not plane.isMarked(n):
+    			plane.goto(n)
+    			loopy(plane, n)
+    			plane.goto(room)
+    
+    
+    a = plane.whereAmI()
+    loopy(plane,a)
 
     return

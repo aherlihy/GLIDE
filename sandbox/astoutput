@@ -1,14 +1,16 @@
-|NAME:plane|NAME:room
-Call|LINE:7|ATTRIBUTE:markRoom|NAME:plane
+|NAME:plane|NAME:plane|NAME:room
+Call|LINE:8|ATTRIBUTE:markRoom|NAME:plane
 |NAME:n
-Call|LINE:8|ATTRIBUTE:roomNeighbors|NAME:plane|NAME:room
-|ATTRIBUTE:isMarked|NAME:plane
-Call|LINE:10|ATTRIBUTE:goto|NAME:plane|NAME:n
+Call|LINE:9|ATTRIBUTE:roomNeighbors|NAME:plane|NAME:room
 
-Call|LINE:11|NAME:explore|NAME:n
+Call|LINE:11|ATTRIBUTE:isMarked|NAME:plane|NAME:n
 
-Call|LINE:12|ATTRIBUTE:goto|NAME:plane|NAME:room
-|NAME:start
-Call|LINE:14|ATTRIBUTE:whereAmI|NAME:plane
+Call|LINE:12|ATTRIBUTE:goto|NAME:plane|NAME:n
 
-Call|LINE:15|NAME:explore|NAME:start
+Call|LINE:13|NAME:loopy|NAME:plane|NAME:n
+
+Call|LINE:14|ATTRIBUTE:goto|NAME:plane|NAME:room
+|NAME:a
+Call|LINE:17|ATTRIBUTE:whereAmI|NAME:plane
+
+Call|LINE:18|NAME:loopy|NAME:plane|NAME:a
