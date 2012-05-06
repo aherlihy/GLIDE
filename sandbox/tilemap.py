@@ -123,7 +123,7 @@ class Room(Tile):
     def __init__(self, value="AIR"):
         super(Room, self).__init__(value)
         self.marked = False
-        self.neighbors = []
+        self.boors = []
 
     def setMark(self, marker):
         self.marked = marker
@@ -132,10 +132,10 @@ class Room(Tile):
         return self.marked
 
     def neighbors(self):
-        return self.neighbors
+        return self.boors
 
     def setNeighbors(self, hood):
-        self.neighbors = hood
+        self.boors = hood
 
 
 class TileMap:
