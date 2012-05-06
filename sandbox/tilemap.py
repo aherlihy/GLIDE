@@ -298,13 +298,13 @@ class TileMap:
         returns an int representing the heading the arg room
         is in from the current location of the plane.
         """
-        if self.grid[self.py][self.px+1].getType() == room:
+        if self.grid[self.py][self.px+1] == room:
             return 0;
-        if self.grid[self.py-1][self.px].getType() == room:
+        if self.grid[self.py-1][self.px] == room:
             return 1;
-        if self.grid[self.py][self.px-1].getType() == room:
+        if self.grid[self.py][self.px-1] == room:
             return 2;
-        if self.grid[self.py+1][self.px].getType() == room:
+        if self.grid[self.py+1][self.px] == room:
             return 3;
 
     def move6(self, heading):

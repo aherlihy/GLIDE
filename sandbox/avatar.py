@@ -144,9 +144,10 @@ class Airplane:
         adjacent to the room the plane currently occupies, the
         plane travels to that room.
         """
-        if self.tilemap.level == 6:
+        if self.tileMap.level == 6:
             if room in self.roomNeighbors(room):
                 head = self.tileMap.getHead(room)
+                print head
                 self.setHeading(head)
                 self.move()
 
