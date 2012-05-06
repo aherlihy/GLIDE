@@ -241,7 +241,9 @@ class TileMap:
             self.plane.move()
         #plane should now be above the desk of number desknum
         #TODO animate the desk turning over
-        self.plane.moveSet.append(8)
+        self.plane.moveSet.append("8")
+        self.plane.moveSet.append(str(desknum))
+        self.plane.moveSet.append("8")
         if self.names[num]=="MARY":
             raise VictoryException()
         else:
@@ -380,7 +382,8 @@ class TileMap:
         else:
             return "AIR"
 
-
+    def getNameList(self):
+        return self.names
 
     def check(self, heading):
         """returns a string representing the type of object in fron
