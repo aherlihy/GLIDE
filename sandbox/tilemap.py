@@ -168,7 +168,6 @@ class TileMap:
         self.filetomap(map_path)
         if self.level == 6:
             self.hood()
-	print self.grid[0][0].getType()
         found = False
         self.plane = Airplane(self)
         for y in xrange(self.height):
@@ -300,18 +299,6 @@ class TileMap:
         returns an int representing the heading the arg room
         is in from the current location of the plane.
         """
-        print self.py
-        print self.px
-        print self.grid[0]
-        print "a"
-        print self.grid[self.py][self.px]
-        print "neighbors"
-        print self.grid[self.py][self.px].neighbors()
-        print "arg"
-
-        print room
-        print "whups"
-        print self.grid[0][0].neighbors()[0]==self.grid[0][0]
         if self.px+1<self.width:
             if self.grid[self.py][self.px+1] == room:
                 return 0;
@@ -430,6 +417,9 @@ class TileMap:
             if self.level == 6:
                 maze.create_maze()
                 self.filetomap(self.map_path)
+                self.hood()
+                self.py=0
+                self.px=0
             elif self.level == 5:
                 self.initBinary()
             import runLevel as run
@@ -496,7 +486,6 @@ class TileMap:
         for i in range(len(strmap)):
             temp  = strmap[i].strip()
             if len(temp) != self.width:
-                print len(temp), self.width
                 raise InvalidMapFileException()
             strmap[i] = temp
         self.grid = [ [] for i in range(self.height)]
@@ -507,6 +496,5 @@ class TileMap:
                 else:
                     a = Tile(strmap[i][j])
                 self.grid[i].append(a)
-#        print self.__str__()
         
             

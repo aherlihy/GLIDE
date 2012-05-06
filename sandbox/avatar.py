@@ -145,9 +145,8 @@ class Airplane:
         plane travels to that room.
         """
         if self.tileMap.level == 6:
-            if room in self.roomNeighbors(room):
+            if room in self.roomNeighbors(self.whereAmI()):
                 head = self.tileMap.getHead(room)
-                print "?"+str( head) + "?"
                 self.setHeading(head)
                 self.move()
 

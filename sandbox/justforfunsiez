@@ -1,9 +1,4 @@
 ../support/levels/level6
-1101
-!
-[<tilemap.Room object at 0xb73ca6ec>]
-?
-1100
-@
-0
+dummy is False
+Using move6, the directions are 1101at heading 3
 This file is where the stdout of the subprocess will go. For debugging
