@@ -131,12 +131,12 @@ def printMaze(rooms):
                 val = val+1
             else:
                 bin = bin+"0"
-            if(i==0 and j==0):
-                file.write('P')
-            elif(i==24 and j==9):
-                file.write('G')
-            else: 
-                file.write(hex(val)[2:])
+#            if(i==0 and j==0):
+#                file.write('P')
+#            elif(i==24 and j==9):
+#                file.write('G')
+#            else: 
+            file.write(hex(val)[2:])
         file.write("\n")
     file.close()
 #main

@@ -76,6 +76,10 @@ For this, we can pass parameters with the method.
     librarian.answerQuestion("What time do you close?")
 
 We can pass basic types, objects, or nothing at all. We can also pass more than one paramter.
+So if had a variable that represented a question, I could pass it directly:
+
+    question = "What time do you open?"
+    librarian.answerQuestion(question)
 
 OK, so we've asked the librarian a question. But how do we get the answer?
 
@@ -92,6 +96,8 @@ ex:
 Now you know what time the library closes!
 *****
 Glossary:
+    Anything you see in pointy brackets is our way of telling you what' expected. 
+
     variable: essentially a place to store some information. Variables represent anything you want them to be.
     basic types: a value that doesn't have any capabilities or attributes other than the value it's supposed to represent.
            *integers* are basic types that represent full numbers

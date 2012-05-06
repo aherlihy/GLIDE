@@ -35,7 +35,7 @@ The next step is to list the things you know to be true.
 *****
 Let's use what we know. If we pick a random student, then all the students that come before that student in line will have names that go before that student's name. All the students after that student will have names that come after that name.
 
-Think about how you would look through a phonebook. Pick a page and see if the page you picked comes before or after the name you're looking for. If it comes before, then you can safetly ignore all the names that come after. And vice versa.
+Think about how you would look through a phonebook. Pick a page and see if the page you picked comes before or after the name you're looking for. If it comes before, then you can safety ignore all the names that come after. And vice versa.
 
 Since we know that the name we want comes before the name we picked, BAM! We can throw away half the phonebook. So we now have a problem that's half as big as the one before!
 *****
@@ -70,3 +70,4 @@ Values that you have access to:
     'size' is the number of students in the class
 New powers!
     plane.askName(integer S) will return the name of the student who is sitting at desk S
+
