@@ -1,9 +1,115 @@
-First page of help for level 1.
+Welcome to GLIDE Tutorial!
+
+Get ready to learn the building blocks that you'll be using to write more and more complex programs.
+
+Let's start with the most basic of concepts: variables.
+Variables in programming work somewhat similar to those that you've seen in mathematics.
+The idea is you want a place to store a value so that whenever you need that value, you can just go to that place. 
+
+So how do you define a variable? 
+Let's say we're at a library. We have a bunch of books and we want to keep track of how many we have at any given time.
+We can define a variable, named 'number_of_books', and set it to equal the number of books we start with.
+Any time someone takes or returns a book, we can add or subtract from number_of_books.
+ 
+ ex:
+    number_of_books = 10
+
+Ta-Daaah! We now have a name that we can ask to find out how many books we have. 
+
+What do we do when we want to add a book?
+ 
+ ex:
+    number_of_books = 11
+
+But what happens if you leave the library for a while? Other people are coming and going, taking and returning books.
+When you get back, you want to return a book but you don't know how many people have added or removed books.
+The question is, do you care how many people have added books? All you need to do is make sure that the value increases by 1. 
+ 
+ ex:
+    number_of_books = number_of_books + 1
+
+So there! We know that the variable will always have the correct number of books if everyone just adds or subtracts from the current amount when they take/return a book.
 *****
-Second page of help.
+So we know we can have a variable that represents a number. What else can variables represent? 
+
+Anything you want them to! Really, we mean anything. Like you can have a variable that represents a whole other program. But we won't go there for awhile.
+
+Variables that represent numbers can't really do anything, they're just numbers. That's why numbers are "Basic Types", while more complicated variables are called Objects.
+
+Objects in computer science have *attributes* and *capabilities*
+
+For now, just assume these objects are defined elsewhere. We will get to making objects eventually, but let's learn how to use them first.
 *****
-Third page.
+Attributes are essentially pieces of information that the object contains.
+For example, say we have an object that represents a library. What do libraries contain?
+Since you are the master of this universe you can define a library to be made up of books, movies, and librarians.
+
+You can access these variables using the following syntax:
+
+   library.books
+   library.movies
+   library.librarian
+
+You can get them or set them. In this case you can say:
+   library.librarian = Kelly
 *****
-etc. etc.
+Capabilities
+Capabilities are essentially the things the object can do.
+For example, a librarian object could read books, answer questions, and shush people who are talking too loudly.
+Capabilities change depending on what type of object you have. They are also called "Methods" and "Functions" (it's all the same stuff).
+
+You can call these methods using the following syntax:
+    librarian.shush()
+
+Let's break down the syntax.
+There are essentially 3 things you need to know about a method: the name of the method, the parameters, and the return type.
+
+The first part of the method is the name of the variable which you're calling the method on.
+
+Parameters
+The parentheses are there so that you can pass some information to the librarian when you call that method.
+You don't always need to pass information, for example with shush().
+
+But let's say we want to ask the librarian a question. The librarian has a method answerQuestion, but we need a way to specify the question she should answer.
+For this, we can pass parameters with the method.
+
+    librarian.answerQuestion("What time do you close?")
+
+We can pass basic types, objects, or nothing at all. We can also pass more than one paramter.
+So if had a variable that represented a question, I could pass it directly:
+
+    question = "What time do you open?"
+    librarian.answerQuestion(question)
+
+OK, so we've asked the librarian a question. But how do we get the answer?
+
+Return Statements
+When we call a method we are often asking for some information. How do we get a response from the object?
+
+Methods can return a value. Just like parameters, methods can return basic types, objects, or nothing at all.
+
+In this example the librarian would return the answer as a number. You want store this value, so you can just assign a variable to it.
+
+ex:
+    closing_time = librarian.answerQuestion("What time do you close?")
+
+Now you know what time the library closes!
 *****
-Give it a try with your plane!
+Glossary:
+    Anything you see in pointy brackets is our way of telling you what' expected. 
+
+    variable: essentially a place to store some information. Variables represent anything you want them to be.
+    basic types: a value that doesn't have any capabilities or attributes other than the value it's supposed to represent.
+           *integers* are basic types that represent full numbers
+           *strings* are another basic type that represent text. 
+    objects: a value that represent anything more complicated than a basic type. Objects have attributes and capabilities.
+    attributes: information stored within an object. These are essentially variables that an object keeps track of. They can be accessed with:
+         <variable name>.<attribute>
+    capabilities/methods/functions: abiltiies that the object is capable of. These are defined within the object and depend on the type of object.
+           There are three components of a method:
+                (1) Name
+                (2) Parameters: information that is passed to the method. A method can take in any number of parameters.
+                (3) Return Value: the information that the method returns to the caller. Unlike parameters, a method can only return one value but that value can be anything.
+           Methods can be called by:
+                <return value> = <name of object>.<name of method>(<parameters>)
+*****

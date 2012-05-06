@@ -80,7 +80,7 @@ class WelcomeScreen(Frame):
     # make the about text box the current item held in the topFrame
     def initAboutBox(self):
         self.currItem = Label(self.topFrame, bg="MediumTurquoise", relief=FLAT, font=self.customFont1,
-                        width=NUM_CHARS, height=NUM_ROWS, text="This is where our ABOUT will go.")
+                        width=NUM_CHARS, height=NUM_ROWS, text="ABOUT\n")
         self.currItem.pack()
         self.topFrame.grid(row=0)
 
