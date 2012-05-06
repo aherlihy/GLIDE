@@ -7,6 +7,7 @@ from Tkinter import TOP, FLAT, RAISED, BOTH, X, Y, WORD, DISABLED, NORMAL, E, W,
 from Painter import Painter
 import tkFont, re, time
 from tilemap import *
+import maze
 
 DIM_X = 1200
 DIM_Y = 900
@@ -48,6 +49,7 @@ class Environment(Frame):
         self.beatenLevels = []
         self.initLevelCanvas()
         self.initLevelText()
+        maze.create_maze()
 
 
     def initUI(self):
@@ -537,7 +539,10 @@ class Environment(Frame):
 		self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to " \
 				    "move on, or try out other cool stuff with your plane here."
 		self.beatenLevels.append(self.currLevel)
-		currStates[5] = "normal"
+		
+		# if not at last level, make the next level button un-grayed
+		if self.currLevel < 6:
+		     currStates[5] = "normal"
 		self.painter.animateWin()
 
             # inefficient win
@@ -580,6 +585,7 @@ class Environment(Frame):
 	self.initLevelText()
 	
 	# do the appropriate graying-out of buttons
+	print "curr level: ", self.currLevel
 	if self.currLevel in self.beatenLevels and self.currLevel < 6:
 	    self.nextLevelButton.config(state=NORMAL)
 	else:
