@@ -54,7 +54,7 @@ def randomizeDirections():
         directions[index2]=temp
     return directions
 def drunkenWalk(rooms, x, y):
-    xMax = 24
+    xMax = 25
     yMax = 10
     rooms[x][y] = room()
     directions = randomizeDirections()
@@ -91,7 +91,7 @@ def drunkenWalk(rooms, x, y):
 #Generate 10X24 array
 def genMaze():
     rooms = []
-    for x in range(0,24):
+    for x in range(0,25):
         rooms.append([])
         for y in range(0, 10):
             rooms[x].append(None)
@@ -105,7 +105,7 @@ def printMaze(rooms):
     # 1000 (8) East Wall
     file=open("../support/levels/level6", "w")
     for i in range(0, 10):
-        for j in range(0,24):
+        for j in range(0,25):
             bin=""
             val=0
             rm = rooms[j][i]
@@ -131,12 +131,12 @@ def printMaze(rooms):
                 val = val+1
             else:
                 bin = bin+"0"
-            if(i==0 and j==0):
-                file.write('P')
-            elif(i==23 and j==9):
-                file.write('G')
-            else: 
-                file.write(hex(val)[2:])
+#            if(i==0 and j==0):
+#                file.write('P')
+#            elif(i==24 and j==9):
+#                file.write('G')
+#            else: 
+            file.write(hex(val)[2:])
         file.write("\n")
     file.close()
 #main

@@ -51,7 +51,7 @@ class OutOfGuessException(Exception):
         return repr(self.value);
 
 
-class Tile:
+class Tile(object):
     """Map Tile Class
 
     This object represents a single tile of the map we will be displaying
@@ -113,6 +113,31 @@ class Tile:
         else:
             raise InvalidTileException();
 
+class Room(Tile):
+    """Room class
+
+    This is an extension of the standard tile, and used for creating
+    the DFS level.  It includes a "visited" decorator and a list of
+    neighboring rooms
+    """
+    def __init__(self, value="AIR"):
+        super(Room, self).__init__(value)
+        self.marked = False
+        self.neighbors = []
+
+    def setMark(self, marker):
+        self.marked = marker
+
+    def isMarked(self):
+        return self.marked
+
+    def neighbors(self):
+        return self.neighbors
+
+    def setNeighbors(self, hood):
+        self.neighbors = hood
+
+
 class TileMap:
     """Map Class
 
@@ -139,6 +164,9 @@ class TileMap:
             #TODO drunken walk stuff
         #sets the plane
         self.filetomap(map_path)
+        if self.level == 6:
+            self.hood()
+	print self.grid[0][0].getType()
         found = False
         self.plane = Airplane(self)
         for y in xrange(self.height):
@@ -147,8 +175,38 @@ class TileMap:
                     found = True
                     self.py = y
                     self.px = x
+        if self.level == 6:
+	    found = True
+            self.py = 0
+            self.px = 0
+
         if found == False:
             raise NoPlaneException() #there wasn't a plane 
+
+    def hood(self):
+        """
+        Fills in the neighbor lists for the Rooms on level 6.
+        """
+        for y in xrange(self.height):
+            for x in xrange(self.width):
+                buds = []
+                r = self.grid[y][x].getType()
+                q = self.grid[y][x]
+
+                e = True if (r[0] is "0") else False
+                n = True if (r[3] is "0") else False
+                w = True if (r[1] is "0") else False
+                s = True if (r[2] is "0") else False
+                if e:
+                    buds.append(q)
+                if n:
+                    buds.append(q)
+                if w:
+                    buds.append(q)
+                if s:
+                    buds.append(q)
+                q.setNeighbors(buds)
+
     
     def initBinary(self):
         #TODO for the potential boxes in the maze, create random names
@@ -234,6 +292,20 @@ class TileMap:
         self.px = newx
         #TODO update the map
 
+    def getHead(self, room):
+        """
+        returns an int representing the heading the arg room
+        is in from the current location of the plane.
+        """
+        if self.grid[self.py][self.px+1].getType() == room:
+            return 0;
+        if self.grid[self.py-1][self.px].getType() == room:
+            return 1;
+        if self.grid[self.py][self.px-1].getType() == room:
+            return 2;
+        if self.grid[self.py+1][self.px].getType() == room:
+            return 3;
+
     def move6(self, heading):
         x = self.grid[self.py][self.px].getType()
         e = True if (x[0] is "0") else False
@@ -260,8 +332,7 @@ class TileMap:
             newy = self.py+1
             if not s:
                 raise InvalidMoveException()
-        front = self.grid[newy][newx].getType()
-        if front == "GATE":
+        if (newx==24) and (newy==9):
             #TODO
             #victory condition
             self.py = newy
@@ -281,22 +352,22 @@ class TileMap:
             newx = self.px+1
             newy = self.py
             if not e:
-                raise MapBorderException()
+                raise InvalidMoveException()
         if heading==1:
             newx = self.px
             newy = self.py-1
             if not n:
-                raise MapBorderException()
+                raise InvalidMoveException()
         if heading==2:
             newx = self.px-1
             newy = self.py
             if not w:
-                raise MapBorderException()
+                raise InvalidMoveException()
         if heading==3:
             newx = self.px
             newy = self.py+1
             if not s:
-                raise MapBorderException()
+                raise InvalidMoveException()
         front = self.grid[newy][newx].getType()
         if front == "GATE":
             return "GATE"
@@ -317,7 +388,7 @@ class TileMap:
         if heading==1:
             newx = self.px
             newy = self.py-1
-            if newx < 0:
+            if newy < 0:
                 raise MapBorderException()
         if heading==2:
             newx = self.px-1
@@ -327,7 +398,7 @@ class TileMap:
         if heading==3:
             newx = self.px
             newy = self.py+1
-            if newx >= self.height:
+            if newy >= self.height:
                 raise MapBorderException()
         return self.grid[newy][newx].getType()
 
@@ -406,13 +477,17 @@ class TileMap:
         for i in range(len(strmap)):
             temp  = strmap[i].strip()
             if len(temp) != self.width:
+                print len(temp), self.width
                 raise InvalidMapFileException()
             strmap[i] = temp
         self.grid = [ [] for i in range(self.height)]
         for i in xrange(self.height):
             for j in xrange(self.width):
-                self.grid[i].append(Tile(strmap[i][j]))
-                a = Tile(strmap[i][j])
+                if self.level == 6:
+                    a = Room(strmap[i][j])
+                else:
+                    a = Tile(strmap[i][j])
+                self.grid[i].append(a)
 #        print self.__str__()
         
             

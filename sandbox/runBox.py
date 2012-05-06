@@ -151,4 +151,4 @@ def run(map_path, level, user):
         return False
     return True
 if __name__ == '__main__':
-    run("../support/levels/level3", 3, "anna")
+    run("level3", 3, "anna")

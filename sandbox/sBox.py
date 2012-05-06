@@ -60,7 +60,7 @@ class sandbox:
             empty = False
             outfile.write("    ")
             outfile.write(line)
-        outfile.write("    return\n")
+        outfile.write("\n    return\n")
         if(empty):
             return False
         codefile.close()
@@ -85,7 +85,7 @@ class sandbox:
         kwds.setdefault("stdout", file)#pipe stdout to a file
         kwds.setdefault("stderr", subprocess.PIPE)#pipe stderr to the output of the subprocess
         usr = subprocess.Popen(args, **kwds)
-        time.sleep(5)
+        time.sleep(3)
         if(usr.poll() == None):
             usr.kill()
             file.close()
