@@ -170,13 +170,13 @@ class Airplane:
         if self.tileMap.level == 6:
             self.tileMap.grid[self.tileMap.py][self.tileMap.px].setMark(True)
 
-    def isMarked(self):
+    def isMarked(self, room):
         """
         Returns a boolean representing whether the current room is
         marked or not
         """
-        if self.tileMap.levl == 6:
-            return self.tileMap.grid[self.tileMap.py][self.tileMap.px].isMarked()
+        if self.tileMap.level == 6:
+            return room.isMarked()
         else:
             return False
 
@@ -215,8 +215,8 @@ class Plane(Airplane):
     def move(self):
         Airplane.move(self)
 
-    def isMarked(self):
-        Airplane.isMarked(self)
+    def isMarked(self, room):
+        Airplane.isMarked(self, room)
 
     def isRoomGoal(self):
 	Airplane.isRoomGoal(self)
