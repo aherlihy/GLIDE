@@ -43,7 +43,7 @@ class Environment(Frame):
         self.initTextBoxes()
         self.initUI()
         
-        self.currLevel = 6
+        self.currLevel = 1
         self.beatenLevels = []
         self.initLevelCanvas()
         self.initLevelText()
@@ -448,7 +448,6 @@ class Environment(Frame):
 	    self.painter.initPlane()
 
 	    cmdList = self.tilemap.getLevel()
-	    print cmdList
 	    
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north

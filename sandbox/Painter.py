@@ -51,7 +51,8 @@ class Painter:
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=tkFont.Font(family="Pupcat", size=20, 
 	                                           weight=tkFont.BOLD), text="Checking your code...", state=HIDDEN)
-        self.dropWaterBalloon(400, 100)
+        self.planeX = 0
+        self.planeY = 0
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -110,6 +111,18 @@ class Painter:
         img_mazef = Image.open("Graphics/Tiles/Maze/mazef.png")
 
         img_goal = Image.open("Graphics/Tiles/goal.png")
+        
+        img_brick = Image.open("Graphics/Tiles/Recess/brick.png")
+        img_head1 = Image.open("Graphics/Tiles/Recess/head1a.png")
+        img_head2 = Image.open("Graphics/Tiles/Recess/head2a.png")
+        img_head3 = Image.open("Graphics/Tiles/Recess/head3a.png")
+        img_head4 = Image.open("Graphics/Tiles/Recess/head4a.png")
+        img_head5 = Image.open("Graphics/Tiles/Recess/head5a.png")
+        img_head6 = Image.open("Graphics/Tiles/Recess/head6a.png")
+        img_head7 = Image.open("Graphics/Tiles/Recess/head7a.png")
+        img_head8 = Image.open("Graphics/Tiles/Recess/head8a.png")
+        img_head9 = Image.open("Graphics/Tiles/Recess/head9a.png")
+        img_head10 = Image.open("Graphics/Tiles/Recess/head10a.png")
 
         self.wall0001 = ImageTk.PhotoImage(img_wall0001)
         self.wall0010 = ImageTk.PhotoImage(img_wall0010)
@@ -162,6 +175,18 @@ class Painter:
 
         self.goal = ImageTk.PhotoImage(img_goal)
         
+        self.brick = ImageTk.PhotoImage(img_brick)
+        self.head1 = ImageTk.PhotoImage(img_head1)
+        self.head2 = ImageTk.PhotoImage(img_head2)
+        self.head3 = ImageTk.PhotoImage(img_head3)
+        self.head4 = ImageTk.PhotoImage(img_head4)
+        self.head5 = ImageTk.PhotoImage(img_head5)
+        self.head6 = ImageTk.PhotoImage(img_head6)
+        self.head7 = ImageTk.PhotoImage(img_head7)
+        self.head8 = ImageTk.PhotoImage(img_head8)
+        self.head9 = ImageTk.PhotoImage(img_head9)
+        self.head10 = ImageTk.PhotoImage(img_head10)
+        
         hexPattern = re.compile("[\da-g]")
 
         for row in range(0, NUM_TILES_HIGH):
@@ -186,6 +211,14 @@ class Painter:
                 # goal 
                 elif charArray[row][col] == 'G':
                     self.canvas.create_image(x, y, image=self.goal, anchor=NW)
+
+                # student
+                elif charArray[row][col] == 'S':
+                    self.canvas.create_image(x, y, image=self.createStudent(), anchor=NW)
+
+                # brick
+                elif charArray[row][col] == 'B':
+                    self.canvas.create_image(x, y, image=self.brick, anchor=NW)
 
                 # plane - set plane here and make square underneath air
                 elif charArray[row][col] == 'P':
@@ -320,6 +353,14 @@ class Painter:
 	else:
 	    decValue = int(hexChar, 16)
 	    return mazePieces[decValue]
+
+
+    def createStudent(self):
+	heads = [self.head1, self.head2, self.head3, self.head4, self.head5,
+	         self.head6, self.head7, self.head8, self.head9, self.head10]
+
+	num = random.randint(0, 9)
+	return heads[num]
 
 
     def initPlane(self):
