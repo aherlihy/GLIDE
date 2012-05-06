@@ -1,8 +1,9 @@
 ../support/levels/level6
 1101
 !
-[<tilemap.Room object at 0xb73ac9ec>]
+[<tilemap.Room object at 0xb73ca6ec>]
 ?
 1100
 @
+0
 This file is where the stdout of the subprocess will go. For debugging
