@@ -103,6 +103,8 @@ class Tile(object):
             return "P";
         if self.value == "DESK":
             return "?"
+        else:
+            return self.value
 
     def getType(self):
         return self.value;
@@ -198,13 +200,13 @@ class TileMap:
                 w = True if (r[1] is "0") else False
                 s = True if (r[2] is "0") else False
                 if e:
-                    buds.append(q)
+                    buds.append(self.grid[y][x+1])
                 if n:
-                    buds.append(q)
+                    buds.append(self.grid[y-1][x])
                 if w:
-                    buds.append(q)
+                    buds.append(self.grid[y][x-1])
                 if s:
-                    buds.append(q)
+                    buds.append(self.grid[y+1][x])
                 q.setNeighbors(buds)
 
     
@@ -298,14 +300,30 @@ class TileMap:
         returns an int representing the heading the arg room
         is in from the current location of the plane.
         """
-        if self.grid[self.py][self.px+1] == room:
-            return 0;
-        if self.grid[self.py-1][self.px] == room:
-            return 1;
-        if self.grid[self.py][self.px-1] == room:
-            return 2;
-        if self.grid[self.py+1][self.px] == room:
-            return 3;
+        print self.py
+        print self.px
+        print self.grid[0]
+        print "a"
+        print self.grid[self.py][self.px]
+        print "neighbors"
+        print self.grid[self.py][self.px].neighbors()
+        print "arg"
+
+        print room
+        print "whups"
+        print self.grid[0][0].neighbors()[0]==self.grid[0][0]
+        if self.px+1<self.width:
+            if self.grid[self.py][self.px+1] == room:
+                return 0;
+        if self.py-1>=0:
+            if self.grid[self.py-1][self.px] == room:
+                return 1;
+        if self.px-1>=0:
+            if self.grid[self.py][self.px-1] == room:
+                return 2;
+        if self.py+1<self.width:
+            if self.grid[self.py+1][self.px] == room:
+                return 3;
 
     def move6(self, heading):
         x = self.grid[self.py][self.px].getType()
@@ -436,7 +454,7 @@ class TileMap:
 #        else:
             #display error message??
         #TODO get this working?
-        return working;
+        return working; 
 
     def getLevel(self):
         return self.plane.getMoves()

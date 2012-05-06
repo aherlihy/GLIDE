@@ -147,7 +147,7 @@ class Airplane:
         if self.tileMap.level == 6:
             if room in self.roomNeighbors(room):
                 head = self.tileMap.getHead(room)
-                print head
+                print "?"+str( head) + "?"
                 self.setHeading(head)
                 self.move()
 

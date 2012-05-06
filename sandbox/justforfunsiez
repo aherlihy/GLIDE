@@ -1,3 +1,8 @@
 ../support/levels/level6
-0111
+1101
+!
+[<tilemap.Room object at 0xb73ac9ec>]
+?
+1100
+@
 This file is where the stdout of the subprocess will go. For debugging
