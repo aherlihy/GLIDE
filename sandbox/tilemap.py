@@ -296,6 +296,9 @@ class TileMap:
         self.px = newx
         #TODO update the map
 
+    def isGoal(self):
+	return self.py==9 and self.px==24
+
     def getHead(self, room):
         """
         returns an int representing the heading the arg room

@@ -113,7 +113,7 @@ def analyze_ast(box, output):
                  output.write("(You never need to import outside packages! We've taken care of everything you're going to need)\n\n")
              elif(line.startswith("Call")):
                  breaks=line.split('|')
-                 if(("NAME:plane" in line) or ("NAME:range" in line) or ("NAME:len" in line)):
+                 if(("NAME:plane" in line) or ("NAME:range" in line) or ("NAME:len" in line) or ("NAME:n" in line) or ("NAME:room" in line) or ("NAME:explore" in line)):
                      continue
                  else:
                      noErrors=False

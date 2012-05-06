@@ -5,8 +5,48 @@ node type: FunctionDef linenumber:5
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: Expr linenumber:6
-Call|LINE:6
-Name|LINE:6|NAME:plane
-attribute node: neilpatrickharris
-node type: Return linenumber:8
+node type: FunctionDef linenumber:6
+node type: arguments
+Name|LINE:6|NAME:room
+node type: Param
+node type: Expr linenumber:7
+Call|LINE:7
+Name|LINE:7|NAME:plane
+attribute node: markRoom
+node type: For linenumber:8
+Name|LINE:8|NAME:n
+node type: Store
+Call|LINE:8
+Name|LINE:8|NAME:plane
+attribute node: roomNeighbors
+Name|LINE:8|NAME:room
+node type: If linenumber:9
+node type: UnaryOp linenumber:9
+node type: Not
+Name|LINE:9|NAME:plane
+attribute node: isMarked
+node type: Expr linenumber:10
+Call|LINE:10
+Name|LINE:10|NAME:plane
+attribute node: goto
+Name|LINE:10|NAME:n
+node type: Expr linenumber:11
+Call|LINE:11
+Name|LINE:11|NAME:explore
+Name|LINE:11|NAME:n
+node type: Expr linenumber:12
+Call|LINE:12
+Name|LINE:12|NAME:plane
+attribute node: goto
+Name|LINE:12|NAME:room
+node type: Assign linenumber:14
+Name|LINE:14|NAME:start
+node type: Store
+Call|LINE:14
+Name|LINE:14|NAME:plane
+attribute node: whereAmI
+node type: Expr linenumber:15
+Call|LINE:15
+Name|LINE:15|NAME:explore
+Name|LINE:15|NAME:start
+node type: Return linenumber:19

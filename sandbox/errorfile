@@ -1,10 +1,10 @@
 Traceback (most recent call last):
   File "bubblewrap.py", line 23, in <module>
     runLevel(plane)
-  File "/gpfs/main/home/ecacciat/course/cs032/GLIDE/sandbox/runLevel.py", line 8, in runLevel
-    plane.goto(b[0])
-  File "/gpfs/main/home/ecacciat/course/cs032/GLIDE/sandbox/avatar.py", line 151, in goto
-    self.setHeading(head)
-  File "/gpfs/main/home/ecacciat/course/cs032/GLIDE/sandbox/avatar.py", line 75, in setHeading
-    self.heading = heading%4
-TypeError: unsupported operand type(s) for %: 'NoneType' and 'int'
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 15, in runLevel
+    explore(start)
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 7, in explore
+    plane.markRoom()
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/avatar.py", line 171, in markRoom
+    self.tileMap.grid[self.tileMap.py][self.tileMap.px].mark()
+AttributeError: 'Room' object has no attribute 'mark'
