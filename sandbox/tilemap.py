@@ -51,7 +51,7 @@ class OutOfGuessException(Exception):
         return repr(self.value);
 
 
-class Tile:
+class Tile(object):
     """Map Tile Class
 
     This object represents a single tile of the map we will be displaying
@@ -121,7 +121,7 @@ class Room(Tile):
     neighboring rooms
     """
     def __init__(self, value="AIR"):
-        super(Tile, self).__init__(value)
+        super(Room, self).__init__(value)
         self.marked = False
         self.neighbors = []
 
@@ -191,19 +191,21 @@ class TileMap:
             for x in xrange(self.width):
                 buds = []
                 r = self.grid[y][x].getType()
+                q = self.grid[y][x]
+
                 e = True if (r[0] is "0") else False
                 n = True if (r[3] is "0") else False
                 w = True if (r[1] is "0") else False
                 s = True if (r[2] is "0") else False
                 if e:
-                    buds.append(self.grid[y][x+1].getType())
+                    buds.append(q)
                 if n:
-                    buds.append(self.grid[y-1][x].getType())
+                    buds.append(q)
                 if w:
-                    buds.append(self.grid[y][x-1].getType())
+                    buds.append(q)
                 if s:
-                    buds.append(self.grid[y+1][x].getType())
-                r.setNeighbors(buds)
+                    buds.append(q)
+                q.setNeighbors(buds)
 
     
     def initBinary(self):
