@@ -158,6 +158,7 @@ class TileMap:
         self.level = int(map_path[len(map_path)-1:])
         self.dummy = False
         self.map_path = map_path
+        self.names = None
         if self.level == 5:
             self.initBinary()
             #TODO randomized Binary search stuff
@@ -231,12 +232,12 @@ class TileMap:
             return None;
         dist = 0
         heading = 0
-        if self.px-2 < desknum:
+        if self.px-1 < desknum:
             heading = 0
-            dist = desknum-(self.px-2)
-        elif self.px-2 > desknum:
+            dist = desknum-(self.px-1)
+        elif self.px-1 > desknum:
             heading = 2
-            dist = (self.px-2)-desknum
+            dist = (self.px-1)-desknum
         self.plane.setHeading(heading)
         for i in xrange(dist):
             self.plane.move()
