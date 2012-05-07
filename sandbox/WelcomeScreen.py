@@ -29,6 +29,9 @@ class WelcomeScreen(Frame):
         parent.configure(bg="MediumTurquoise")
         self.parent = parent
         self.mw = mw
+        
+        print self.parent.winfo_screenwidth()
+        print self.parent.winfo_screenheight()
         self.customFont1 = tkFont.Font(family="LMMono10", size=18)
 
         self.initLogo()
