@@ -1,18 +1,10 @@
-|NAME:plane|NAME:plane|NAME:room
-Call|LINE:8|ATTRIBUTE:markRoom|NAME:plane
-|NAME:n
-Call|LINE:9|ATTRIBUTE:roomNeighbors|NAME:plane|NAME:room
+|NAME:plane
+Call|LINE:6|ATTRIBUTE:check|NAME:plane
 
-Call|LINE:11|ATTRIBUTE:isMarked|NAME:plane|NAME:n
+Call|LINE:7|ATTRIBUTE:move|NAME:plane
 
-Call|LINE:12|ATTRIBUTE:goto|NAME:plane|NAME:n
+Call|LINE:8|ATTRIBUTE:move|NAME:plane
 
-Call|LINE:13|NAME:loopy|NAME:plane|NAME:n
+Call|LINE:9|ATTRIBUTE:move|NAME:plane
 
-Call|LINE:14|ATTRIBUTE:goto|NAME:plane|NAME:room
-|NAME:a
-Call|LINE:17|ATTRIBUTE:whereAmI|NAME:plane
-
-Call|LINE:18|NAME:loopy|NAME:plane|NAME:a
-|NAME:file
-Call|LINE:19|NAME:open
+Call|LINE:10|ATTRIBUTE:move|NAME:plane

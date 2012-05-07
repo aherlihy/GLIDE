@@ -1,4 +1,4 @@
-GLIDE Tutorial III
+GLIDE Tutorial (Part three!)
 
 All right! One more part of the tutorial and you're off to the big time!
 
@@ -23,7 +23,7 @@ So let's say we want to find a book variable called 'book'. We also want to find
 <code>
     library.enter()
     librarian = library.getLibrarian() #This function returns the current librarian on shift.
-    librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what to look for
+    librarian.answerQuestion("Can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what to look for
     wanted_book = library.findBook(book)
     library.leave()
 </code>
@@ -47,11 +47,12 @@ Well, dear friend, we put exactly what we want to happen. In this case, we've de
     def find_book(library, book):
         library.enter()
         librarian = library.getLibrarian() #This function returns the current librarian on shift.
-        librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what t$
+        librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what to look for
         wanted_book = library.findBook(book)
         library.leave()
 </code>
 NOTE that just like if statements, everything is indented after the definition.
+*****
 What's the last piece we need to fill in? 
 Why yes, the return statement. We want the function to return the book we took from the library. How do we return the value?
 <code>
@@ -61,7 +62,7 @@ Why yes, the return statement. We want the function to return the book we took f
         librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows wh$
         wanted_book = library.findBook(book)
         library.leave()
-        return wanted_book
+        <b>return</b> wanted_book
 </code>
 Ta Dah! We have now defined a function. Now if we want to get 10 library books out, we can just say:
 <code>
@@ -79,3 +80,4 @@ Be careful to define the function <b>before</b> calling it! Otherwise the comput
 
 Good luck!
 *****
+You haven't checked any code yet!

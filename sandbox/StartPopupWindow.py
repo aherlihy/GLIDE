@@ -44,12 +44,27 @@ class StartPopupWindow(Toplevel):
         #usernames = self.parent.getUserList()
         self.usernames = ["Emily", "John", "Anna"]
 
+        # change font size depending on screen dimension
+        screen_width = self.parent.winfo_screenwidth()
+        screen_height = self.parent.winfo_screenheight()
+
+        # projector setting
+        if screen_width == 1280:
+	    self.customFont1 = tkFont.Font(family="Pupcat", size=20, weight=tkFont.BOLD)
+
+	# single screen setting
+	elif screen_width == 1920:
+	    self.customFont1 = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
+
+	# double screen setting
+	else:
+            self.customFont1 = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
+
         # if there are no current users, then just make a New User window
         if len(self.usernames) > 0:
             self.initUserSelectionWindow()
         else:
             self.initNewUserWindow()
-
 
     def initUserSelectionWindow(self):
         self.currFrame = Frame(self, relief=FLAT, background="MediumTurquoise")
@@ -60,7 +75,6 @@ class StartPopupWindow(Toplevel):
 
 
     def initNameButtons(self):
-        self.customFont1 = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
 
         topFrame = Frame(self.currFrame, relief=FLAT, background="MediumTurquoise", pady=20)
         scrollbar = Scrollbar(topFrame, orient=VERTICAL)
@@ -135,9 +149,8 @@ class StartPopupWindow(Toplevel):
 
 
     def initNewUserWindow(self):
-        self.customFont2 = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
         self.currFrame = Frame(self, relief=FLAT, background="MediumTurquoise", height=1000)
-        label = Label(self.currFrame, text="Enter a new username:", font=self.customFont2,
+        label = Label(self.currFrame, text="Enter a new username:", font=self.customFont1,
                       bg="MediumTurquoise")
         label.pack()
 
@@ -145,7 +158,7 @@ class StartPopupWindow(Toplevel):
 
         # panel 1 holds the entry box
         panel1 = Frame(self.currFrame, relief=FLAT, background="MediumTurquoise", padx=10, pady=10)
-        entry = Entry(panel1, textvariable=self.newName, font=self.customFont2, bg="PaleTurquoise")
+        entry = Entry(panel1, textvariable=self.newName, font=self.customFont1, bg="PaleTurquoise")
         entry.pack()
 
         panel1.pack()
@@ -159,16 +172,16 @@ class StartPopupWindow(Toplevel):
         if len(self.usernames) > 0:
             backButton = Button(panel2, text="Back", bg="MediumTurquoise",
                                 activebackground="yellow", 
-                                font=self.customFont2, command=self.returnToUserSelectionScreen)
+                                font=self.customFont1, command=self.returnToUserSelectionScreen)
         else:
             backButton = Button(panel2, text="Back", bg="MediumTurquoise",
                                 activebackground="yellow", 
-                                font=self.customFont2, command=self.back)
+                                font=self.customFont1, command=self.back)
 
         backButton.grid(row=0, column=0)
         continueButton = Button(panel2, text="Continue", bg="MediumTurquoise",
                                 activebackground="yellow",
-                                font=self.customFont2, command=self.saveNewUser)
+                                font=self.customFont1, command=self.saveNewUser)
         continueButton.grid(row=0, column=1)
         panel2.pack()
 

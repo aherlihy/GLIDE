@@ -5,61 +5,27 @@ node type: FunctionDef linenumber:5
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: FunctionDef linenumber:7
-node type: arguments
+node type: While linenumber:6
+node type: Compare linenumber:6
+Call|LINE:6
+Name|LINE:6|NAME:plane
+attribute node: check
+node type: IsNot
+node type: Str linenumber:6
+node type: Expr linenumber:7
+Call|LINE:7
 Name|LINE:7|NAME:plane
-node type: Param
-Name|LINE:7|NAME:room
-node type: Param
+attribute node: move
 node type: Expr linenumber:8
 Call|LINE:8
 Name|LINE:8|NAME:plane
-attribute node: markRoom
-node type: For linenumber:9
-Name|LINE:9|NAME:n
-node type: Store
+attribute node: move
+node type: Expr linenumber:9
 Call|LINE:9
 Name|LINE:9|NAME:plane
-attribute node: roomNeighbors
-Name|LINE:9|NAME:room
-node type: If linenumber:11
-node type: UnaryOp linenumber:11
-node type: Not
-Call|LINE:11
-Name|LINE:11|NAME:plane
-attribute node: isMarked
-Name|LINE:11|NAME:n
-node type: Expr linenumber:12
-Call|LINE:12
-Name|LINE:12|NAME:plane
-attribute node: goto
-Name|LINE:12|NAME:n
-node type: Expr linenumber:13
-Call|LINE:13
-Name|LINE:13|NAME:loopy
-Name|LINE:13|NAME:plane
-Name|LINE:13|NAME:n
-node type: Expr linenumber:14
-Call|LINE:14
-Name|LINE:14|NAME:plane
-attribute node: goto
-Name|LINE:14|NAME:room
-node type: Assign linenumber:17
-Name|LINE:17|NAME:a
-node type: Store
-Call|LINE:17
-Name|LINE:17|NAME:plane
-attribute node: whereAmI
-node type: Expr linenumber:18
-Call|LINE:18
-Name|LINE:18|NAME:loopy
-Name|LINE:18|NAME:plane
-Name|LINE:18|NAME:a
-node type: Assign linenumber:19
-Name|LINE:19|NAME:file
-node type: Store
-Call|LINE:19
-Name|LINE:19|NAME:open
-node type: Str linenumber:19
-node type: Str linenumber:19
-node type: Return linenumber:21
+attribute node: move
+node type: Expr linenumber:10
+Call|LINE:10
+Name|LINE:10|NAME:plane
+attribute node: move
+node type: Return linenumber:13

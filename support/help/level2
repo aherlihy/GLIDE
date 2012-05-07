@@ -1,14 +1,15 @@
-GLIDE Tutorial II
+GLIDE Tutorial (part II!)
 
 Hey, you made it! So you can move, turn right, and turn left. But that's kinda limited. 
 Firstly, if you wanted to get to a target that was 10 spaces ahead, then you would have to write move() 10 times.
-That's called 'hardcoding' and it's bad. It's bad for two reasons: we're computer scientists and we're lazy. Writing something 10 times is annoying. Secondly, what if the wind blows and it changes the shape of the clouds? We're stuck moving forward 10 times and we're going to crash.
+That's called 'hardcoding' and it's bad. It's bad for two reasons: we're computer scientists and we're lazy. Writing something 10 times is annoying.
+Secondly, what if the wind blows and it changes the shape of the clouds? We're stuck moving forward 10 times and we're going to crash.
 
 Luckily, plane has this awesome method <code>check()</code> which will tell you what's ahead of you. It will return a string (which if you remember is just text) representing what you're about to run into.
-
+    The options are: "AIR", "CLOUD", or "GOAL"
 So what are we going to do with this method? We now have some info about our environment, but we need to <i>do</i> something with it.
 
-We want to avoid crashing into walls. So let's only move forward if plane.check() returns AIR. How can we do different things depending on what check returns?
+We want to avoid crashing into walls. So let's only move forward if plane.check() returns "AIR". How can we do different things depending on what check returns?
 
 With an <b>if statement</b>! What does this look like?
 <code>
@@ -25,7 +26,6 @@ But what if you want turn around if plane.check is <b>not</b> air?
         plane.turnLeft()
         plane.turnLeft()
 </code>
-
 So we now have two options. But check() can return three things - how do we include a 3rd option into our if statements?
 <code>
     if(plane.check() is 'AIR'):
@@ -36,7 +36,7 @@ So we now have two options. But check() can return three things - how do we incl
     else:
         #Rejoice! Since check didn't return 'AIR' or 'WALL', then it must have returned 'GOAL'!
 </code>
-You can have as many <code>elif(...)</code> statements as options you have. elif stands for "else if"
+You can have as many <code>elif(...)</code> statements as options you have. elif stands for "else if".
 *****
 <b>Things to know about if statements</b>
     **Everything inside of the if statement should be indented. Generally, everytime you see a ':' at the end of a line, you have to indent at least the next line by FOUR SPACES. No mo, no less.
@@ -50,9 +50,9 @@ You can have as many <code>elif(...)</code> statements as options you have. elif
 <code>
         (10>11) = False
         (0<1000) = True
-        ("POTATO" is not "POTAHTO") = False
+        ("POTATO" is not "POTAHTO") = True
 </code>
-    Just like any other basic type, you can have variables with boolean values! i.e.
+    Just like any other basic type, you can have variables that represent boolean values! For example:
 <code>
         is_bigger = 10>0
 </code>
@@ -80,5 +80,5 @@ New methods:
          Check tells you what is in front of the plane.
              parameters: empty
              return value: a string with the following possible values: 'AIR', 'WALL', 'GOAL'
-
 *****
+You haven't checked your code yet!

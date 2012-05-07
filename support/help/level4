@@ -1,12 +1,14 @@
 Welcome to the big time!
 
-You've passed the tutorial, but don't be afraid to check back if you've forgotten something!
+<i>You've passed the tutorial, but don't be afraid to check back if you've forgotten something!</i>
 
 So Aaron is sitting in class, bored. Completely oblivious to the dull mumblings of his teacher, he gazes wistfully out the window. Warm spring air wafts in lazily from the open window, bringing with it the soft drone of the lawnmower outside.
 
-He's really supposed to be filling out a pop quiz...but it's such a nice day out. And it's almost recess. Deciding to put his quiz to much better use, Aaron slowly starts folding his quiz until a glorious vision emerges from the paper...a paper airplane. But not just any paper airplane: It's GLIDE!
+He's really supposed to be filling out a pop quiz...but it's such a nice day out. And it's almost recess. Deciding to put his quiz to much better use, Aaron slowly starts folding his quiz until a glorious vision emerges...a paper airplane. But not just any paper airplane: It's GLIDE!
 
-"Hi Glide", Aaron happily greets you. "Are you ready to cause some mischief??" and with that, the bell for recess rings and you and Aaron run outside.
+"Hi Glide", Aaron happily greets you, "are you ready to cause some mischief??"
+
+With that, the bell for recess rings and you and Aaron run outside.
 *****
 Now, Aaron's quite the sneaky kid. He's brought with him 20 water balloons that he plans on dropping on each and every one of his classmates - except Sally, his best friend.
 
@@ -18,9 +20,9 @@ Loops are fantastic. Remember having to write find_book 10 times in order to get
 
 Loops essentially execute code until you tell them to stop. The question is, how exactly do you tell them to stop?
 It depends on the type of loop. The two types of loops we're going to look at are <b>for</b> and <b>while</b> loops.
-
+*****
 <b>WHILE</b>
-    A while loop is similar to an if statement, except instead of only executing once, it keeps going until the boolean is false. There are also no else or elif statements in while loops.
+    A while loop is similar to an if statement, except instead of only executing once, it keeps going until the boolean is false. There are no 'else' or 'elif' statements in while loops.
     Just like an if statement, it needs to take in a boolean value.
     Let's say we want to define a while loop that counts to a number variable that we don't know. Let's call it 'max'
     <code>
@@ -35,34 +37,38 @@ It depends on the type of loop. The two types of loops we're going to look at ar
     </code>
     You want to use while statements when you don't know exactly how many times you're going to want to execute the code.
     MAKE SURE you are always updating the variable that you pass into while. Otherwise, you will keep going forever and your program will not be happy :(
+*****
 <b>FOR</b>
     For loops are also pretty neat. You can use for loops when you either know exactly how many things you want to loop through or you're looping through specific items (more on that later).
     Let's say you want to move forward 10 times exactly.
     This is what the syntax looks like:
     <code>
-    for i in range(0,10):
+    for i in range(0,9):
         plane.move()
     </code>
+    Note that you are looping from 0 to 9. Since 0 counts as a loop, if you want the plane to move 10 times then you loop until 9. This is called <b>zero-indexing</b> and is the same as counting 0 as 1.
+
     Another neat thing about for loops are that they keep track of how many times you've looped in the variable 'i'.
     You could call i something else, for example:
     <code>
     for BANANAS in range(0,10):
-        plane.move() 
+        plane.move()
     </code>
     And that will do exactly the same thing as the first example. So why bother with defining a variable there?
     Well, what if you want to know where you are in the loop <i>inside</i> the loop?
-    What if you want to increase the size of a variable by 1 more each time you loop? So the first time you would add 0, then 1, then 2, etc.
+    Say you want to increase the size of a variable by 1 more each time you loop? So the first time you would add 0, then 1, then 2, etc.
     <code>
     count=0
     for num in range(0,10):
         count = count+num
     </code>
     This code will add one more each time. So by the end of the for loop, 'count' has 1+2+3+4...+9 stored.
+
     Another cool use for for loops is if you have a list of items.
-    Let's say we have a list variable, let's call it L. Its length is represented by the variable 'length'. If we wanted to do the same thing to each item in the list, we could write a for loop:
+    Let's say we have a list variable, let's call it L. If we wanted to do the same thing to each item in the list, we could write a for loop:
     <code>
         for i in L:
-            #i will be each element in the list
+            #i will be each element in the list L
     </code>
 *****
 <u>GLOSSARY</u>
@@ -93,7 +99,8 @@ New plane methods:
          Parameters: none
          Return: none
     plane.areYouSally() 
-         This function returns either True or False depending on if you've found Sally.
+         This function will tell you if you are currently dropping water on Sally.
          Parameters: None
          Return: boolean
 *****
+You haven't checked any code yet!
