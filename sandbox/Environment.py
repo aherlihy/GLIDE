@@ -134,12 +134,94 @@ class Environment(Frame):
 	f.close()
 	
 	# insert the first screen's text into the help box and set a variable saying so
-	self.helpBox.insert(END, self.screens[0])
+	self.putHelpboxText(0)
 	self.shownScreen = 0
 	
 	# disable editing again
         self.helpBox.config(state=DISABLED)
 
+
+    def putHelpboxText(self, screenNum):
+        self.helpBox.insert(END, self.screens[screenNum])
+        self.shownScreen = screenNum
+	
+	# do tag parsing
+	
+	codeStart = self.helpBox.search("<code>", 1.0)
+	while codeStart != '':
+	    l = re.split('\.', codeStart)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(codeStart, "%d.%d" % (line, col+6))  # remove the "<code>" tag from the line
+
+	    codeEnd = self.helpBox.search("</code>", 1.0)
+	    if codeEnd == '':
+		print "Missing </code> tag in level ", self.currLevel, " help file."
+	    l = re.split('\.', codeEnd)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(codeEnd, "%d.%d" % (line, col+7))  # remove the "</code>" tag from the line
+
+	    # apply tag
+	    self.helpBox.tag_add("code", codeStart, codeEnd)
+
+	    # check for other code tags
+	    codeStart = self.helpBox.search("<code>", 1.0)
+
+        boldStart = self.helpBox.search("<b>", 1.0)
+	while boldStart != '':
+	    l = re.split('\.', boldStart)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(boldStart, "%d.%d" % (line, col+3))  # remove the "<b>" tag from the line
+
+	    boldEnd = self.helpBox.search("</b>", 1.0)
+	    if boldEnd == '':
+		print "Missing </b> tag in level ", self.currLevel, " help file."
+	    l = re.split('\.', boldEnd)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(boldEnd, "%d.%d" % (line, col+4))  # remove the "</b>" tag from the line
+
+	    # apply tag
+	    self.helpBox.tag_add("bold", boldStart, boldEnd)
+
+	    # check for other code tags
+	    boldStart = self.helpBox.search("<b>", 1.0)
+
+        italStart = self.helpBox.search("<i>", 1.0)
+	while italStart != '':
+	    l = re.split('\.', italStart)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(italStart, "%d.%d" % (line, col+3))  # remove the "<i>" tag from the line
+
+	    italEnd = self.helpBox.search("</i>", 1.0)
+	    if italEnd == '':
+		print "Missing </i> tag in level ", self.currLevel, " help file."
+	    l = re.split('\.', italEnd)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(italEnd, "%d.%d" % (line, col+4))  # remove the "</i>" tag from the line
+
+	    # apply tag
+	    self.helpBox.tag_add("ital", italStart, italEnd)
+
+	    # check for other code tags
+	    italStart = self.helpBox.search("<i>", 1.0)
+
+        underStart = self.helpBox.search("<u>", 1.0)
+	while underStart != '':
+	    l = re.split('\.', underStart)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(underStart, "%d.%d" % (line, col+3))  # remove the "<u>" tag from the line
+
+	    underEnd = self.helpBox.search("</u>", 1.0)
+	    if underEnd == '':
+		print "Missing </u> tag in level ", self.currLevel, " help file."
+	    l = re.split('\.', underEnd)
+	    line, col = int(l[0]), int(l[1])
+	    self.helpBox.delete(underEnd, "%d.%d" % (line, col+4))  # remove the "</u>" tag from the line
+
+	    # apply tag
+	    self.helpBox.tag_add("underline", underStart, underEnd)
+
+	    # check for other code tags
+	    underStart = self.helpBox.search("<u>", 1.0)
 
     def initToolbar(self):
         toolbar = Frame(self.parent, relief=FLAT, background="MediumTurquoise")
@@ -277,8 +359,16 @@ class Environment(Frame):
 
 	buttonBar.pack(fill=X)
 	
-	# set up tags to highlight errors in the text editor
+	# set up tags to highlight errors in the text editor and do syntax highlighting
 	self.textEditor.tag_config("error", background="OrangeRed", foreground="White")
+	
+	self.boldFont = tkFont.Font(family="LMMono10", size=14, weight=tkFont.BOLD)
+	self.italFont = tkFont.Font(family="LMMono10", size=14, slant=tkFont.ITALIC)
+	
+	self.helpBox.tag_config("bold", font=self.boldFont)
+	self.helpBox.tag_config("ital", font=self.italFont)
+	self.helpBox.tag_config("underline", underline=1)
+	self.helpBox.tag_config("code", font=self.boldFont, foreground="DarkViolet")
 	
         panedWindow.add(rightPanel)
         panedWindow.pack(fill=BOTH, expand=1)
@@ -307,9 +397,10 @@ class Environment(Frame):
 	    pass
 	else:
 	    self.helpBox.config(state=NORMAL)   # first, turn on editing
-	    self.shownScreen -= 1
+	    #self.shownScreen -= 1
 	    self.helpBox.delete(1.0, END)   # clear the text box first
-	    self.helpBox.insert(END, self.screens[self.shownScreen])   # add the prev screen's text
+	    #self.helpBox.insert(END, self.screens[self.shownScreen])   # add the prev screen's text
+	    self.putHelpboxText(self.shownScreen-1)
 	    self.helpBox.config(state=DISABLED)  # turn off editing again
 
 
@@ -319,9 +410,10 @@ class Environment(Frame):
 	    pass
 	else:
 	    self.helpBox.config(state=NORMAL)   # turn on editing
-	    self.shownScreen = len(self.screens)-1
+	    #self.shownScreen = len(self.screens)-1
 	    self.helpBox.delete(1.0, END)   # clear text box
-	    self.helpBox.insert(END, self.screens[self.shownScreen])
+	    #self.helpBox.insert(END, self.screens[self.shownScreen])
+	    self.putHelpboxText(len(self.screens)-1)
             self.helpBox.config(state=DISABLED)   # turn off editing
 
 
@@ -331,9 +423,10 @@ class Environment(Frame):
 	    pass
 	else:
 	    self.helpBox.config(state=NORMAL)   # first, turn on editing
-	    self.shownScreen += 1
+	    #self.shownScreen += 1
 	    self.helpBox.delete(1.0, END)   # clear text box
-	    self.helpBox.insert(END, self.screens[self.shownScreen])
+	    #self.helpBox.insert(END, self.screens[self.shownScreen])
+	    self.putHelpboxText(self.shownScreen+1)
             self.helpBox.config(state=DISABLED)   # turn off editing
 
 
@@ -389,7 +482,6 @@ class Environment(Frame):
 	    # each compilation
 	    self.redrawLevelCanvas()
 	    # reset plane
-	    #self.painter.initPlane()
 	    
 	    # make sure no lines are highlighted as error lines
 	    self.textEditor.tag_remove("error", 1.0, END)
@@ -421,15 +513,15 @@ class Environment(Frame):
 	        errText += line
 	        continue
 
-            m = re.findall("\d+", line)
-	    if m != []:
-		for val in m:
-		    errorLine = int(val) - 5
-		    line = re.sub(val, str(errorLine), line)
-		    errText += line
+            m = re.search("line (\d+)", line)
+	    if m != None:
+		val = m.group(1)
+		errorLine = int(val) - 5
+		line = re.sub(val, str(errorLine), line)
 
-		    # highlight line in textEditor
-		    self.textEditor.tag_add("error", "%d.%d" % (errorLine, 0), "%d.%s" % (errorLine, END))
+		# highlight line in textEditor
+		self.textEditor.tag_add("error", "%d.%d" % (errorLine, 0), "%d.%s" % (errorLine, END))
+		errText += line
 	    else:
 		errText += line
 	f.close()
@@ -566,6 +658,7 @@ class Environment(Frame):
 
 
     def prevLevel(self):
+	self.painter.killAnimation()  # stop fireworks, if going
 	self.currLevel -= 1
 	self.initLevelCanvas()
 	self.initLevelText()
@@ -580,12 +673,12 @@ class Environment(Frame):
 
 
     def nextLevel(self):
+	self.painter.killAnimation()   # stop fireworks, if going
 	self.currLevel += 1
 	self.initLevelCanvas()
 	self.initLevelText()
 	
 	# do the appropriate graying-out of buttons
-	print "curr level: ", self.currLevel
 	if self.currLevel in self.beatenLevels and self.currLevel < 6:
 	    self.nextLevelButton.config(state=NORMAL)
 	else:
