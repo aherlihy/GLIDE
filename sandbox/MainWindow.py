@@ -6,7 +6,6 @@ from Tkinter import Tk, Frame, Menu, BOTH, Canvas, Text, PanedWindow
 from Tkinter import Button, LEFT, TOP, X, FLAT, RAISED, BOTH
 from WelcomeScreen import WelcomeScreen
 from Environment import Environment
-=======
 from GlideChoose import GlideChoose
 
 DIM_X = 1200
