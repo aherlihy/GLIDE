@@ -147,7 +147,12 @@ def analyze_ast(box, output):
 def run(map_path, level, user):
     output = open("output.py", "w")
     box = sandbox() 
-    if not(box.init_level(level, user)):
+    val = box.init_level(level, user)
+    if(val == None):
+        output.write("HEY! It looks like you're trying to access system, which is a no-no.\nIf you're not - then make sure you aren't calling any functions on a module named sys. Because that's not the sys you're looking for.\n")
+        output.close()
+        return False
+    elif(val == False):
         output.write("ERROR:EMPTY")
         output.close()
         return False

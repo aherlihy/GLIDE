@@ -57,6 +57,8 @@ class sandbox:
 
         #append each line in codefile to outfile, indenting appropriately
         for line in codefile:
+            if("sys." in line):
+                return None
             empty = False
             outfile.write("    ")
             outfile.write(line)
