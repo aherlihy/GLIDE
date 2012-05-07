@@ -1,0 +1,72 @@
+LEVEL 1:
+plane.turnLeft()
+plane.turnLeft()
+plane.move()
+
+LEVEL 2:
+#Type your code here!
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+plane.move()
+
+LEVEL 3
+#It's time to write some functions!
+
+def helper(plane):
+    plane.move()
+    plane.move()
+    plane.move()
+    plane.move()
+
+#Don't forget to actually call your function!
+helper(plane)
+plane.turnLeft()
+helper(plane)
+plane.turnRight()
+helper(plane)
+plane.turnRight()
+helper(plane)
+plane.turnLeft()
+helper(plane)
+plane.turnLeft()
+helper(plane)
+plane.turnRight()
+helper(plane)
+plane.turnRight()
+helper(plane)
+plane.turnLeft()
+helper(plane)
+plane.move()
+plane.move()
+
+LEVEL 4:
+for student in range(0,19):
+    while not(plane.isAboveStudent()):
+        plane.move()
+    if not (plane.isAboveSally()):
+        plane.dropWater()
+while(plane.check() is not 'TARGET'):
+    plane.move()
+plane.move()
+
+LEVEL 5:
