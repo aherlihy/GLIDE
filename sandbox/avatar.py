@@ -89,7 +89,7 @@ class Airplane:
         This method is used for binary search level
         """
         try:
-            a = self.tileMap.askName(desknum)
+            a = self.tileMap.askDeskName(desknum)
             return a
         except VictoryException:
             self.moveSet += "7"

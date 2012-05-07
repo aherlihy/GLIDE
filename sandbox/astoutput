@@ -1,10 +1,2 @@
 |NAME:plane
-Call|LINE:6|ATTRIBUTE:check|NAME:plane
-
-Call|LINE:7|ATTRIBUTE:move|NAME:plane
-
-Call|LINE:8|ATTRIBUTE:move|NAME:plane
-
-Call|LINE:9|ATTRIBUTE:move|NAME:plane
-
-Call|LINE:10|ATTRIBUTE:move|NAME:plane
+Call|LINE:6|ATTRIBUTE:askName|NAME:plane

@@ -220,7 +220,7 @@ class TileMap:
                 "VING","WALDO","WITT","XANDER","XENA","YOLANDA","YVETTE",
                 "ZACH","ZIM"]
         use = ["MARY"]
-        for i in xrange(23):
+        for i in xrange(18):
             use.append(names.pop(random.randint(0,len(names)-1)))
         use.sort()
         self.names = use
@@ -230,27 +230,28 @@ class TileMap:
         if self.grid[self.py+1][self.px].getType() != "DESK":
             return None;
         dist = 0
-        if self.px < desknum:
+        heading = 0
+        if self.px-2 < desknum:
             heading = 0
-            dist = desknum-self.px
-        elif self.px > desknum:
+            dist = desknum-(self.px-2)
+        elif self.px-2 > desknum:
             heading = 2
-            dist = self.px-desknum
+            dist = (self.px-2)-desknum
         self.plane.setHeading(heading)
         for i in xrange(dist):
             self.plane.move()
         #plane should now be above the desk of number desknum
         #TODO animate the desk turning over
-        self.plane.moveSet.append("8")
-        self.plane.moveSet.append(str(desknum))
-        self.plane.moveSet.append("8")
-        if self.names[num]=="MARY":
+        self.plane.moveSet+="8"
+        self.plane.moveSet+=str(desknum)
+        self.plane.moveSet+="8"
+        if self.names[desknum]=="MARY":
             raise VictoryException()
         else:
             self.guess -= 1
             if self.guess == 0:
                 raise OutOfGuessException()
-            return self.names[num]
+            return self.names[desknum]
 
     def getPlane(self):
         """This method sets the coordinates for a plane that has
@@ -453,6 +454,7 @@ class TileMap:
         return working; 
 
     def getLevel(self):
+        print self.plane.getMoves()
         return self.plane.getMoves()
 
 
