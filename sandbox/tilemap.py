@@ -268,7 +268,7 @@ class TileMap:
         if heading==1:
             newx = self.px
             newy = self.py-1
-            if newx < 0:
+            if newy < 0:
                 raise InvalidMoveException()
         if heading==2:
             newx = self.px-1
@@ -278,7 +278,7 @@ class TileMap:
         if heading==3:
             newx = self.px
             newy = self.py+1
-            if newx >= self.height:
+            if newy >= self.height:
                 raise InvalidMoveException()
         front = self.grid[newy][newx].getType()
         if front == "WALL" \

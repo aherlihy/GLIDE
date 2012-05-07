@@ -8,6 +8,5 @@ node type: Param
 node type: Expr linenumber:6
 Call|LINE:6
 Name|LINE:6|NAME:plane
-attribute node: askName
-node type: Num linenumber:6
+attribute node: neilpatrickharris
 node type: Return linenumber:8

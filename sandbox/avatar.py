@@ -147,20 +147,7 @@ class Airplane:
         if self.tileMap.level == 6:
             if room in self.roomNeighbors(self.whereAmI()):
                 head = self.tileMap.getHead(room)
-                dif = self.heading-head
-                if dif==1:
-                    self.turnRight()
-                elif dif==-1:
-                    self.turnLeft()
-                elif dif==3:
-                    self.turnLeft()
-                elif dif==-3:
-                    self.turnRight()
-                elif dif==0:
-                    pass;
-                else:
-                    self.turnLeft()
-                    self.turnLeft()
+                self.setHeading(head)
                 self.move()
 
 
