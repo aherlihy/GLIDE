@@ -41,12 +41,12 @@ class WelcomeScreen(Frame):
 
 	# single screen setting
 	elif screen_width == 1920:
-	    self.customFont1 = tkFont.Font(family="LMMono10", size=14)
+	    self.customFont1 = tkFont.Font(family="LMMono10", size=18)
 	    self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
 
 	# double screen setting
 	else:
-            self.customFont1 = tkFont.Font(family="LMMono10", size=14)
+            self.customFont1 = tkFont.Font(family="LMMono10", size=18)
             self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
 
         self.initLogo()

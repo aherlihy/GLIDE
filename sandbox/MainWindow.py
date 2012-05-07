@@ -32,22 +32,22 @@ class MainWindow(Frame):
 
         self.envt = None
         self.parent.protocol("WM_DELETE_WINDOW", self.exit)
+        self.canQuit = True
 
     def createNewEnvt(self, username):
 	self.welcomeScreen.pack_forget()
-        self.envt = Environment(self.parent, username)
+        self.envt = Environment(self.parent, self, username)
         self.envt.pack()
 
     def exit(self):
-	frame = Frame(bg="")
-        frame.pack()
-        popup = GlideChoose(self, "Are you sure you want to quit?", "Quit GLIDE", True)
-
+	if self.canQuit:
+	    frame = Frame(bg="")
+	    frame.pack()
+	    popup = GlideChoose(self, "Are you sure you want to quit?", "Quit GLIDE", True)
 
     def kill(self):
-	#if self.envt != None:
-	#    self.envt.painter.destroy()
-	#    self.envt.destroy()
+	if self.envt != None:
+	    self.envt.setEndStatus(True)
 	self.parent.destroy()
 
 def main():

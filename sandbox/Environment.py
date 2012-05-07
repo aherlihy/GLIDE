@@ -29,15 +29,17 @@ CANVAS_HEIGHT = (DIM_Y - TOOLBAR_Y)/2+25
 
 class Environment(Frame):
 
-    def __init__(self, root, username):
+    def __init__(self, root, mw, username):
         Frame.__init__(self, root, background="MediumTurquoise")
         self.parent = root
+        self.mw = mw
         self.username = username
 
         self.levelFilename = "../support/levels/level"
         self.stencilFilename = "../support/stencil/level"
         self.helpFilename = "../support/help/level"
         self.canRun = False
+        self.endStatus = False
 
         # change font size depending on screen dimension
         screen_width = self.parent.winfo_screenwidth()
@@ -60,7 +62,7 @@ class Environment(Frame):
 	# double screen setting
 	else:
 	    self.customFont1 = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
-            self.customFont2 = tkFont.Font(family="LMMono10", size=14)
+            self.customFont2 = tkFont.Font(family="LMMono10", size=15)
             self.boldFont = tkFont.Font(family="LMMono10", size=14, weight=tkFont.BOLD)
 	    self.italFont = tkFont.Font(family="LMMono10", size=14, slant=tkFont.ITALIC)
 
@@ -575,6 +577,10 @@ class Environment(Frame):
 	self.runButton.config(state=DISABLED)
 
 
+    def setEndStatus(self, b):
+	self.endStatus = b
+
+
     # Get the list of commands to execute from the tilemap and tell the painter to do them. This
     # allows us to look ahead for turns so we can animate them nicely.
     def run(self):
@@ -583,13 +589,12 @@ class Environment(Frame):
 	    
 	    # disable buttons while we run the level dummy
             currStates = self.disableButtons()
-	    
+
 	    # reset plane
 	    self.painter.initPlane()
 
 	    cmdList = self.tilemap.getLevel()
-	    print cmdList
-	    
+
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north
 	    cmdList = re.sub('14051', 'k', cmdList) # k = s-bend north east
@@ -598,7 +603,7 @@ class Environment(Frame):
 	    cmdList = re.sub('25342', 'n', cmdList) # n = s-bend west south
 	    cmdList = re.sub('34253', 'o', cmdList) # o = s-bend south west
 	    cmdList = re.sub('35043', 'p', cmdList) # p = s-bend south east
-	    
+
 	    cmdList = re.sub('043', 'a', cmdList)   # a = right turn south
 	    cmdList = re.sub('051', 'b', cmdList)   # b = left turn north
 	    cmdList = re.sub('342', 'c', cmdList)   # c = right turn west
@@ -609,6 +614,11 @@ class Environment(Frame):
 	    cmdList = re.sub('140', 'h', cmdList)   # h = right turn east
 
 	    for i in range(len(cmdList)):
+		if self.endStatus:
+		    self.painter.destroy()
+		    self.destroy()
+		    return
+
 		cmd = cmdList[i]
 		if cmd == '0':
 		    self.painter.movePlaneEast()
@@ -698,7 +708,7 @@ class Environment(Frame):
 	    self.helpBox.delete(1.0, END)   # clear text box
 	    self.helpBox.insert(END, self.screens[self.shownScreen])
 	    self.helpBox.config(state=DISABLED)   # turn off editing
-	    
+
 	    # make the run button clickable again
 	    self.returnButtonsToStates(currStates)
 

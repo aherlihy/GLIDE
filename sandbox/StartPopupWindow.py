@@ -237,7 +237,7 @@ class StartPopupWindow(Toplevel):
             popup = GlideDialog(self, "Username %s already exists. Please enter a new username." 
                                 % self.newName.get().capitalize(), "Before continuing...")
         else:
-            self.parent.createEnvt()
+            self.parent.createEnvt(self.newName)
             self.back()
 
 
