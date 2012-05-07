@@ -566,6 +566,7 @@ class Environment(Frame):
 	    self.painter.initPlane()
 
 	    cmdList = self.tilemap.getLevel()
+	    print cmdList
 	    
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north
@@ -606,7 +607,8 @@ class Environment(Frame):
 	            self.helpBox.delete(1.0, END)   # clear text box
 	            self.helpBox.insert(END, self.screens[self.shownScreen])
 	            self.helpBox.config(state=DISABLED)   # turn off editing
-	            break
+	            self.returnButtonsToStates(currStates)
+	            return
 		elif cmd == '7':
 		    pass
 		elif cmd == '8':
