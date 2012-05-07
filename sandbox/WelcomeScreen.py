@@ -43,7 +43,7 @@ class WelcomeScreen(Frame):
 	elif screen_width == 1920:
 	    self.customFont1 = tkFont.Font(family="LMMono10", size=18)
 	    self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
-
+            self.customFont2 = tkFont.Font(family="LMMono10", size=12)
 	# double screen setting
 	else:
             self.customFont1 = tkFont.Font(family="LMMono10", size=18)
@@ -96,17 +96,21 @@ class WelcomeScreen(Frame):
 
     # make the about text box the current item held in the topFrame
     def initAboutBox(self):
+        file = open("../support/help/about", "r")
+        gttext = file.read()
         self.currItem = Label(self.topFrame, bg="MediumTurquoise", relief=FLAT, font=self.customFont1,
-                        width=NUM_CHARS, height=NUM_ROWS, text="ABOUT\n")
+                        width=NUM_CHARS, height=NUM_ROWS, text=gttext)
         self.currItem.pack()
         self.topFrame.grid(row=0)
 
 
     # make the getting started text box the current item held in the topFrame
     def initGettingStartedBox(self):
-        self.currItem = Label(self.topFrame, bg="MediumTurquoise", relief=FLAT, font=self.customFont1,
-                        width=NUM_CHARS, height=NUM_ROWS, 
-                        text="This is where we'll tell the user a little \nbit about GLIDE.")
+        file = open("../support/help/gettingstarted", "r")
+        abouttext = file.read()
+        self.currItem = Label(self.topFrame, bg="MediumTurquoise", relief=FLAT, font=self.customFont2,
+                        width=NUM_CHARS, height=NUM_ROWS+5, 
+                        text=abouttext)
         self.currItem.grid(row=0, column=0)
         self.topFrame.grid(row=0)
 
