@@ -5,27 +5,8 @@ node type: FunctionDef linenumber:5
 node type: arguments
 Name|LINE:5|NAME:plane
 node type: Param
-node type: While linenumber:6
-node type: Compare linenumber:6
+node type: Expr linenumber:6
 Call|LINE:6
 Name|LINE:6|NAME:plane
-attribute node: check
-node type: IsNot
-node type: Str linenumber:6
-node type: Expr linenumber:7
-Call|LINE:7
-Name|LINE:7|NAME:plane
-attribute node: move
-node type: Expr linenumber:8
-Call|LINE:8
-Name|LINE:8|NAME:plane
-attribute node: move
-node type: Expr linenumber:9
-Call|LINE:9
-Name|LINE:9|NAME:plane
-attribute node: move
-node type: Expr linenumber:10
-Call|LINE:10
-Name|LINE:10|NAME:plane
-attribute node: move
-node type: Return linenumber:13
+attribute node: neilpatrickharris
+node type: Return linenumber:8

@@ -1,1 +1,6 @@
-stencil for level 3
+#It's time to write some functions!
+
+def helper(???): #What do you need to pass in as a paramter?
+   ...
+
+#Don't forget to actually call your function!

@@ -72,7 +72,7 @@ class Environment(Frame):
         self.initTextBoxes()
         self.initUI()
 
-        self.currLevel = 1
+        self.currLevel = 5
 
         self.beatenLevels = []
         self.initLevelCanvas()

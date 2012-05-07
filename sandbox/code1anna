@@ -1,4 +1,2 @@
-
-plane.turnLeft()
-plane.turnLeft()
-plane.move()
+room = plane.whereAmI()
+plane.isMarked(room)

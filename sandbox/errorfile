@@ -1,8 +1,10 @@
 Traceback (most recent call last):
   File "bubblewrap.py", line 23, in <module>
     runLevel(plane)
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 10, in runLevel
-    if(plane.askName(mid)<"Sally"):
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/avatar.py", line 92, in askName
-    a = self.tileMap.askName(desknum)
-AttributeError: TileMap instance has no attribute 'askName'
+  File "/gpfs/main/home/jwoberbe/course/cs032/GLIDE/sandbox/runLevel.py", line 6, in runLevel
+    plane.askName(1)
+  File "/gpfs/main/home/jwoberbe/course/cs032/GLIDE/sandbox/avatar.py", line 92, in askName
+    a = self.tileMap.askDeskName(desknum)
+  File "/gpfs/main/home/jwoberbe/course/cs032/GLIDE/sandbox/tilemap.py", line 239, in askDeskName
+    self.plane.setHeading(heading)
+UnboundLocalError: local variable 'heading' referenced before assignment
