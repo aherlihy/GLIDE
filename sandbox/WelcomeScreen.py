@@ -11,8 +11,8 @@ from StartPopupWindow import StartPopupWindow
 DIM_X = 1200
 DIM_Y = 900
 BUTTON_PAD_X = 50
-NUM_CHARS = 50
-NUM_ROWS = 13
+NUM_CHARS = 80
+NUM_ROWS = 19
 
 #---------------------------------------------------------------------#
 # The WelcomeScreen is the first window shown to the user when GLIDE  #
@@ -43,7 +43,7 @@ class WelcomeScreen(Frame):
 	elif screen_width == 1920:
 	    self.customFont1 = tkFont.Font(family="LMMono10", size=18)
 	    self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
-            self.customFont2 = tkFont.Font(family="LMMono10", size=12)
+            self.customFont2 = tkFont.Font(family="LMMono10", size=14)
 	# double screen setting
 	else:
             self.customFont1 = tkFont.Font(family="LMMono10", size=18)
@@ -88,8 +88,9 @@ class WelcomeScreen(Frame):
 
     def initScreen(self):
         self.parent.grid_columnconfigure(0, minsize=DIM_X)
-        self.parent.grid_rowconfigure(0, minsize=DIM_Y/2)
-        self.parent.grid_rowconfigure(1, minsize=DIM_Y/2)
+        self.parent.grid_rowconfigure(0, minsize=740)
+        #self.parent.grid_rowconfigure(1, minsize=DIM_Y/2)
+        #self.parent.grid_rowconfigure(1, minsize=200)
         self.parent.grid_propagate(False)
         self.parent.resizable(width=False, height=False)
 
@@ -109,7 +110,7 @@ class WelcomeScreen(Frame):
         file = open("../support/help/gettingstarted", "r")
         abouttext = file.read()
         self.currItem = Label(self.topFrame, bg="MediumTurquoise", relief=FLAT, font=self.customFont2,
-                        width=NUM_CHARS, height=NUM_ROWS+5, 
+                        width=NUM_CHARS, height=NUM_ROWS+7, 
                         text=abouttext)
         self.currItem.grid(row=0, column=0)
         self.topFrame.grid(row=0)
