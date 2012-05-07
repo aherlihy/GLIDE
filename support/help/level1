@@ -34,6 +34,11 @@ So we know we can have a variable that represents a number. What else can variab
 
 Anything you want them to! Really, we mean anything. Like you can have a variable that represents a whole other program. But we won't go there for awhile.
 
+Variables can represent anything but they can also represent <i>nothing</i>.
+    If you don't assign a variable any value, then it is automatically nothing. There is a special name for nothing, <code>None</code>.
+    You have to be careful that you don't try to do anything with a variable that has a None value.
+    That will result in an error :(
+
 Variables that represent numbers can't really do anything, they're just numbers. That's why numbers are <i>Basic Types</i>, while more complicated variables are called <i>Objects</i>.
 
 Objects in computer science have <i>attributes</i> and <i>capabilities</i>. You can think of attributes as the nouns, and capabilities as the verbs associated with any object.
@@ -111,6 +116,29 @@ Now you know what time the library closes!
                 (1) <i>Name</i>
                 (2) <i>Parameters</i>: information that is passed to the method. A method can take in any number of parameters.
                 (3) <i>Return Value</i>: the information that the method returns to the caller. Unlike parameters, a method can only return one value but that value can be anything.
+           These three components together are called the <b>method signature</b>
            Methods can be called by:
                 <code>return_value = variable_name.method_name(parameter1, parameter2, ...)</code>
+*****
+Alright let's get this level started. What do we want you to do? Just play around.
+
+You have one variable right now - <code>plane</code>
+
+We're going to start you off with the simple methods of plane: 
+    <code>move()</code>
+         This is pretty self explanatory. When you want the plane to move forward, call move().
+             parameters: empty
+             return value: None
+    <code>turnRight()</code>
+         When you want the plane to turn to the left of where it's facing.
+             parameters: empty
+             return value: None 
+    <code>turnLeft()</code>
+         When you want the plane to turn to the right of where it's facing.
+             parameters: empty
+             return value: None
+
+You will have completed the level when you can move the plane to the target!
+When you input code, you can test it by pressing the check "Check Code" button. If there are errors in your code then they will show up on the right side textbox.
+Once you can pass "Check Code" you can press "Run Code" and see what happens!
 *****

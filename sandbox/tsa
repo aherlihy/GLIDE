@@ -55,4 +55,11 @@ Call|LINE:18
 Name|LINE:18|NAME:loopy
 Name|LINE:18|NAME:plane
 Name|LINE:18|NAME:a
-node type: Return linenumber:20
+node type: Assign linenumber:19
+Name|LINE:19|NAME:file
+node type: Store
+Call|LINE:19
+Name|LINE:19|NAME:open
+node type: Str linenumber:19
+node type: Str linenumber:19
+node type: Return linenumber:21

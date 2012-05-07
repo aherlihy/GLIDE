@@ -14,3 +14,5 @@ Call|LINE:14|ATTRIBUTE:goto|NAME:plane|NAME:room
 Call|LINE:17|ATTRIBUTE:whereAmI|NAME:plane
 
 Call|LINE:18|NAME:loopy|NAME:plane|NAME:a
+|NAME:file
+Call|LINE:19|NAME:open

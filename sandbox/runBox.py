@@ -89,7 +89,8 @@ def run_this(box, output, map_path):
                            currentErrorFile = name
                    if(currentErrorFile.endswith("runLevel.py")):
                        reasonableError=True
-                       write_error(output, list, linenumber, length, codeline)
+                       output.write(linenumber + "\n")
+                       output.write("code: \"" + codeline[4:] + "\"\n")
                        
            if(reasonableError):
                output.write(list[length-1]+"\n")
@@ -129,9 +130,9 @@ def analyze_ast(box, output):
                           print "b", b
                           c = b.split(':')
                           if(c[0]=="LINE"):
-                               output.write("On line " + c[1]+ " you call ")
+                               output.write("On line " + c[1]+ " you call")
                           if(c[0]=="ATTRIBUTE"):
-                               output.write("\"" + c[1] + "\"")
+                               output.write(" \"" + c[1] + "\"")
                           if(c[0]=="NAME"):
                                output.write(" on \"" + c[1] + "\"")
                      output.write("\n\n")

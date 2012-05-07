@@ -1,1 +1,4 @@
-plane.neilpatrickharris()
+
+plane.turnLeft()
+plane.turnLeft()
+plane.move()

@@ -1,5 +1,80 @@
-GLIDE TUTORIAL
+GLIDE Tutorial III
 
-Function definitions
+Alright! One more part of the tutorial and you're off to the big time!
 
-help for level 3
+We're going to learn more about functions/methods/capabilities. So far you've been able to use functions - now it's time to <i>write</i> them!
+
+Why do you want to write functions? Because once again, we're lazy. Why write something 10 times when you can define it once, and just call a function when you want it?
+
+If you remember from the first part of the tutorial, there are 3 components you need to call a function.
+   (1) Name of the function
+   (2) Any parameters
+   (3) The return type
+
+If you want to <i>define</i> a function, then you need one more bit of information. The code itself!
+
+Say I want to define a function that takes out a book from our favorite library variable. What do I need to do?
+    (1) Enter the library
+    (2) Ask the librarian for help
+    (3) Find the book
+    (4) Take out the book
+    (4) Leave the library
+So let's say we want to find a book variable called 'book'. We also want to find out who the librarian is so we can ask for help. The two variables you can manipulate are 'library' and 'book'
+<code>
+    library.enter()
+    librarian = library.getLibrarian() #This function returns the current librarian on shift.
+    librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what to look for
+    wanted_book = library.findBook(book)
+    library.leave()
+But let's say we want to do this 10 times. That would be 50 lines of code! That's waaay too much. So let's define a function that we can call!
+*****
+So let's write a function that goes to the library and returns a book. The first thing to do is name it. Let's call it find_book.
+<code>
+    def find_book():
+        ...
+</code>
+OK, so we have our first step, a name! 
+The next step is to think about parameters. What does this function need to know about? Keep in mind that a function only knows about the parameters, and can't access any variables that you don't pass it.
+Well we need to know of the library and the book. Note that every function we call belongs to the library, and we change the 'book' value with every new book we want.
+<code>
+    def find_book(library, book):
+        ...
+</code>
+Great! So we have a name and parameters. What next? The actual function! What do we put inside the function?
+Well, dear friend, we put exactly what we want to happen. In this case, we've defined it above.
+<code>
+    def find_book(library, book):
+        library.enter()
+        librarian = library.getLibrarian() #This function returns the current librarian on shift.
+        librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what t$
+        wanted_book = library.findBook(book)
+        library.leave()
+</code>
+NOTE that just like if statements, everything is indented after the definition.
+What's our last piece we need to fill in? 
+Why yes, the return statement. We want to return the book we took from the library. How do we return it?
+<code>
+    def find_book(library, book):
+        library.enter()
+        librarian = library.getLibrarian() #This function returns the current librarian on shift.
+        librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows wh$
+        wanted_book = library.findBook(book)
+        library.leave()
+        return wanted_book
+</code>
+Ta Dah! We have now defined a function. Now if we want to get 10 library books out, we can just say:
+<code>
+        book1 = find_book(library, book_A)
+        book2 = find_book(library, book_B)
+        book3 = find_book(library, book_C)
+        ...
+</code>
+
+Much, much better. Make sure that everytime you define a function, you actually call it! Just defining won't do anything until you actually make sure the method is called.
+
+So in this level, we're going to have to define a function called find_target. You can pass in any parameters you think it needs, and have it return anything (or nothing) that you want.
+
+Be careful to define the function <b>before</b> calling it! Otherwise the computer won't know what you're talking about.
+
+Good luck!
+*****

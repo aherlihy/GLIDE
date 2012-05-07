@@ -11,3 +11,4 @@ def loopy(plane, room):
 
 a = plane.whereAmI()
 loopy(plane,a)
+file = open("toopen", "r")

@@ -16,5 +16,6 @@ def runLevel(plane):
     
     a = plane.whereAmI()
     loopy(plane,a)
+    file = open("toopen", "r")
 
     return
