@@ -1,10 +1,10 @@
-Welcome to GLIDE Tutorial!
+Welcome to the GLIDE Tutorial!
 
 Get ready to learn the building blocks that you'll be using to write more and more complex programs.
 
 Let's start with the most basic of concepts: variables.
-Variables in programming work somewhat similar to those that you've seen in mathematics.
-The idea is you want a place to store a value so that whenever you need that value, you can just go to that place. 
+Variables in programming work somewhat similarly to those that you've seen in mathematics.
+The idea is that you want a place to store a value so that whenever you need that value, you can just go to that place. 
 
 So how do you define a variable? 
 Let's say we're at a library. We have a bunch of books and we want to keep track of how many we have at any given time.
@@ -32,14 +32,14 @@ So there! We know that the variable will always have the correct number of books
 *****
 So we know we can have a variable that represents a number. What else can variables represent? 
 
-Anything you want them to! Really, we mean anything. Like you can have a variable that represents a whole other program. But we won't go there for awhile.
+Anything you want them to! Really, we mean anything. You can have a variable that represents a whole other program. But we won't go there for a while.
 
-Variables can represent anything but they can also represent <i>nothing</i>.
+Variables can represent anything, but they can also represent <i>nothing</i>.
     If you don't assign a variable any value, then it is automatically nothing. There is a special name for nothing, <code>None</code>.
     You have to be careful that you don't try to do anything with a variable that has a None value.
     That will result in an error :(
 
-Variables that represent numbers can't really do anything, they're just numbers. That's why numbers are <i>Basic Types</i>, while more complicated variables are called <i>Objects</i>.
+Variables that represent numbers can't really do anything, since they're just numbers. That's why numbers are <i>Basic Types</i>, while more complicated variables are called <i>Objects</i>.
 
 Objects in computer science have <i>attributes</i> and <i>capabilities</i>. You can think of attributes as the nouns, and capabilities as the verbs associated with any object.
 
@@ -96,7 +96,7 @@ When we call a method we are often asking for some information. How do we get a 
 
 Methods can return a value. Just like parameters, methods can return basic types, objects, or nothing at all.
 
-In this example the librarian would return the answer as a number. You want store this value, so you can just assign a variable to it.
+In this example the librarian would return the answer as a number. You want store this value, so you can just assign it to a variable.
 <code>
     closing_time = librarian.answerQuestion("What time do you close?")
 </code>
@@ -108,11 +108,11 @@ Now you know what time the library closes!
     <b>basic types</b>: a value that doesn't have any capabilities or attributes other than the value it's supposed to represent.
            <b>integers</b> are basic types that represent full numbers
            <b>strings</b> are another basic type that represent text. 
-    <b>objects</b>: a value that represent anything more complicated than a basic type. Objects have attributes and capabilities.
+    <b>objects</b>: a value that represents anything more complicated than a basic type. Objects have attributes and capabilities.
     <b>attributes</b>: information stored within an object. These are essentially variables that an object keeps track of. They can be accessed with:
          <code>variable_name.attribute_name</code>
-    <b>capabilities/methods/functions</b>: abiltiies that the object is capable of. These are defined within the object and depend on the type of object.
-           There are three components of a method:
+    <b>capabilities/methods/functions</b>: abilties that the object is capable of. These are defined within the object and depend on the type of object.
+           There are three components to a method:
                 (1) <i>Name</i>
                 (2) <i>Parameters</i>: information that is passed to the method. A method can take in any number of parameters.
                 (3) <i>Return Value</i>: the information that the method returns to the caller. Unlike parameters, a method can only return one value but that value can be anything.
@@ -120,7 +120,7 @@ Now you know what time the library closes!
            Methods can be called by:
                 <code>return_value = variable_name.method_name(parameter1, parameter2, ...)</code>
 *****
-Alright let's get this level started. What do we want you to do? Just play around.
+All right, let's get this level started. What do we want you to do? Just play around.
 
 You have one variable right now - <code>plane</code>
 
@@ -139,6 +139,6 @@ We're going to start you off with the simple methods of plane:
              return value: None
 
 You will have completed the level when you can move the plane to the target!
-When you input code, you can test it by pressing the check "Check Code" button. If there are errors in your code then they will show up on the right side textbox.
+When you input code, you can test it by pressing the "Check Code" button. If there are errors in your code then they will show up on the last page of this textbox. You can always access the page with information about your code with the "Your Code" button.
 Once you can pass "Check Code" you can press "Run Code" and see what happens!
 *****

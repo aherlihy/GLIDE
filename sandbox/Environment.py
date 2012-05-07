@@ -141,6 +141,23 @@ class Environment(Frame):
         self.helpBox.config(state=DISABLED)
 
 
+    def loadUserCode(self):
+	# clear the text editor
+	self.textEditor.delete(1.0, END)
+	
+	# put user's code into the text editor
+	name = "code" + str(self.currLevel) + self.username
+        f = open(name, 'r')
+        lineNum = 0
+	while True:
+	    line = f.readline()
+	    if line == "":
+		break
+	    else:
+		self.textEditor.insert(END, line)
+	f.close()
+
+
     def putHelpboxText(self, screenNum):
         self.helpBox.insert(END, self.screens[screenNum])
         self.shownScreen = screenNum
@@ -333,9 +350,14 @@ class Environment(Frame):
 	# right hand side: help box, plus buttons to see different help screens
 	customFont = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
 	rightPanel = Frame(panedWindow)
+	scrollbar1 = Scrollbar(rightPanel, orient=VERTICAL)
 	boxPanel = Frame(rightPanel, width=DIM_Y/2, height=DIM_X - 2*TOOLBAR_Y)
         self.helpBox = Text(boxPanel, background="LemonChiffon", font=self.customFont2, selectbackground="Gold",
-                            wrap=WORD, height=15)
+                            wrap=WORD, height=15, yscrollcommand=scrollbar1.set,)
+        
+        # add a scrollbar to the right-hand box
+	scrollbar1.config(command=self.helpBox.yview)
+        scrollbar1.pack(side=RIGHT, fill=Y)
         self.helpBox.pack(expand=1)
         boxPanel.pack()
 
@@ -537,8 +559,6 @@ class Environment(Frame):
 	
 	if self.canRun:
 	    
-	    # make the run button un-clickable for the duration of the animation
-	    #self.runButton.config(state=DISABLED)
 	    # disable buttons while we run the level dummy
             currStates = self.disableButtons()
 	    
@@ -588,6 +608,8 @@ class Environment(Frame):
 	            self.helpBox.config(state=DISABLED)   # turn off editing
 	            break
 		elif cmd == '7':
+		    pass
+		elif cmd == '8':
 		    pass
 		elif cmd == 'a':
 		    self.painter.takeRightTurnSouth()
@@ -663,6 +685,9 @@ class Environment(Frame):
 	self.initLevelCanvas()
 	self.initLevelText()
 	
+	# when going to previous level, always reload user's saved code
+	self.loadUserCode()
+	
 	# do the appropriate graying-out of buttons
 	if self.currLevel == 1:
 	    self.prevLevelButton.config(state=DISABLED)
@@ -677,6 +702,11 @@ class Environment(Frame):
 	self.currLevel += 1
 	self.initLevelCanvas()
 	self.initLevelText()
+	
+	# if the next level (now currLevel) has already been beaten, then reload the user's 
+	# saved code
+	if self.currLevel in self.beatenLevels:
+	    self.loadUserCode()
 	
 	# do the appropriate graying-out of buttons
 	if self.currLevel in self.beatenLevels and self.currLevel < 6:

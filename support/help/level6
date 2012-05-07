@@ -15,24 +15,23 @@ What are the major dangers of traversing a maze?
     (1) You can go around in loops, never realizing that you've already been there.
     (2) If you reach a fork in the road, you want to choose a path to explore - but how do you know to go back to that fork and explore the other path?
 
-Luckily, you have two tools in your toolbox. Chalk, to mark the rooms so you know not to go in circles, and a piece of string, so you can retrace your steps$
-
+Luckily, you have two tools in your toolbox: chalk, to mark the rooms so you know not to go in circles, and a piece of string, so you can retrace your steps$
 *****
 Let's first take a look at what exactly we're going to be doing.
 
 Enter the maze.
  Check if you're at the exit
-    if so, rejoyce!
+    if so, rejoice!
     otherwise, glue down your string so you know to return.
     for each each exit out of your current room
         enter the new room.
         check if you're at the exit
-        if so, rejoyce!
+        if so, rejoice!
         otherwise, glue down your string so you know to return
         for each exit out of that room
             enter the new room
             check if you're at the exit
-            if so, rejoyce!
+            if so, rejoice!
             otherwise, glue down your string so you know to return
             for each exit out of that room
                 ....etc, etc
@@ -44,10 +43,10 @@ Chalk can be represented with a simple boolean flag. For each room, it can eithe
 
 String is a little more complicated.
 
-What do we need out of our string? We need to be able to return to exactly where we were. Also, we need to avoid the repition that we saw when we tried to write down everything we're going to do.
+What do we need out of our string? We need to be able to return to exactly where we were. Also, we need to avoid the repetition that we saw when we tried to write down everything we're going to do.
 
 Have you ever been halfway through a task and wished you could pause everything - go do something else - and when you return, everything will be in the exact same spot you left it?
-If you remember from the function tutorial, we can do that! Using your favorite function call, you can expect pick up exactly where you left off. Check out the function pages of the glossary if you don't remeber!
+If you remember from the function tutorial, we can do that! Using your favorite function call, you can expect to pick up exactly where you left off. Check out the function pages of the glossary if you don't remember!
 *****
 OK let's build a function.
 What does it need to take as parameters?

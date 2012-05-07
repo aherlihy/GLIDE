@@ -6,21 +6,21 @@ So Aaron is sitting in class, bored. Completely oblivious to the dull mumblings 
 
 He's really supposed to be filling out a pop quiz...but it's such a nice day out. And it's almost recess. Deciding to put his quiz to much better use, Aaron slowly starts folding his quiz until a glorious vision emerges from the paper...a paper airplane. But not just any paper airplane: It's GLIDE!
 
-"Hi Glide", Aaron happily greets you. "Are you ready to cause some mischeif??" and with that, the bell for recess rings and you and Aaron run outside.
+"Hi Glide", Aaron happily greets you. "Are you ready to cause some mischief??" and with that, the bell for recess rings and you and Aaron run outside.
 *****
-Now, Aaron's quite the sneaky kid. He's brought with him 20 water balloons that he plans on dropping on each and every one of his classmates - except Sally, his best friend. 
+Now, Aaron's quite the sneaky kid. He's brought with him 20 water balloons that he plans on dropping on each and every one of his classmates - except Sally, his best friend.
 
 You, GLIDE, need to write code to drop a water balloon on each classmate, as long as they're not Sally. 
 
-But going through each student and dropping a waterballoon is too much typing! So let's learn a new tool to write code: LOOPS!
+But going through each student and dropping a water balloon is too much typing! So let's learn a new tool to write code: LOOPS!
 
-Loops are fantastic. Remember having to write find_book 10 times in order to get 10 books? Well with loops, those days are over.
+Loops are fantastic. Remember having to write find_book 10 times in order to get 10 books? Well, with loops, those days are over.
 
-Loops essentially execute code until you tell them to stop. The question is how exactly do you tell them to stop?
-It depends on the type of loop. The two types of looks we're going to look at are <b>for</b> and <b>while</b> loops.
+Loops essentially execute code until you tell them to stop. The question is, how exactly do you tell them to stop?
+It depends on the type of loop. The two types of loops we're going to look at are <b>for</b> and <b>while</b> loops.
 
 <b>WHILE</b>
-    A while loop is similar to an if statement, except of only executing once, it keeps going until the boolean is false. There are also no else or elif statements for while loops.
+    A while loop is similar to an if statement, except instead of only executing once, it keeps going until the boolean is false. There are also no else or elif statements in while loops.
     Just like an if statement, it needs to take in a boolean value.
     Let's say we want to define a while loop that counts to a number variable that we don't know. Let's call it 'max'
     <code>
@@ -51,7 +51,7 @@ It depends on the type of loop. The two types of looks we're going to look at ar
     </code>
     And that will do exactly the same thing as the first example. So why bother with defining a variable there?
     Well, what if you want to know where you are in the loop <i>inside</i> the loop?
-    So you want to increase the size of a variable by 1 more each time you loop? So the first time you would add 0, then 1, then 2, etc.
+    What if you want to increase the size of a variable by 1 more each time you loop? So the first time you would add 0, then 1, then 2, etc.
     <code>
     count=0
     for num in range(0,10):
@@ -59,7 +59,7 @@ It depends on the type of loop. The two types of looks we're going to look at ar
     </code>
     This code will add one more each time. So by the end of the for loop, 'count' has 1+2+3+4...+9 stored.
     Another cool use for for loops is if you have a list of items.
-    Let's say we have a list variable, let's call it L. It's length is represented by the variable 'length'. If we wanted to do the same thing to each item in the list, we could write a for loop:
+    Let's say we have a list variable, let's call it L. Its length is represented by the variable 'length'. If we wanted to do the same thing to each item in the list, we could write a for loop:
     <code>
         for i in L:
             #i will be each element in the list
@@ -90,10 +90,10 @@ So how are you going to pour water over these unsuspecting students?
 New plane methods:
     plane.dropWater()
          When you call dropWater you will release one of the balloons that Aaron has given you.
-         Paramters: none
+         Parameters: none
          Return: none
     plane.areYouSally() 
          This function returns either True or False depending on if you've found Sally.
-         Paramters: None
+         Parameters: None
          Return: boolean
 *****

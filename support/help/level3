@@ -1,6 +1,6 @@
 GLIDE Tutorial III
 
-Alright! One more part of the tutorial and you're off to the big time!
+All right! One more part of the tutorial and you're off to the big time!
 
 We're going to learn more about functions/methods/capabilities. So far you've been able to use functions - now it's time to <i>write</i> them!
 
@@ -26,6 +26,7 @@ So let's say we want to find a book variable called 'book'. We also want to find
     librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what to look for
     wanted_book = library.findBook(book)
     library.leave()
+</code>
 But let's say we want to do this 10 times. That would be 50 lines of code! That's waaay too much. So let's define a function that we can call!
 *****
 So let's write a function that goes to the library and returns a book. The first thing to do is name it. Let's call it find_book.
@@ -33,9 +34,9 @@ So let's write a function that goes to the library and returns a book. The first
     def find_book():
         ...
 </code>
-OK, so we have our first step, a name! 
+OK, so we have our first step, a name! The keyword 'def' stands for 'definition', which indicates that you're <i>defining</i> a method.
 The next step is to think about parameters. What does this function need to know about? Keep in mind that a function only knows about the parameters, and can't access any variables that you don't pass it.
-Well we need to know of the library and the book. Note that every function we call belongs to the library, and we change the 'book' value with every new book we want.
+Well, we need to know of the library and the book. Note that every function we call belongs to the library, and we change the 'book' value with every new book we want.
 <code>
     def find_book(library, book):
         ...
@@ -51,8 +52,8 @@ Well, dear friend, we put exactly what we want to happen. In this case, we've de
         library.leave()
 </code>
 NOTE that just like if statements, everything is indented after the definition.
-What's our last piece we need to fill in? 
-Why yes, the return statement. We want to return the book we took from the library. How do we return it?
+What's the last piece we need to fill in? 
+Why yes, the return statement. We want the function to return the book we took from the library. How do we return the value?
 <code>
     def find_book(library, book):
         library.enter()
@@ -70,7 +71,7 @@ Ta Dah! We have now defined a function. Now if we want to get 10 library books o
         ...
 </code>
 
-Much, much better. Make sure that everytime you define a function, you actually call it! Just defining won't do anything until you actually make sure the method is called.
+Much, much better. Make sure that every time you define a function, you actually call it! Just defining won't do anything until you actually make sure the method is called.
 
 So in this level, we're going to have to define a function called find_target. You can pass in any parameters you think it needs, and have it return anything (or nothing) that you want.
 

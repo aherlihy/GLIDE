@@ -1,6 +1,6 @@
 GLIDE Tutorial II
 
-Hey you made it! So you can move, turn right, and turn left. But that's kinda limited. 
+Hey, you made it! So you can move, turn right, and turn left. But that's kinda limited. 
 Firstly, if you wanted to get to a target that was 10 spaces ahead, then you would have to write move() 10 times.
 That's called 'hardcoding' and it's bad. It's bad for two reasons: we're computer scientists and we're lazy. Writing something 10 times is annoying. Secondly, what if the wind blows and it changes the shape of the clouds? We're stuck moving forward 10 times and we're going to crash.
 
@@ -34,11 +34,12 @@ So we now have two options. But check() can return three things - how do we incl
         plane.turnLeft()
         plane.turnLeft()
     else:
-        #Rejoyce! Since check didn't return 'AIR' or 'WALL', then it must have returned 'GOAL'!
+        #Rejoice! Since check didn't return 'AIR' or 'WALL', then it must have returned 'GOAL'!
+</code>
 You can have as many <code>elif(...)</code> statements as options you have. elif stands for "else if"
 *****
 <b>Things to know about if statements</b>
-    **Everything inside of the if statement should be indented. Generally, everytime you see a ':' you have to indent at least the next line by FOUR SPACES. No mo, no less.
+    **Everything inside of the if statement should be indented. Generally, everytime you see a ':' at the end of a line, you have to indent at least the next line by FOUR SPACES. No mo, no less.
     You can have if/else, if/elif/else, or if/elif/elif/<i>elif til your heart's content</i>/else 
     Every if statement takes in a <b>boolean</b>. A boolean is another basic type that represents either a true or a false value.
 <code>
@@ -60,7 +61,7 @@ You can have as many <code>elif(...)</code> statements as options you have. elif
 <u>Glossary</u>
     <b>boolean</b>: A basic type that can mean either True or False.
                     You can create a boolean using 'is' or 'is not'
-                    You can also use '=='(equals) '>='(greater or equal) '<=' (less than or equal) '<' (less than) '>' (greater than)
+                    You can also use '==' (equals) '>=' (greater or equal) '<=' (less than or equal) '<' (less than) '>' (greater than)
     <b>if statements</b>: You can execute two or more different commands depending on a boolean value.
                     Syntax:
                     <code>
