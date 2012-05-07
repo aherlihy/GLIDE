@@ -55,6 +55,7 @@ class Painter:
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=self.waitingFont, text="Checking your code...", state=HIDDEN)
 
+        self.shownNameList = []
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -223,6 +224,7 @@ class Painter:
         self.bubble2 = ImageTk.PhotoImage(img_bubble2)
         self.bubble3 = ImageTk.PhotoImage(img_bubble3)
         
+        maze = False
         hexPattern = re.compile("[\da-g]")
         
         self.planeX = 0
@@ -255,6 +257,7 @@ class Painter:
 
                 # goal 
                 elif charArray[row][col] == 'G':
+		    self.canvas.create_image(x, y, image=self.air, anchor=NW)
                     self.canvas.create_image(x, y, image=self.goal, anchor=NW)
 
                 # student
@@ -284,8 +287,10 @@ class Painter:
 		    self.planeX = x
 		    self.planeY = y
 
+                # maze
                 elif hexPattern.match(charArray[row][col]) != None:
 		    self.canvas.create_image(x, y, image=(self.makeMaze(charArray, row, col)), anchor=NW)
+		    maze = True
 
                 else:
                     print "Unrecognized character ", charArray[row][col], " in map file."
@@ -294,6 +299,9 @@ class Painter:
         # if we have a teacher's desk in this level, draw it on top of other stuff
         if teacherLoc is not None:
 	    self.canvas.create_image(teacherLoc[0], teacherLoc[1], image=self.teacher, anchor=SE)
+
+        if maze:
+	    self.canvas.create_image(NUM_TILES_WIDE*TILE_WIDTH, NUM_TILES_HIGH*TILE_HEIGHT, image=self.goal, anchor=SE)
 
         # after all tiles have been set, draw the plane so it's on top of everything else
         self.initPlane()
@@ -451,6 +459,7 @@ class Painter:
     def hideCheckingText(self):
 	self.canvas.itemconfig(self.waitingOutline, state=HIDDEN)
 	self.canvas.itemconfig(self.waitingText, state=HIDDEN)
+
 
     def movePlaneEast(self):
 	# make sure we're facing in the correct direction first
@@ -1416,6 +1425,12 @@ class Painter:
 
 
     def askName(self, name, index):
+	if self.planeRotDeg == DIR_EAST:
+	    self.rotatePlaneClockwise(90)
+	else:
+	    self.rotatePlaneCounterclockwise(90)
+	time.sleep(.3)
+
 	x = TILE_WIDTH*(2.5+index) 
 	y = TILE_HEIGHT*7
 	y2 = y
@@ -1430,5 +1445,6 @@ class Painter:
 	    y2 += 103
 	    i = self.bubble3
 	
-	self.canvas.create_image(x, y, image=i, anchor=N)
-	self.canvas.create_text(x, y2, text=name, font=self.dialogFont)
+	self.img = self.canvas.create_image(x, y, image=i, anchor=N)
+	self.text = self.canvas.create_text(x, y2, text=name, font=self.dialogFont)
+	self.canvas.update()

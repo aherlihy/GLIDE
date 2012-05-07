@@ -492,10 +492,7 @@ class Environment(Frame):
 
 
     def save(self):
-	nameList = ["Rosencrantz", "Guilderstern", "Emily"]
-        self.painter.askName(nameList[1], 2)
-        self.painter.askName(nameList[0], 1)
-        self.painter.askName(nameList[2], 3)
+        pass
 
     def load(self):
         pass
@@ -592,6 +589,9 @@ class Environment(Frame):
 
 	    # reset plane
 	    self.painter.initPlane()
+	    
+	    # get name list if in binary search level (None if not this level)
+	    nameList = self.tilemap.getNameList()
 
 	    cmdList = self.tilemap.getLevel()
 
@@ -613,6 +613,10 @@ class Environment(Frame):
 	    cmdList = re.sub('152', 'g', cmdList)   # g = left turn west
 	    cmdList = re.sub('140', 'h', cmdList)   # h = right turn east
 
+	    desks = re.findall('8(\d+?)8', cmdList)
+	    cmdList = re.sub('8\d+?8', '8x', cmdList)  # x = desk
+	    nextDesk = -1
+
 	    for i in range(len(cmdList)):
 		if self.endStatus:
 		    self.painter.destroy()
@@ -633,7 +637,11 @@ class Environment(Frame):
 		elif cmd == '5':
 		    self.painter.rotatePlaneCounterclockwise(90)
 		elif cmd == '6':     # crash
-		    self.screens[-1] = "Oh no - your plane crashed!"
+		
+		    if self.currLevel == 5:
+		        self.screens[-1] = "You asked too many students and your teacher woke up! Yikes!\nTry to find Sally in fewer guesses."
+		    else:
+			self.screens[-1] = "Oh no - your plane crashed!"
 		    self.helpBox.config(state=NORMAL)   # turn on editing
 	            self.shownScreen = len(self.screens)-1
 	            self.helpBox.delete(1.0, END)   # clear text box
@@ -644,7 +652,10 @@ class Environment(Frame):
 		elif cmd == '7':
 		    pass
 		elif cmd == '8':
-		    pass
+		    nextDesk += 1
+		elif cmd == 'x':
+		    currDesk = int(desks[nextDesk])
+		    self.painter.askName(nameList[currDesk], currDesk+1)
 		elif cmd == 'a':
 		    self.painter.takeRightTurnSouth()
 		elif cmd == 'b':
@@ -695,12 +706,19 @@ class Environment(Frame):
 
             # inefficient win
 	    elif match != None:
-		self.screens[-1] = "You passed the goal - looks your code contained some extra stuff. " \
-				    "Try making your plane reach the goal in as few moves as possible."
+		if self.currLevel == 5:
+		    self.screens[-1] = "You found Sally but kept asking students, and your teacher noticed. Uh oh! " \
+		                       "Try making your plane find Sally by asking as few students as possible."
+		else:
+		    self.screens[-1] = "You passed the goal - looks your code contained some extra stuff. " \
+				       "Try making your plane reach the goal in as few moves as possible."
 
             # didn't hit goal at all
             else:
-		self.screens[-1] = "Oops! Your plane didn't make it to the goal."
+		if self.currLevel == 5:
+		    self.screens[-1] = "Looks like Sally's still sleeping. Try again to wake her up."
+		else:
+		    self.screens[-1] = "Oops! Your plane didn't make it to the goal."
 
 	    # show the new text in the "your code" part of the help box
 	    self.helpBox.config(state=NORMAL)   # turn on editing
@@ -758,7 +776,7 @@ class Environment(Frame):
 
 def main():
     root = Tk()
-    app = Environment(root, "anna")
+    app = Environment(root, None, "anna")
     root.mainloop()
 
 

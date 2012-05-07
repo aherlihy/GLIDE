@@ -232,27 +232,27 @@ class TileMap:
             return None;
         dist = 0
         heading = 0
-        if self.px-1 < desknum:
+        if self.px-2 < desknum:
             heading = 0
-            dist = desknum-(self.px-1)
-        elif self.px-1 > desknum:
+            dist = desknum-(self.px-2)
+        elif self.px-2 > desknum:
             heading = 2
-            dist = (self.px-1)-desknum
+            dist = (self.px-2)-desknum
         self.plane.setHeading(heading)
         for i in xrange(dist):
             self.plane.move()
         #plane should now be above the desk of number desknum
         #TODO animate the desk turning over
         self.plane.moveSet+="8"
-        self.plane.moveSet+=str(desknum)
+        self.plane.moveSet+=str(desknum-1)
         self.plane.moveSet+="8"
-        if self.names[desknum]=="MARY":
+        if self.names[desknum-1]=="MARY":
             raise VictoryException()
         else:
             self.guess -= 1
             if self.guess == 0:
                 raise OutOfGuessException()
-            return self.names[desknum]
+            return self.names[desknum-1]
 
     def getPlane(self):
         """This method sets the coordinates for a plane that has
