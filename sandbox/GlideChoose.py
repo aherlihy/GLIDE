@@ -8,9 +8,10 @@ DIM_X = 400
 
 class GlideChoose(Toplevel):
 
-    def __init__(self, parent, text, title):
+    def __init__(self, parent, text, title, exit=False):
         self.top = Toplevel.__init__(self, parent, background="MediumTurquoise", takefocus=True)
         self.parent = parent
+        self.isExiting = exit
 
         # change font size depending on screen dimension
         screen_width = self.parent.winfo_screenwidth()
@@ -79,7 +80,10 @@ class GlideChoose(Toplevel):
 
     def OK(self):
         self.destroy()
-        self.parent.deleteUser()
+        if not self.isExiting:
+            self.parent.deleteUser()
+        else:
+	    self.parent.kill()
 
 
 def main():
