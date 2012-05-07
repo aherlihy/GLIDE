@@ -39,6 +39,32 @@ class Environment(Frame):
         self.helpFilename = "../support/help/level"
         self.canRun = False
 
+        # change font size depending on screen dimension
+        screen_width = self.parent.winfo_screenwidth()
+        screen_height = self.parent.winfo_screenheight()
+
+        # projector setting
+        if screen_width == 1280:
+	    self.customFont1 = tkFont.Font(family="Pupcat", size=18, weight=tkFont.BOLD)
+	    self.customFont2 = tkFont.Font(family="LMMono10", size=17)
+	    self.boldFont = tkFont.Font(family="LMMono10", size=17, weight=tkFont.BOLD)
+	    self.italFont = tkFont.Font(family="LMMono10", size=17, slant=tkFont.ITALIC)
+
+	# single screen setting
+	elif screen_width == 1920:
+	    self.customFont1 = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
+	    self.customFont2 = tkFont.Font(family="LMMono10", size=14)
+	    self.boldFont = tkFont.Font(family="LMMono10", size=14, weight=tkFont.BOLD)
+	    self.italFont = tkFont.Font(family="LMMono10", size=14, slant=tkFont.ITALIC)
+
+	# double screen setting
+	else:
+	    self.customFont1 = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
+            self.customFont2 = tkFont.Font(family="LMMono10", size=14)
+            self.boldFont = tkFont.Font(family="LMMono10", size=14, weight=tkFont.BOLD)
+	    self.italFont = tkFont.Font(family="LMMono10", size=14, slant=tkFont.ITALIC)
+
+
         self.initToolbar()
         self.initCanvas()
         self.initTextBoxes()
@@ -329,7 +355,6 @@ class Environment(Frame):
 
     def initTextBoxes(self):
         panedWindow = PanedWindow(self.parent, width=DIM_X, height=(DIM_Y - TOOLBAR_Y)/2+5, relief=FLAT)
-        self.customFont2 = tkFont.Font(family="LMMono10", size=14)
 
 
 	# left-hand side: text box for the user to type into, plus a scrollbar
@@ -348,12 +373,12 @@ class Environment(Frame):
         panedWindow.add(leftPanel)
 
 	# right hand side: help box, plus buttons to see different help screens
-	customFont = tkFont.Font(family="Pupcat", size=14, weight=tkFont.BOLD)
+	
 	rightPanel = Frame(panedWindow)
 	scrollbar1 = Scrollbar(rightPanel, orient=VERTICAL)
 	boxPanel = Frame(rightPanel, width=DIM_Y/2, height=DIM_X - 2*TOOLBAR_Y)
         self.helpBox = Text(boxPanel, background="LemonChiffon", font=self.customFont2, selectbackground="Gold",
-                            wrap=WORD, height=15, yscrollcommand=scrollbar1.set,)
+                            wrap=WORD, height=15, yscrollcommand=scrollbar1.set)
         
         # add a scrollbar to the right-hand box
 	scrollbar1.config(command=self.helpBox.yview)
@@ -367,13 +392,13 @@ class Environment(Frame):
 
         prevButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Previous", borderwidth=1,
                                 activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.prevScreen,
-                                font=customFont)
+                                font=self.customFont1)
         yourCodeButton = Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Your Code", borderwidth=1,
                                 activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.lastScreen,
-                                font=customFont)
+                                font=self.customFont1)
         nextButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Next", borderwidth=1,
                                 activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.nextScreen,
-                                font=customFont)
+                                font=self.customFont1)
 
 	prevButton.pack(side=LEFT)
 	nextButton.pack(side=RIGHT)
@@ -383,9 +408,6 @@ class Environment(Frame):
 	
 	# set up tags to highlight errors in the text editor and do syntax highlighting
 	self.textEditor.tag_config("error", background="OrangeRed", foreground="White")
-	
-	self.boldFont = tkFont.Font(family="LMMono10", size=14, weight=tkFont.BOLD)
-	self.italFont = tkFont.Font(family="LMMono10", size=14, slant=tkFont.ITALIC)
 	
 	self.helpBox.tag_config("bold", font=self.boldFont)
 	self.helpBox.tag_config("ital", font=self.italFont)

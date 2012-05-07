@@ -1,8 +1,8 @@
 Traceback (most recent call last):
   File "bubblewrap.py", line 23, in <module>
     runLevel(plane)
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 15, in runLevel
-    explore(start)
-  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 13, in explore
-    10/0
-ZeroDivisionError: integer division or modulo by zero
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/runLevel.py", line 10, in runLevel
+    if(plane.askName(mid)<"Sally"):
+  File "/gpfs/main/home/aherlihy/GLIDE/sandbox/avatar.py", line 92, in askName
+    a = self.tileMap.askName(desknum)
+AttributeError: TileMap instance has no attribute 'askName'

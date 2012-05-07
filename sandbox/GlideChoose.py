@@ -12,13 +12,28 @@ class GlideChoose(Toplevel):
         self.top = Toplevel.__init__(self, parent, background="MediumTurquoise", takefocus=True)
         self.parent = parent
 
+        # change font size depending on screen dimension
+        screen_width = self.parent.winfo_screenwidth()
+        screen_height = self.parent.winfo_screenheight()
+
+        # projector setting
+        if screen_width == 1280:
+	    self.customFont = tkFont.Font(family="Pupcat", size=20, weight=tkFont.BOLD)
+
+	# single screen setting
+	elif screen_width == 1920:
+	    self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
+
+	# double screen setting
+	else:
+            self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
+        
         self.initLabel(text)
         self.initButtons()
         self.initWindow(title)
 
 
     def initLabel(self, text):
-        self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
         label = Label(self, text=text, font=self.customFont,
                       background="MediumTurquoise", padx=10, pady=20)
         label.pack()

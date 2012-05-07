@@ -2,44 +2,41 @@ Welcome to the GLIDE Tutorial!
 
 Get ready to learn the building blocks that you'll be using to write more and more complex programs.
 
-Let's start with the most basic of concepts: variables.
-Variables in programming work somewhat similarly to those that you've seen in mathematics.
+Let's start with the most basic of concepts: <b>variables</b>.
+Variables in programming work somewhat similarly to those that you've seen in math.
 The idea is that you want a place to store a value so that whenever you need that value, you can just go to that place. 
 
 So how do you define a variable? 
 Let's say we're at a library. We have a bunch of books and we want to keep track of how many we have at any given time.
 We can define a variable, named 'number_of_books', and set it to equal the number of books we start with.
 Any time someone takes or returns a book, we can add or subtract from number_of_books.
- 
- ex:
+<code>
     number_of_books = 10
-
+</code>
 Ta-Daaah! We now have a name that we can ask to find out how many books we have. 
 
 What do we do when we want to add a book?
- 
- ex:
+<code>
     number_of_books = 11
-
+</code>
 But what happens if you leave the library for a while? Other people are coming and going, taking and returning books.
 When you get back, you want to return a book but you don't know how many people have added or removed books.
 The question is, if all you're doing is returning a book, do you care how many people have added books? All you need to do is make sure that the value increases by 1. 
- 
- ex:
+<code>
     number_of_books = number_of_books + 1
-
+</code>
 So there! We know that the variable will always have the correct number of books if everyone just adds or subtracts from the current amount when they take/return a book.
 *****
 So we know we can have a variable that represents a number. What else can variables represent? 
 
-Anything you want them to! Really, we mean anything. You can have a variable that represents a whole other program. But we won't go there for a while.
+Anything you want them to! Really, we mean <i>anything</i>. You can have a variable that represents a whole other program. But we won't go there for a while.
 
 Variables can represent anything, but they can also represent <i>nothing</i>.
     If you don't assign a variable any value, then it is automatically nothing. There is a special name for nothing, <code>None</code>.
     You have to be careful that you don't try to do anything with a variable that has a None value.
     That will result in an error :(
 
-Variables that represent numbers can't really do anything, since they're just numbers. That's why numbers are <i>Basic Types</i>, while more complicated variables are called <i>Objects</i>.
+Variables that represent numbers can't really do anything, since they're just numbers. That's why numbers are <b>Basic Types</b>, while more complicated variables are called <b>Objects</b>.
 
 Objects in computer science have <i>attributes</i> and <i>capabilities</i>. You can think of attributes as the nouns, and capabilities as the verbs associated with any object.
 
@@ -60,8 +57,7 @@ You can get them or set them. In this case you can say:
    library.librarian = Kelly
 </code>
 *****
-<b>Capabilities</b>
-Capabilities are essentially the things the object can do.
+<b>Capabilities</b> are essentially the things the object can do.
 For example, a librarian object could read books, answer questions, and shush people who are talking too loudly.
 Capabilities change depending on what type of object you have. They are also called "Methods" and "Functions" (it's all the same stuff).
 
@@ -72,7 +68,7 @@ You can call these methods using the following syntax:
 Let's break down the syntax.
 There are essentially 3 things you need to know about a method: the name of the method, the parameters, and the return type.
 
-The first part of the method is the name of the variable which you're calling the method on.
+The first part of the method is the name of the variable which you're calling the method on (i.e. "shush").
 
 <b>Parameters</b>
 The parentheses are there so that you can pass some information to the librarian when you call that method.
@@ -101,6 +97,7 @@ In this example the librarian would return the answer as a number. You want stor
     closing_time = librarian.answerQuestion("What time do you close?")
 </code>
 Now you know what time the library closes!
+Note that unlike parameters, methods can only return <b>one</b> return type.
 *****
 <u>Glossary</u>:
 
@@ -139,6 +136,8 @@ We're going to start you off with the simple methods of plane:
              return value: None
 
 You will have completed the level when you can move the plane to the target!
+
 When you input code, you can test it by pressing the "Check Code" button. If there are errors in your code then they will show up on the last page of this textbox. You can always access the page with information about your code with the "Your Code" button.
 Once you can pass "Check Code" you can press "Run Code" and see what happens!
 *****
+You haven't checked code yet!
