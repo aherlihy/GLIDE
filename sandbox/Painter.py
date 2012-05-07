@@ -54,8 +54,7 @@ class Painter:
         self.waitingOutline = self.canvas.create_rectangle(460, 90, 720, 130, fill="Yellow",
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=self.waitingFont, text="Checking your code...", state=HIDDEN)
-
-        self.shownNameList = []
+        self.dropWaterBalloon(self.planeX+2*TILE_WIDTH-8, self.planeY+TILE_HEIGHT)
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -1366,7 +1365,7 @@ class Painter:
 	    self.canvas.delete(l10)
 
 
-    def dropWaterBalloon(self, x, y):
+    def dropWaterBalloon(self, x, y, onKid=False):
 	# pick a random color
 	num = random.randint(1, 6)
 	if num == 1:
@@ -1389,13 +1388,18 @@ class Painter:
         self.canvas.update()
 
         # drop balloon
-        for i in range(5*TILE_HEIGHT):
-            time.sleep(.025)
+        if onKid:
+	    dist = int(2.6*TILE_HEIGHT)
+	else:
+	    dist = int(3.1*TILE_HEIGHT)
+	
+        for i in range(dist):
+            time.sleep(.02)
             self.canvas.move("balloon", 0, 1)
             self.canvas.update()
 
         # set y to new y position
-        y = y + 5*TILE_HEIGHT
+        y = y + dist
 
         # first stage of bursting
         img = Image.open(string + "2.png")
@@ -1420,8 +1424,14 @@ class Painter:
         self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
         self.canvas.update()
         time.sleep(.25)
-
+        
+        # fourth stage of bursting
+        img = Image.open(string + "5.png")
         self.canvas.delete("balloon")
+        self.balloon = ImageTk.PhotoImage(img)
+        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
+        self.canvas.update()
+        time.sleep(.25)
 
 
     def askName(self, name, index):
