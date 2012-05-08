@@ -84,3 +84,19 @@ while(max >= min):
         toReturn = mid
         break
 
+LEVEL 6:
+def loopy(plane, room):
+    plane.markRoom()
+    if plane.isRoomGoal():
+        return False
+    for n in plane.roomNeighbors(room):
+        if not plane.isMarked(n):
+            plane.goToRoom(n)
+            b = loopy(plane, n)
+            if b:
+                plane.goToRoom(room)
+            return True
+
+
+a = plane.whereAmI()
+loopy(plane,a)

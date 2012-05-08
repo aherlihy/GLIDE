@@ -162,7 +162,7 @@ class Airplane:
             return
         else:
             return self.tileMap.grid[self.tileMap.py][self.tileMap.px]
-e
+
 
     def markRoom(self):
         """

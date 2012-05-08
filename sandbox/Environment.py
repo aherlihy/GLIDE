@@ -72,7 +72,7 @@ class Environment(Frame):
         self.initTextBoxes()
         self.initUI()
 
-        self.currLevel = 5
+        self.currLevel = 1
 
         self.beatenLevels = []
         self.initLevelCanvas()
@@ -594,7 +594,11 @@ class Environment(Frame):
 	    nameList = self.tilemap.getNameList()
 
 	    cmdList = self.tilemap.getLevel()
-	    print cmdList
+	    
+	    if self.currLevel == 6:
+		self.painter.setSpeeds(.007, .003)
+	    else:
+		self.painter.setSpeeds(.015, .008)
 
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north
@@ -712,6 +716,15 @@ class Environment(Frame):
 		if self.currLevel < 6:
 		     currStates[5] = "normal"
 		self.painter.animateWin()
+		# show the new text in the "your code" part of the help box
+		self.helpBox.config(state=NORMAL)   # turn on editing
+		self.shownScreen = len(self.screens)-1
+		self.helpBox.delete(1.0, END)   # clear text box
+		self.helpBox.insert(END, self.screens[self.shownScreen])
+		self.helpBox.config(state=DISABLED)   # turn off editing
+		self.returnButtonsToStates(currStates)
+		self.painter.clearNames()
+		return
 
             # inefficient win
 	    elif match != None:
@@ -738,12 +751,12 @@ class Environment(Frame):
 
 	    # make the run button clickable again
 	    self.returnButtonsToStates(currStates)
-	    
+
 	    # reset the plane
 	    self.update()
 	    time.sleep(.8)
 	    self.painter.initPlane()
-	    
+
 	    self.painter.clearNames()
 
 

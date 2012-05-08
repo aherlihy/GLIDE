@@ -58,6 +58,15 @@ class Painter:
         self.balloonList = []
         
         self.numNames = 0
+        
+        self.SPEED = .007
+	self.ROT_SPEED = .003
+
+
+    def setSpeeds(self, speed, rotSpeed):
+	self.SPEED = speed
+	self.ROT_SPEED = rotSpeed
+
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -473,7 +482,7 @@ class Painter:
 	self.planeRotDeg = DIR_EAST
 
 	for i in range(0, TILE_WIDTH):
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 	    self.canvas.move("plane", 1, 0)
 	    self.canvas.update()
 
@@ -488,7 +497,7 @@ class Painter:
 	self.planeRotDeg = DIR_WEST
 
 	for i in range(0, TILE_WIDTH):
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 	    self.canvas.move("plane", -1, 0)
 	    self.canvas.update()
 
@@ -503,7 +512,7 @@ class Painter:
 	self.planeRotDeg = DIR_NORTH
 
 	for i in range(0, TILE_HEIGHT):
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 	    self.canvas.move("plane", 0, -1)
 	    self.canvas.update()
 
@@ -518,7 +527,7 @@ class Painter:
 	self.planeRotDeg = DIR_SOUTH
 
 	for i in range(0, TILE_HEIGHT):
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 	    self.canvas.move("plane", 0, 1)
 	    self.canvas.update()
 
@@ -526,7 +535,7 @@ class Painter:
     def rotatePlaneClockwise(self, numDegrees):
 	x, y = self.canvas.coords("plane")
 	for deg in range(0, numDegrees):
-	    time.sleep(.012)
+	    time.sleep(self.ROT_SPEED)
 	    self.canvas.delete("plane")
 	    img = Image.open("Graphics/plane.png")
 	    imgRotated = img.rotate(self.planeRotDeg - deg)
@@ -539,7 +548,7 @@ class Painter:
     def rotatePlaneCounterclockwise(self, numDegrees):
 	x, y = self.canvas.coords("plane")
 	for deg in range(0, numDegrees):
-	    time.sleep(.012)
+	    time.sleep(self.ROT_SPEED)
 	    self.canvas.delete("plane")
 	    img = Image.open("Graphics/plane.png")
 	    imgRotated = img.rotate(self.planeRotDeg + deg)
@@ -561,7 +570,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -591,7 +600,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -620,7 +629,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -650,7 +659,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -680,7 +689,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -710,7 +719,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -739,7 +748,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -769,7 +778,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -799,7 +808,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -820,7 +829,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_HEIGHT
@@ -850,7 +859,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -871,7 +880,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_HEIGHT
@@ -901,7 +910,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -923,7 +932,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_HEIGHT
@@ -953,7 +962,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_WIDTH
@@ -974,7 +983,7 @@ class Painter:
 	x = 0.0
 	deg = 0
 	while x <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    x += 1.0/TILE_HEIGHT
@@ -1004,7 +1013,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -1025,7 +1034,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_WIDTH
@@ -1055,7 +1064,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -1076,7 +1085,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_WIDTH
@@ -1107,7 +1116,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -1128,7 +1137,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_WIDTH
@@ -1158,7 +1167,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_HEIGHT
@@ -1179,7 +1188,7 @@ class Painter:
 	y = 0.0
 	deg = 0
 	while y <= 1.0:
-	    time.sleep(.025)
+	    time.sleep(self.SPEED)
 
 	    # calculate values for a hyperbola with a scale of 1
 	    y += 1.0/TILE_WIDTH
