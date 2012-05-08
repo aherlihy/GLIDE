@@ -708,8 +708,12 @@ class Environment(Frame):
 	    # check for a win, or an "inefficient" win - reached goal but had extra cmds at end
 	    match = re.search('7', cmdList)
 	    if match != None and match.start() == len(cmdList)-1:    # actual win
-		self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to " \
-				    "move on, or try out other cool stuff with your plane here."
+		if self.currLevel == 6:
+		    self.screens[-1] = "CONGRATULATIONS! You've reached the end of GLIDE 1.0! Stay tuned " \
+		                       "for more levels in future versions of GLIDE."
+		else:
+		    self.screens[-1] = "Congrats! You beat the level!\n\nYou can hit the Next Level button to " \
+				        "move on, or try out other cool stuff with your plane here."
 		self.beatenLevels.append(self.currLevel)
 		
 		# if not at last level, make the next level button un-grayed
@@ -754,7 +758,7 @@ class Environment(Frame):
 
 	    # reset the plane
 	    self.update()
-	    time.sleep(.8)
+	    time.sleep(1.2)
 	    self.painter.initPlane()
 
 	    self.painter.clearNames()
