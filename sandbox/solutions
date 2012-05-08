@@ -70,3 +70,17 @@ while(plane.check() is not 'TARGET'):
 plane.move()
 
 LEVEL 5:
+#Let's find Sally!
+max = 20
+min = 0
+toReturn = None
+while(max >= min):
+    mid = (min+max)/2
+    if(plane.askName(mid)<"Sally"):
+        min = mid+1
+    elif(plane.askName(mid)>"Sally"):
+        max = mid-1
+    else:
+        toReturn = mid
+        break
+

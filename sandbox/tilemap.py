@@ -217,15 +217,15 @@ class TileMap:
                 "HIDALGO","HAMLET","ISABELLE","ISAAC","JOHN","JENNA","KIT",
                 "KATE","LAURA","LIAM","MALCOLM","MATHILDA","NAIOMI","NATHAN",
                 "OREK","OTHELLO","PAUL","PRINCE","QUINCY","QUINN","ROSENCRANTZ",
-                "RYAN","SAM","SHIRLEY","TINA","TOM","ULYSSES","UGENE","VANESSA",
+                "RYAN","SALLY","SHIRLEY","TINA","TOM","ULYSSES","UGENE","VANESSA",
                 "VING","WALDO","WITT","XANDER","XENA","YOLANDA","YVETTE",
                 "ZACH","ZIM"]
-        use = ["MARY"]
+        use = ["SALLY"]
         for i in xrange(18):
             use.append(names.pop(random.randint(0,len(names)-1)))
         use.sort()
         self.names = use
-        self.guess = 5
+        self.guess = 6
         
     def askDeskName(self, desknum):
         if self.grid[self.py+1][self.px].getType() != "DESK":
@@ -246,7 +246,7 @@ class TileMap:
         self.plane.moveSet+="8"
         self.plane.moveSet+=str(desknum-1)
         self.plane.moveSet+="8"
-        if self.names[desknum-1]=="MARY":
+        if self.names[desknum-1]=="SALLY":
             raise VictoryException()
         else:
             self.guess -= 1
