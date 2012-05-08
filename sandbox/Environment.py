@@ -72,7 +72,7 @@ class Environment(Frame):
         self.initTextBoxes()
         self.initUI()
 
-        self.currLevel = 1
+        self.currLevel = 5
 
         self.beatenLevels = []
         self.initLevelCanvas()
@@ -392,15 +392,23 @@ class Environment(Frame):
 	helpboxWidth = self.helpBox.winfo_reqwidth()
         buttonBar = Frame(rightPanel, relief=FLAT, background="LemonChiffon", height=BUTTON_Y, width=helpboxWidth)
 
-        prevButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Previous", borderwidth=1,
-                                activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.prevScreen,
-                                font=self.customFont1)
-        yourCodeButton = Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Your Code", borderwidth=1,
-                                activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.lastScreen,
-                                font=self.customFont1)
-        nextButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", text="Next", borderwidth=1,
-                                activebackground="Turquoise", width=SCREEN_BUTTON_X, height=BUTTON_Y, command=self.nextScreen,
-                                font=self.customFont1)
+        img = Image.open("Graphics/backArrow.png")
+        self.backImg = ImageTk.PhotoImage(img)
+        prevButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", image=self.backImg, borderwidth=1,
+                                activebackground="Turquoise", height=BUTTON_Y, command=self.prevScreen)
+        prevButton.image = self.backImg
+        
+        img = Image.open("Graphics/yourCode.png")
+        self.codeImg = ImageTk.PhotoImage(img)
+        yourCodeButton = Button(buttonBar, relief=RAISED, background="LemonChiffon", image=self.codeImg, borderwidth=1,
+                                activebackground="Turquoise", height=BUTTON_Y, command=self.lastScreen)
+        yourCodeButton.image = self.codeImg
+
+        img = Image.open("Graphics/nextArrow.png")
+        self.nextImg = ImageTk.PhotoImage(img)
+        nextButton =     Button(buttonBar, relief=RAISED, background="LemonChiffon", image=self.nextImg, borderwidth=1,
+                                activebackground="Turquoise", height=BUTTON_Y, command=self.nextScreen)
+        nextButton.image = self.nextImg
 
 	prevButton.pack(side=LEFT)
 	nextButton.pack(side=RIGHT)
