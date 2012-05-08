@@ -72,7 +72,7 @@ class Environment(Frame):
         self.initTextBoxes()
         self.initUI()
 
-        self.currLevel = 5
+        self.currLevel = 6
 
         self.beatenLevels = []
         self.initLevelCanvas()
@@ -503,7 +503,20 @@ class Environment(Frame):
         pass
 
     def load(self):
-        pass
+        # clear the text editor
+	self.textEditor.delete(1.0, END)
+	
+	# put user's code into the text editor
+	name = "../support/levels/sol" + str(self.currLevel)
+        f = open(name, 'r')
+        lineNum = 0
+	while True:
+	    line = f.readline()
+	    if line == "":
+		break
+	    else:
+		self.textEditor.insert(END, line)
+	f.close()
 
     # Save the user's code in the text editor into a file and tell the tilemap to check the code.
     def checkCode(self):
@@ -735,6 +748,7 @@ class Environment(Frame):
 		self.helpBox.insert(END, self.screens[self.shownScreen])
 		self.helpBox.config(state=DISABLED)   # turn off editing
 		self.returnButtonsToStates(currStates)
+		time.sleep(.8)
 		self.painter.clearNames()
 		return
 
