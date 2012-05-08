@@ -205,7 +205,7 @@ class Airplane:
             return
         return self.tileMap.grid[9][self.tileMap.px].getType()=="STUDENT"
 
-    def aboveSally(self)
+    def aboveSally(self):
         if self.tileMap.level!=4:
             return False
         return self.tileMap.px == 10
@@ -227,6 +227,15 @@ class Plane(Airplane):
         #sadly, I see no way to get around a parameter
         super(Plane, self).__init__(tile_map)
 
+    def aboveSally(self):
+        Airplane.aboveSally(self)
+
+    def aboveStudent(self):
+        Airplane.aboveStudent(self)
+
+    def dropBalloon(self):
+        Airplane.dropBalloon(self)
+    
     def goToRoom(self, room):
         Airplane.goToRoom(self, room)
 

@@ -59,6 +59,20 @@ helper(plane)
 plane.move()
 plane.move()
 
+#Here is a better solution.  <3 John
+turn = 1
+while True:
+	while plane.check() != "CLOUD":
+		if plane.check() == "TARGET":
+			plane.move()
+			return;
+		plane.move()
+	if turn <=1:
+		plane.turnLeft()
+	else:
+		plane.turnRight()
+	turn = (turn+1)%4
+
 LEVEL 4:
 for student in range(0,19):
     while not(plane.isAboveStudent()):
@@ -76,9 +90,12 @@ min = 0
 toReturn = None
 while(max >= min):
     mid = (min+max)/2
-    if(plane.askName(mid)<"Sally"):
+    a = plane.askName(mid)
+    if(a=="SALLY"):
+        return
+    elif(a<"SALLY"):
         min = mid+1
-    elif(plane.askName(mid)>"Sally"):
+    elif(a>"SALLY"):
         max = mid-1
     else:
         toReturn = mid
