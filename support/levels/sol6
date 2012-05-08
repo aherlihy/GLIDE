@@ -1,1 +1,18 @@
-solution 6
+def explore(plane, room, found):
+    if found:
+        return True
+    plane.markRoom()
+    if plane.isRoomGoal():
+        return True
+    for n in plane.roomNeighbors(room):
+        if not plane.isMarked(n):
+            plane.goToRoom(n)
+            b = explore(plane, n, found)
+            if not b:
+                plane.goToRoom(room)
+            else:
+                return True
+    return False
+
+a = plane.whereAmI()
+explore(plane,a, False)

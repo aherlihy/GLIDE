@@ -1,6 +1,8 @@
-#It's time to write some functions!
+# It's time to write some functions!
+# Make sure you pass in your variable plane so you
+# can call methods on it from inside your function!
 
-def helper(???): #What do you need to pass in as a paramter?
-   ...
+def helper(plane):
+    # indent!
 
-#Don't forget to actually call your function!
+# Don't forget to actually call your function!

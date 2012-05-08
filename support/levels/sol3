@@ -1,7 +1,29 @@
-plane.turnLeft()
-plane.move()
-plane.turnRight()
-for i in range(9):
+# It's time to write some functions!
+# Make sure you pass in your variable plane so you
+# can call methods on it from inside your function!
+
+def helper(plane, left):
     plane.move()
-plane.turnLeft()
+    plane.move()
+    plane.move()
+    plane.move()
+    if left is True:
+        plane.turnLeft()
+    else:
+        plane.turnRight()
+
+# Don't forget to actually call your function!
+helper(plane, True)
+helper(plane, False)
+helper(plane, False)
+helper(plane, True)
+helper(plane, True)
+helper(plane, False)
+helper(plane, False)
+helper(plane, True)
+plane.move()
+plane.move()
+plane.move()
+plane.move()
+plane.move()
 plane.move()

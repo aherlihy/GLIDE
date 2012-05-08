@@ -1,1 +1,16 @@
-solution 5
+#Let's find Sally!
+max = 20
+min = 0
+toReturn = None
+while(max >= min):
+    mid = (min+max)/2
+    a = plane.askName(mid)
+    if(a=="SALLY"):
+        return
+    elif(a<"SALLY"):
+        min = mid+1
+    elif(a>"SALLY"):
+        max = mid-1
+    else:
+        toReturn = mid
+        break

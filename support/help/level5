@@ -1,6 +1,6 @@
-So Aaron is sitting in class, bored. Completely oblivious to the dull mumblings of his teacher, he gazes wistfully out the window. Warm spring air wafts in lazily from the open window, bringing with it the soft drone of the lawnmower outside.
+So Aaron is back inside after a hearty bout of rabble-rousing during recess.
 
-Looking across the room, Aaron sees his best friend, Sally, has fallen asleep. Knowing that Sally is already in trouble for forgetting her homework, Aaron realizes he needs to wake her up without letting his teacher find out. Aaron quickly rips a sheet out of his notebook and fashions the most versatile and awesome paper airplane known to man, YOU.
+Looking across the room, Aaron sees Sally, has fallen asleep at her desk. Knowing that Sally is already in trouble for forgetting her homework, Aaron realizes he needs to wake her up without letting his teacher find out. Aaron quickly rips a sheet out of his notebook and fashions the most versatile and awesome paper airplane known to man, YOU.
 
 "Go, GLIDE" he whispers, "go find the student named Sally and wake her from her slumber!"
 *****
@@ -18,7 +18,7 @@ Whenever you're faced with a problem you don't know how to solve, the first thin
 
 What if you were looking for a student C in a class of size 1? That's obvious, it would just be that student.
 
-Now the question is: how do we get our problem, of size n, into what we know how to solve, which is size 1?
+Now the question is: how do we get our problem, of size 20, into what we know how to solve, which is size 1?
 *****
 What if we had a class of size 2? That would be simple: ask one student, and if it's not that one, then its the other one.
 What about size 3? This is where it gets tricky. You can't just ask each one of them, because you can only ask up to half of the class, and if you pick and random, you're not guarenteed to pick the right ones.
@@ -30,7 +30,8 @@ What about size 3? This is where it gets tricky. You can't just ask each one of 
 The next step is to list the things you know to be true. 
     (1) Sally is in the class
     (2) The students are arranged alphabetically
-    (3) There are n students, and no 2 students have the same name.
+    (3) There are 20 students, and no 2 students
+        have the same name.
 *****
 Let's use what we know. If we pick a random student, then all the students that come before that student in line will have names that go before that student's name. All the students after that student will have names that come after that name.
 
@@ -50,7 +51,7 @@ What do we have left?
 
 One student! Which is a problem we know how to solve.
 *****
-OK, so let's go back to a list of size n.
+OK, so let's go back to a list of size 20. Let's say we name our size variable 'n'
  ___   ___   ___       ___   ___   ___ 
 |   | |   | |   |     |   | |   | |   |
 | ? | | ? | | ? | ... | ? | | ? | | ? |
@@ -63,9 +64,46 @@ Once we know what the name of the student sitting in the middle is, we can throw
 
 What are left with? A problem of size n/2. Keep halving the size of the problem, and eventually you will get down to 1!
 *****
-LEVEL 6 MANUAL
-Attributes:
-    <code>size</code> is the number of students in the class
-Capabilities:
-    <code>plane.askName(desk_number)</code> will return the name of the student who is sitting at desk_number
-
+New Methods:
+    <code>plane.askName(desk_number)</code> 
+          Will give you the name of the student
+          who is sitting at desk_number
+          Parameters: integer for desk number
+          Return: string for student name. 
+                  <b>IN CAPITALS</b>
+Old Methods:
+    <code>dropBalloon()</code>
+         When you call dropWater you will release
+         one of the balloons that Aaron has given
+         you.
+         Parameters: none
+         Return: none
+    <code>aboveSally()</code>
+         This function will tell you if you are
+         currently dropping water on Sally.
+         Parameters: None
+         Return: boolean
+    <code>aboveStudent()</code>
+         This function will tell you if you are
+         currently dropping water on a student.
+         Parameters: None
+         Return: boolean
+    <code>check()</code>
+         Check tells you what is in front of the
+         plane.
+             parameters: empty
+             return value: "AIR", "CLOUD", "TARGET"
+    <code>move()</code>
+         When you want the plane to move forward
+             parameters: empty
+             return value: None
+    <code>turnRight()</code>
+         When you want the plane to turn left
+             parameters: empty
+             return value: None 
+    <code>turnLeft()</code>
+         When you want the plane to turn right
+             parameters: empty
+             return value: None
+*****
+Let's get started!

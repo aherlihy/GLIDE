@@ -2,7 +2,7 @@ Welcome to the GLIDE Tutorial!
 
 Get ready to learn the building blocks that you'll be using to write more and more complex programs.
 
-Let's start with the most basic of concepts: <b>variables</b>.
+Let's start with a basic concept: <b>variables</b>.
 Variables in programming work somewhat similarly to those that you've seen in math.
 The idea is that you want a place to store a value so that whenever you need that value, you can just go to that place. 
 
@@ -32,8 +32,12 @@ So we know we can have a variable that represents a number. What else can variab
 Anything you want them to! Really, we mean <i>anything</i>. You can have a variable that represents a whole other program. But we won't go there for a while.
 
 Variables can represent anything, but they can also represent <i>nothing</i>.
-    If you don't assign a variable any value, then it is automatically nothing. There is a special name for nothing, <code>None</code>.
-    You have to be careful that you don't try to do anything with a variable that has a None value.
+    If you don't assign a variable any value, then it is
+    automatically nothing. There is a special name for 
+    nothing, <code>None</code>.
+
+    You have to be careful that you don't try to do 
+    anything with a variable that has a None value.
     That will result in an error :(
 
 Variables that represent numbers can't really do anything, since they're just numbers. That's why numbers are <b>Basic Types</b>, while more complicated variables are called <b>Objects</b>.
@@ -57,7 +61,7 @@ You can get them or set them. In this case you can say:
    library.librarian = Kelly
 </code>
 *****
-<b>Capabilities</b> are essentially the things the object can do.
+<b>Capabilities</b> are essentially things the object can do.
 For example, a librarian object could read books, answer questions, and shush people who are talking too loudly.
 Capabilities change depending on what type of object you have. They are also called "Methods" and "Functions" (it's all the same stuff).
 
@@ -74,16 +78,16 @@ The first part of the method is the name of the variable which you're calling th
 The parentheses are there so that you can pass some information to the librarian when you call that method.
 You don't always need to pass information, for example with shush().
 
-But let's say we want to ask the librarian a question. The librarian has a method answerQuestion, but we need a way to specify the question she should answer.
+But let's say we want to ask the librarian a question. The librarian has a method answerQ, but we need a way to specify the question she should answer.
 For this, we can pass parameters with the method.
 <code>
-    librarian.answerQuestion("What time do you close?")
+    librarian.answerQ("What time is close?")
 </code>
 We can pass basic types, objects, or nothing at all. We can also pass more than one paramter.
 So if had a variable that represented a question, I could pass it directly:
 <code>
     question = "What time do you open?"
-    librarian.answerQuestion(question)
+    librarian.answerQ(question)
 </code>
 OK, so we've asked the librarian a question. But how do we get the answer?
 
@@ -94,28 +98,49 @@ Methods can return a value. Just like parameters, methods can return basic types
 
 In this example the librarian would return the answer as a number. You want store this value, so you can just assign it to a variable.
 <code>
-    closing_time = librarian.answerQuestion("What time do you close?")
+  t = librarian.answerQ("What time is close?")
 </code>
 Now you know what time the library closes!
 Note that unlike parameters, methods can only return <b>one</b> return type.
 *****
 <u>Glossary</u>:
 
-    <b>variable</b>: essentially a place to store some information. Variables represent anything you want them to be.
-    <b>basic types</b>: a value that doesn't have any capabilities or attributes other than the value it's supposed to represent.
-           <b>integers</b> are basic types that represent full numbers
-           <b>strings</b> are another basic type that represent text. 
-    <b>objects</b>: a value that represents anything more complicated than a basic type. Objects have attributes and capabilities.
-    <b>attributes</b>: information stored within an object. These are essentially variables that an object keeps track of. They can be accessed with:
-         <code>variable_name.attribute_name</code>
-    <b>capabilities/methods/functions</b>: abilties that the object is capable of. These are defined within the object and depend on the type of object.
+    <b>variable</b>: essentially a place to store some 
+           information. Variables represent anything you 
+           want them to be.
+    <b>basic types</b>: a value that doesn't have any
+           capabilities or attributes other than the
+           value it's supposed to represent.
+           <b>integers</b> are basic types that represent    
+                full numbers
+           <b>strings</b> are another basic type that 
+                represent text. 
+    <b>objects</b>: a value that represents anything more
+           complicated than a basic type. Objects have 
+           attributes and capabilities.
+    <b>attributes</b>: information stored within an
+           object. These are essentially variables that
+           an object keeps track of. They can be
+           accessed with:
+               <code>variable_name.attribute_name</code>
+    <b>capabilities/methods/functions</b>: abilties that
+           the object is capable of. These are defined
+           within the object and depend on the type of
+           object.
            There are three components to a method:
                 (1) <i>Name</i>
-                (2) <i>Parameters</i>: information that is passed to the method. A method can take in any number of parameters.
-                (3) <i>Return Value</i>: the information that the method returns to the caller. Unlike parameters, a method can only return one value but that value can be anything.
-           These three components together are called the <b>method signature</b>
+                (2) <i>Parameters</i>: information that is
+                    passed to the method. A method can
+                    take in any number of parameters.
+                (3) <i>Return Value</i>: the information
+                     that the method returns to the
+                     caller. Unlike parameters, a method
+                     can only return one value but that
+                     value can be anything.
+           These three components together are called
+           the <b>method signature</b>
            Methods can be called by:
-                <code>return_value = variable_name.method_name(parameter1, parameter2, ...)</code>
+  <code>return_value = variable.method(p1, p2, ...)</code>
 *****
 All right, let's get this level started. What do we want you to do? Just play around.
 
@@ -123,21 +148,21 @@ You have one variable right now - <code>plane</code>
 
 We're going to start you off with the simple methods of plane: 
     <code>move()</code>
-         This is pretty self explanatory. When you want the plane to move forward, call move().
+         When you want the plane to move forward
              parameters: empty
              return value: None
     <code>turnRight()</code>
-         When you want the plane to turn to the left of where it's facing.
+         When you want the plane to turn left
              parameters: empty
              return value: None 
     <code>turnLeft()</code>
-         When you want the plane to turn to the right of where it's facing.
+         When you want the plane to turn right
              parameters: empty
              return value: None
 
 You will have completed the level when you can move the plane to the target!
 
-When you input code, you can test it by pressing the "Check Code" button. If there are errors in your code then they will show up on the last page of this textbox. You can always access the page with information about your code with the "Your Code" button.
-Once you can pass "Check Code" you can press "Run Code" and see what happens!
+<i>When you input code, you can test it by pressing the "Check Code" button. If there are errors in your code then they will show up on the last page of this textbox. You can always access the page with information about your code with the "Your Code" button.
+Once you can pass "Check Code" you can press "Run Code" and see what happens!</i>
 *****
-You haven't checked code yet!
+Time to get started!

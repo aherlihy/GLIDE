@@ -8,9 +8,9 @@ He's really supposed to be filling out a pop quiz...but it's such a nice day out
 
 "Hi Glide", Aaron happily greets you, "are you ready to cause some mischief??"
 
-With that, the bell for recess rings and you and Aaron run outside.
+With that, the bell for recess rings.
 *****
-Now, Aaron's quite the sneaky kid. He's brought with him 20 water balloons that he plans on dropping on each and every one of his classmates - except Sally, his best friend.
+Now, Aaron's quite the sneaky kid. He's brought with him water balloons that he plans on dropping on each and every one of his classmates - except Sally, his best friend.
 
 You, GLIDE, need to write code to drop a water balloon on each classmate, as long as they're not Sally. 
 
@@ -18,89 +18,137 @@ But going through each student and dropping a water balloon is too much typing! 
 
 Loops are fantastic. Remember having to write find_book 10 times in order to get 10 books? Well, with loops, those days are over.
 
-Loops essentially execute code until you tell them to stop. The question is, how exactly do you tell them to stop?
+Loops essentially execute code until you tell them to stop. The question is, how do you tell them to stop?
 It depends on the type of loop. The two types of loops we're going to look at are <b>for</b> and <b>while</b> loops.
 *****
 <b>WHILE</b>
     A while loop is similar to an if statement, except instead of only executing once, it keeps going until the boolean is false. There are no 'else' or 'elif' statements in while loops.
-    Just like an if statement, it needs to take in a boolean value.
-    Let's say we want to define a while loop that counts to a number variable that we don't know. Let's call it 'max'
+    Just like an if statement, it needs to take in
+    a boolean value.
+Let's say we want to define a while loop that counts to a number variable that we don't know.
+Let's call it 'max'
     <code>
          count = 0
          while(count<max):
              count = count + 1
     </code>
-    YAY! We've solved our problem of writing plane.move() 10 times. We can just say:
+    YAY! We've solved our problem of writing 
+    plane.move() 10 times. We can just say:
     <code>
          while(plane.check() is not 'WALL'):
              plane.move()
     </code>
-    You want to use while statements when you don't know exactly how many times you're going to want to execute the code.
-    MAKE SURE you are always updating the variable that you pass into while. Otherwise, you will keep going forever and your program will not be happy :(
+You want to use while statements when you don't know exactly how many times you're going to want to execute the code.
+    MAKE SURE you are always updating the variable 
+    that you pass into while. Otherwise, you will 
+    keep going forever and your program will not be 
+    happy :(
 *****
 <b>FOR</b>
     For loops are also pretty neat. You can use for loops when you either know exactly how many things you want to loop through or you're looping through specific items (more on that later).
-    Let's say you want to move forward 10 times exactly.
+Let's say you want to move forward 10 times exactly.
     This is what the syntax looks like:
     <code>
-    for i in range(0,9):
+    for i in range(10):
         plane.move()
     </code>
-    Note that you are looping from 0 to 9. Since 0 counts as a loop, if you want the plane to move 10 times then you loop until 9. This is called <b>zero-indexing</b> and is the same as counting 0 as 1.
+    Note that you are looping from 0 to 9 since 0
+    counts as a loop. This is called 
+    <b>zero-indexing</b> and is the same as
+    counting 0 as 1.
 
-    Another neat thing about for loops are that they keep track of how many times you've looped in the variable 'i'.
+Another neat thing about for loops are that
+they keep track of how many times you've looped
+in the variable 'i'.
     You could call i something else, for example:
     <code>
     for BANANAS in range(0,10):
         plane.move()
     </code>
-    And that will do exactly the same thing as the first example. So why bother with defining a variable there?
-    Well, what if you want to know where you are in the loop <i>inside</i> the loop?
-    Say you want to increase the size of a variable by 1 more each time you loop? So the first time you would add 0, then 1, then 2, etc.
+And that will do exactly the same thing as the first example. So why bother with defining a variable there?
+    Well, what if you want to know where you are in
+    the loop <i>inside</i> the loop?
+Say you want to increase the size of a variable by 1 more each time you loop? So the first time you would add 0, then 1, then 2, etc.
     <code>
     count=0
     for num in range(0,10):
         count = count+num
     </code>
-    This code will add one more each time. So by the end of the for loop, 'count' has 1+2+3+4...+9 stored.
+    This code will add one more each time. So by
+    the end of the for loop, 'count' has 
+    1+2+3+4+5+6+7+8+9 stored.
 
-    Another cool use for for loops is if you have a list of items.
-    Let's say we have a list variable, let's call it L. If we wanted to do the same thing to each item in the list, we could write a for loop:
+Another cool use for for loops is if you have a list of items.
+    Let's say we have a list variable, let's call
+    it L. If we wanted to do the same thing to each
+    item in the list, we could write a for loop:
     <code>
         for i in L:
-            #i will be each element in the list L
-    </code>
+           # i will be each element in the list</code>
 *****
 <u>GLOSSARY</u>
-    <b>while loop</b>: a loop that continues to execute until the boolean value becomes false.
-           While loops are good for times when you don't know exactly how many times you want to loop.
+    <b>while loop</b>: a loop that continues to
+         execute until the boolean becomes false.
+           While loops are good for times when you
+           don't know exactly how many times you
+           want to loop.
            <code>
            while(boolean_value):
-               #make sure you update the boolean!
+               # make sure you update
+               # the boolean!
            </code>
-    <b>for loop</b>: a loop that will continue for a fixed amount of time.
+    <b>for loop</b>: a loop that will continue for
+         a fixed amount of time.
            It can be defined by range:
            <code>
-           for i in range(0, number):
+           for i in range(min, max):
                ...
            </code>
            Or it can be defined as items in a list:
+           <code>
            for item in list:
                ...
-           Where 'item' is the item variable and 'list' is the list variable
-    <i>Make sure you indent after you start a loop!</i>
-    <i>Also be careful you don't loop forever!</i>
+	    </code>
+           Where 'item' is the item variable and
+           'list' is the list variable
+<i>Make sure you indent after you start a loop! Also be careful you don't loop forever!</i>
 *****
 So how are you going to pour water over these unsuspecting students?
 
 New plane methods:
-    plane.dropWater()
-         When you call dropWater you will release one of the balloons that Aaron has given you.
+    <code>dropBalloon()</code>
+         When you call dropWater you will release
+         one of the balloons that Aaron has given
+         you.
          Parameters: none
          Return: none
-    plane.areYouSally() 
-         This function will tell you if you are currently dropping water on Sally.
+    <code>aboveSally()</code>
+         This function will tell you if you are
+         currently dropping water on Sally.
          Parameters: None
          Return: boolean
+    <code>aboveStudent()</code>
+         This function will tell you if you are
+         currently dropping water on a student.
+         Parameters: None
+         Return: boolean
+Old plane methods:
+    <code>check()</code>
+         Check tells you what is in front of the
+         plane.
+             parameters: empty
+             return value: "AIR", "CLOUD", "TARGET"
+    <code>move()</code>
+         When you want the plane to move forward
+             parameters: empty
+             return value: None
+    <code>turnRight()</code>
+         When you want the plane to turn left
+             parameters: empty
+             return value: None 
+    <code>turnLeft()</code>
+         When you want the plane to turn right
+             parameters: empty
+             return value: None
 *****
 You haven't checked any code yet!

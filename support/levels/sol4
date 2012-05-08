@@ -1,1 +1,16 @@
-solution 4
+# Let's drop some water balloons!
+
+# for each student (remember, there are 10!)
+for student in range(0,19):
+    # Time to get movin! 
+    # Make sure you're actually
+    # over a student before you let em drop!
+    while not(plane.aboveStudent()):
+        plane.move()
+    # Don't forget Sally!
+    if not (plane.aboveSally()):
+        plane.dropBalloon()
+#Let's get ourselves to the target.
+while(plane.check() is not 'TARGET'):
+    plane.move()
+plane.move()

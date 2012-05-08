@@ -1,9 +1,32 @@
-plane.move()
-plane.move()
-plane.move()
-plane.move()
-plane.move()
-plane.move()
-plane.move()
-plane.move()
-plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()
+if(plane.check() is not 'CLOUD'):
+    plane.move()

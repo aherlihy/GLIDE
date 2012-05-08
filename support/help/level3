@@ -1,8 +1,8 @@
-GLIDE Tutorial (Part three!)
+GLIDE Tutorial (Part Three!)
 
 All right! One more part of the tutorial and you're off to the big time!
 
-We're going to learn more about functions/methods/capabilities. So far you've been able to use functions - now it's time to <i>write</i> them!
+We're going to learn more about functions/methods. So far you've been able to use functions - now it's time to <i>write</i> them!
 
 Why do you want to write functions? Because once again, we're lazy. Why write something 10 times when you can define it once, and just call a function when you want it?
 
@@ -22,8 +22,12 @@ Say I want to define a function that takes out a book from our favorite library 
 So let's say we want to find a book variable called 'book'. We also want to find out who the librarian is so we can ask for help. The two variables you can manipulate are 'library' and 'book'
 <code>
     library.enter()
-    librarian = library.getLibrarian() #This function returns the current librarian on shift.
-    librarian.answerQuestion("Can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what to look for
+    librarian = library.getLibrarian()
+    librarian.answerQuestion("Can you help
+    me find this book?", book) 
+    # We can pass in both the question and 
+    # the book variable, so the librarian
+    # knows what to look for
     wanted_book = library.findBook(book)
     library.leave()
 </code>
@@ -32,22 +36,24 @@ But let's say we want to do this 10 times. That would be 50 lines of code! That'
 So let's write a function that goes to the library and returns a book. The first thing to do is name it. Let's call it find_book.
 <code>
     def find_book():
-        ...
-</code>
-OK, so we have our first step, a name! The keyword 'def' stands for 'definition', which indicates that you're <i>defining</i> a method.
+        ...</code>
+OK, so we have our first step, a name! The keyword <b>def</b> stands for 'definition', which indicates that you're <i>defining</i> a method.
 The next step is to think about parameters. What does this function need to know about? Keep in mind that a function only knows about the parameters, and can't access any variables that you don't pass it.
 Well, we need to know of the library and the book. Note that every function we call belongs to the library, and we change the 'book' value with every new book we want.
 <code>
     def find_book(library, book):
-        ...
-</code>
+        ...</code>
 Great! So we have a name and parameters. What next? The actual function! What do we put inside the function?
 Well, dear friend, we put exactly what we want to happen. In this case, we've defined it above.
 <code>
     def find_book(library, book):
         library.enter()
-        librarian = library.getLibrarian() #This function returns the current librarian on shift.
-        librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows what to look for
+        librarian = library.getLibrarian()
+        librarian.answerQuestion("Can you help
+        me find this book?", book) 
+        # We can pass in both the question and 
+        # the book variable, so the librarian
+        # knows what to look for
         wanted_book = library.findBook(book)
         library.leave()
 </code>
@@ -58,8 +64,12 @@ Why yes, the return statement. We want the function to return the book we took f
 <code>
     def find_book(library, book):
         library.enter()
-        librarian = library.getLibrarian() #This function returns the current librarian on shift.
-        librarian.answerQuestion("can you help me find this book?", book) #We can pass in both the question and the book variable, so the librarian knows wh$
+        librarian = library.getLibrarian()
+        librarian.answerQuestion("Can you help 
+        me find this book?", book)
+        # We can pass in both the question and 
+        # the book variable, so the librarian
+        # knows what to look for
         wanted_book = library.findBook(book)
         library.leave()
         <b>return</b> wanted_book
@@ -71,13 +81,49 @@ Ta Dah! We have now defined a function. Now if we want to get 10 library books o
         book3 = find_book(library, book_C)
         ...
 </code>
-
 Much, much better. Make sure that every time you define a function, you actually call it! Just defining won't do anything until you actually make sure the method is called.
+*****
+So in this level, we're going to have to define a function. You can pass in any parameters you think it needs, and have it return anything (or nothing) that you want.
 
-So in this level, we're going to have to define a function called find_target. You can pass in any parameters you think it needs, and have it return anything (or nothing) that you want.
+Look for patterns in the level - any time you're writing the same thing and over again, it may be time for a function!
 
 Be careful to define the function <b>before</b> calling it! Otherwise the computer won't know what you're talking about.
 
 Good luck!
+*****
+<u>Glossary</u>
+<b>function</b> is a way to neaten code and avoid
+    repeated code. You can define them using:
+        <code>def function_name(p1, p2, ...):
+             ....
+       </code>
+    You can put anything in a function! Just make
+    sure you are passing all the information you
+    need.
+
+    Make sure you are actually calling it!
+    You call and store the return value using:
+    <code>   variable = function_name(param1, param2)</code>
+*****
+No new methods this level!
+
+Old methods:
+    <code>check()</code>
+         Check tells you what is in front of the
+         plane.
+             parameters: empty
+             return value: "AIR", "CLOUD", "TARGET"
+    <code>move()</code>
+         When you want the plane to move forward
+             parameters: empty
+             return value: None
+    <code>turnRight()</code>
+         When you want the plane to turn left
+             parameters: empty
+             return value: None 
+    <code>turnLeft()</code>
+         When you want the plane to turn right
+             parameters: empty
+             return value: None
 *****
 You haven't checked any code yet!
