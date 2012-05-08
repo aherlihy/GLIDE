@@ -151,7 +151,7 @@ class Airplane:
                 self.move()
 
 
-    def isRoomGoal(Self):
+    def isRoomGoal(self):
 	return self.tileMap.isGoal()
 
     def whereAmI(self):
@@ -162,6 +162,7 @@ class Airplane:
             return
         else:
             return self.tileMap.grid[self.tileMap.py][self.tileMap.px]
+e
 
     def markRoom(self):
         """

@@ -217,7 +217,7 @@ class TileMap:
                 "HIDALGO","HAMLET","ISABELLE","ISAAC","JOHN","JENNA","KIT",
                 "KATE","LAURA","LIAM","MALCOLM","MATHILDA","NAIOMI","NATHAN",
                 "OREK","OTHELLO","PAUL","PRINCE","QUINCY","QUINN","ROSENCRANTZ",
-                "RYAN","SALLY","SHIRLEY","TINA","TOM","ULYSSES","UGENE","VANESSA",
+                "RYAN","SHIRLEY","TINA","TOM","ULYSSES","UGENE","VANESSA",
                 "VING","WALDO","WITT","XANDER","XENA","YOLANDA","YVETTE",
                 "ZACH","ZIM"]
         use = ["SALLY"]
