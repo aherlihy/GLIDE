@@ -137,7 +137,7 @@ class Airplane:
         except tilemap.InvalidMoveException:
             self.crash()
 
-    def goto(self, room):
+    def goToRoom(self, room):
         """
         This is the move method for the DFS level.  It takes in
         a room object (subclass of a Tile), and if the room is
@@ -209,8 +209,8 @@ class Plane(Airplane):
         #sadly, I see no way to get around a parameter
         super(Plane, self).__init__(tile_map)
 
-    def goto(self, room):
-        Airplane.goto(self, room)
+    def goToRoom(self, room):
+        Airplane.goToRoom(self, room)
 
     def move(self):
         Airplane.move(self)
