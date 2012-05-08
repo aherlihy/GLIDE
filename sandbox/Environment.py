@@ -652,6 +652,7 @@ class Environment(Frame):
 	            self.update()
 	            time.sleep(.8)
 	            self.painter.initPlane()
+	            self.painter.clearNames()
 	            return
 		elif cmd == '7':
 		    pass
@@ -742,6 +743,8 @@ class Environment(Frame):
 	    self.update()
 	    time.sleep(.8)
 	    self.painter.initPlane()
+	    
+	    self.painter.clearNames()
 
 
     def prevLevel(self):

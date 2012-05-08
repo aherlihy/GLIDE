@@ -56,6 +56,8 @@ class Painter:
         self.waitingText = self.canvas.create_text(588, 110, font=self.waitingFont, text="Checking your code...", state=HIDDEN)
         self.numBalloons = 0
         self.balloonList = []
+        
+        self.numNames = 0
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -1475,10 +1477,21 @@ class Painter:
 	    y2 += 103
 	    i = self.bubble3
 	
-	self.img = self.canvas.create_image(x, y, image=i, anchor=N)
-	self.text = self.canvas.create_text(x, y2, text=name, font=self.dialogFont)
+	tag1 = "bubble" + str(self.numNames)
+	tag2 = "name" + str(self.numNames)
+	self.img = self.canvas.create_image(x, y, image=i, anchor=N, tag=tag1)
+	self.text = self.canvas.create_text(x, y2, text=name, font=self.dialogFont, tag=tag2)
 	self.canvas.update()
+	self.numNames += 1
 
+
+    def clearNames(self):
+	for i in range(0, self.numNames):
+	    tag1 = "bubble" + str(i)
+	    tag2 = "name" + str(i)
+	    self.canvas.delete(tag1)
+	    self.canvas.delete(tag2)
+	self.numNames = 0
 
     def crash(self):
 	x, y = self.canvas.coords("plane")

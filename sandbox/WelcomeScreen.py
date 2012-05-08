@@ -38,16 +38,19 @@ class WelcomeScreen(Frame):
         if screen_width == 1280:
 	    self.customFont1 = tkFont.Font(family="LMMono10", size=20)
 	    self.customFont = tkFont.Font(family="Pupcat", size=20, weight=tkFont.BOLD)
+	    self.customFont2 = tkFont.Font(family="LMMono10", size=14)
 
 	# single screen setting
 	elif screen_width == 1920:
 	    self.customFont1 = tkFont.Font(family="LMMono10", size=18)
 	    self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
             self.customFont2 = tkFont.Font(family="LMMono10", size=14)
+            
 	# double screen setting
 	else:
             self.customFont1 = tkFont.Font(family="LMMono10", size=18)
             self.customFont = tkFont.Font(family="Pupcat", size=16, weight=tkFont.BOLD)
+            self.customFont2 = tkFont.Font(family="LMMono10", size=14)
 
         self.initLogo()
         self.initToolbar()
@@ -89,8 +92,6 @@ class WelcomeScreen(Frame):
     def initScreen(self):
         self.parent.grid_columnconfigure(0, minsize=DIM_X)
         self.parent.grid_rowconfigure(0, minsize=740)
-        #self.parent.grid_rowconfigure(1, minsize=DIM_Y/2)
-        #self.parent.grid_rowconfigure(1, minsize=200)
         self.parent.grid_propagate(False)
         self.parent.resizable(width=False, height=False)
 
