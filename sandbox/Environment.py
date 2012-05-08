@@ -617,7 +617,9 @@ class Environment(Frame):
 	    cmdList = self.tilemap.getLevel()
 	    
 	    if self.currLevel == 6:
-		self.painter.setSpeeds(.007, .003)
+		self.painter.setSpeeds(.004, .0015)
+            elif self.currLevel == 3:
+		self.painter.setSpeeds(.010, .005)
 	    else:
 		self.painter.setSpeeds(.015, .008)
 
@@ -748,7 +750,8 @@ class Environment(Frame):
 		self.helpBox.insert(END, self.screens[self.shownScreen])
 		self.helpBox.config(state=DISABLED)   # turn off editing
 		self.returnButtonsToStates(currStates)
-		time.sleep(.8)
+		self.update()
+		time.sleep(.7)
 		self.painter.clearNames()
 		return
 

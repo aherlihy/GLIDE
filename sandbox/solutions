@@ -74,13 +74,10 @@ while True:
 	turn = (turn+1)%4
 
 LEVEL 4:
-for student in range(0,19):
-    while not(plane.isAboveStudent()):
-        plane.move()
-    if not (plane.isAboveSally()):
-        plane.dropWater()
-while(plane.check() is not 'TARGET'):
-    plane.move()
+while plane.check() != "TARGET":
+	plane.move()
+	if plane.aboveStudent() and not plane.aboveSally():
+		plane.dropBalloon()
 plane.move()
 
 LEVEL 5:

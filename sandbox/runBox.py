@@ -127,7 +127,7 @@ def analyze_ast(box, output):
                      noErrors=False
                      output.write("It looks like you're trying to call a function that's not allowed.\n")
                      for b in breaks[1:]:
-                          print "b", b
+#                          print "b", b
                           c = b.split(':')
                           if(c[0]=="LINE"):
                                output.write("On line " + c[1]+ " you call")

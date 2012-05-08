@@ -249,7 +249,8 @@ class TileMap:
         self.plane.moveSet+=str(desknum-1)
         self.plane.moveSet+="8"
         if self.names[desknum-1]=="SALLY":
-            raise VictoryException()
+	    self.plane.moveSet+="7"
+            return "SALLY"
         else:
             self.guess -= 1
             if self.guess == 0:
@@ -457,7 +458,6 @@ class TileMap:
         return working; 
 
     def getLevel(self):
-        print self.plane.getMoves()
         return self.plane.getMoves()
 
 
