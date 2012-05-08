@@ -72,7 +72,7 @@ class Environment(Frame):
         self.initTextBoxes()
         self.initUI()
 
-        self.currLevel = 4
+        self.currLevel = 5
 
         self.beatenLevels = []
         self.initLevelCanvas()
@@ -594,6 +594,7 @@ class Environment(Frame):
 	    nameList = self.tilemap.getNameList()
 
 	    cmdList = self.tilemap.getLevel()
+	    print cmdList
 
 	    cmdList = re.sub('04350', 'i', cmdList) # i = s-bend east south
 	    cmdList = re.sub('05140', 'j', cmdList) # j = s-bend east north
@@ -637,7 +638,7 @@ class Environment(Frame):
 		elif cmd == '5':
 		    self.painter.rotatePlaneCounterclockwise(90)
 		elif cmd == '6':     # crash
-		
+		    self.painter.crash()
 		    if self.currLevel == 5:
 		        self.screens[-1] = "You asked too many students and your teacher woke up! Yikes!\nTry to find Sally in fewer guesses."
 		    else:
@@ -648,6 +649,9 @@ class Environment(Frame):
 	            self.helpBox.insert(END, self.screens[self.shownScreen])
 	            self.helpBox.config(state=DISABLED)   # turn off editing
 	            self.returnButtonsToStates(currStates)
+	            self.update()
+	            time.sleep(.8)
+	            self.painter.initPlane()
 	            return
 		elif cmd == '7':
 		    pass
@@ -656,6 +660,10 @@ class Environment(Frame):
 		elif cmd == 'x':
 		    currDesk = int(desks[nextDesk])
 		    self.painter.askName(nameList[currDesk], currDesk+1)
+		elif cmd == 'y':
+		    self.painter.dropWaterBalloon()
+		elif cmd == 'z':
+		    self.painter.dropWaterBalloon(True)
 		elif cmd == 'a':
 		    self.painter.takeRightTurnSouth()
 		elif cmd == 'b':
@@ -729,6 +737,11 @@ class Environment(Frame):
 
 	    # make the run button clickable again
 	    self.returnButtonsToStates(currStates)
+	    
+	    # reset the plane
+	    self.update()
+	    time.sleep(.8)
+	    self.painter.initPlane()
 
 
     def prevLevel(self):

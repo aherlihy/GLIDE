@@ -54,7 +54,8 @@ class Painter:
         self.waitingOutline = self.canvas.create_rectangle(460, 90, 720, 130, fill="Yellow",
                                                            dash='3', width=2, state=HIDDEN)
         self.waitingText = self.canvas.create_text(588, 110, font=self.waitingFont, text="Checking your code...", state=HIDDEN)
-        self.dropWaterBalloon(self.planeX+2*TILE_WIDTH-8, self.planeY+TILE_HEIGHT)
+        self.numBalloons = 0
+        self.balloonList = []
 
     def paintMap(self, charArray):
 	""" Create a map of tiles based on a character array. The following characters are valid:
@@ -1197,6 +1198,7 @@ class Painter:
     def animateWin(self):
 	thread.start_new_thread(self.setOffFireworks, ())
 
+
     def killAnimation(self):
 	self.animate = False
 
@@ -1365,7 +1367,12 @@ class Painter:
 	    self.canvas.delete(l10)
 
 
-    def dropWaterBalloon(self, x, y, onKid=False):
+    def dropWaterBalloon(self, onKid=False):
+	self.numBalloons += 1
+	self.animate = True
+	thread.start_new_thread(self.waterBalloon, (onKid,))
+	
+    def waterBalloon(self, onKid):
 	# pick a random color
 	num = random.randint(1, 6)
 	if num == 1:
@@ -1382,10 +1389,16 @@ class Painter:
 	    color = "purple"
 	string = "Graphics/waterBalloon_" + color
 
-        img = Image.open(string + ".png")
-        self.balloon = ImageTk.PhotoImage(img)
-        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
-        self.canvas.update()
+        x, y = self.canvas.coords("plane")
+        x = x - 5
+        y = y + TILE_HEIGHT
+
+        if self.animate:
+	    img = Image.open(string + ".png")
+	    nametag = "balloon" + str(self.numBalloons)
+	    b = ImageTk.PhotoImage(img)
+	    self.canvas.create_image(x, y, image=b, anchor=NW, tag=nametag)
+	    self.canvas.update()
 
         # drop balloon
         if onKid:
@@ -1394,44 +1407,51 @@ class Painter:
 	    dist = int(3.1*TILE_HEIGHT)
 	
         for i in range(dist):
-            time.sleep(.02)
-            self.canvas.move("balloon", 0, 1)
-            self.canvas.update()
+	    if self.animate:
+		time.sleep(.02)
+		self.canvas.move(nametag, 0, 1)
+		self.canvas.update()
 
         # set y to new y position
         y = y + dist
 
         # first stage of bursting
-        img = Image.open(string + "2.png")
-        self.canvas.delete("balloon")
-        self.balloon = ImageTk.PhotoImage(img)
-        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
-        self.canvas.update()
-        time.sleep(.25)
+        if self.animate:
+	    img = Image.open(string + "2.png")
+	    self.canvas.delete(nametag)
+	    b = ImageTk.PhotoImage(img)
+	    self.canvas.create_image(x, y, image=b, anchor=NW, tag=nametag)
+	    self.canvas.update()
+	    time.sleep(.17)
 
         # second stage of bursting
-        img = Image.open(string + "3.png")
-        self.canvas.delete("balloon")
-        self.balloon = ImageTk.PhotoImage(img)
-        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
-        self.canvas.update()
-        time.sleep(.25)
+        if self.animate:
+	    img = Image.open(string + "3.png")
+	    self.canvas.delete(nametag)
+	    b = ImageTk.PhotoImage(img)
+	    self.canvas.create_image(x, y, image=b, anchor=NW, tag=nametag)
+	    self.canvas.update()
+	    time.sleep(.17)
 
         # third stage of bursting
-        img = Image.open(string + "4.png")
-        self.canvas.delete("balloon")
-        self.balloon = ImageTk.PhotoImage(img)
-        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
-        self.canvas.update()
-        time.sleep(.25)
+        if self.animate:
+	    img = Image.open(string + "4.png")
+	    self.canvas.delete(nametag)
+	    b = ImageTk.PhotoImage(img)
+	    self.canvas.create_image(x, y, image=b, anchor=NW, tag=nametag)
+	    self.canvas.update()
+	    time.sleep(.17)
         
         # fourth stage of bursting
-        img = Image.open(string + "5.png")
-        self.canvas.delete("balloon")
-        self.balloon = ImageTk.PhotoImage(img)
-        self.canvas.create_image(x, y, image=self.balloon, anchor=NW, tag="balloon")
-        self.canvas.update()
-        time.sleep(.25)
+        if self.animate:
+	    img = Image.open(string + "5.png")
+	    self.canvas.delete(nametag)
+	    b = ImageTk.PhotoImage(img)
+	    self.canvas.create_image(x, y, image=b, anchor=NW, tag=nametag)
+	    self.canvas.update()
+	    time.sleep(.17)
+        
+        self.balloonList.append(b)
 
 
     def askName(self, name, index):
@@ -1458,3 +1478,15 @@ class Painter:
 	self.img = self.canvas.create_image(x, y, image=i, anchor=N)
 	self.text = self.canvas.create_text(x, y2, text=name, font=self.dialogFont)
 	self.canvas.update()
+
+
+    def crash(self):
+	x, y = self.canvas.coords("plane")
+	for i in range(1, 11):
+	    img = Image.open("Graphics/planeFade" + str(i) + ".png")
+	    imgRotated = img.rotate(self.planeRotDeg)
+	    self.planeImg = ImageTk.PhotoImage(imgRotated)
+	    self.plane = self.canvas.create_image(x, y, image=self.planeImg, anchor=NW, tags="plane")
+	    self.canvas.update()
+	    time.sleep(.17)
+	self.canvas.delete("plane")
