@@ -230,6 +230,8 @@ class TileMap:
     def askDeskName(self, desknum):
         if self.grid[self.py+1][self.px].getType() != "DESK":
             return None;
+        if desknum<1 or desknum > 19:
+            return None
         dist = 0
         heading = 0
         if self.px-2 < desknum:
